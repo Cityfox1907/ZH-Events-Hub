@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZüriBühni — Heute Abend</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500&family=DM+Sans:wght@400;500&family=Playfair+Display:wght@400;500&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+  :root {
+    --paper: #f7f2ea;
+    --paper-dim: #efe7d8;
+    --card: #fdfaf3;
+    --ink: #1c1917;
+    --ink-muted: #57534e;
+    --ink-faint: #a8a29e;
+    --line: #e7ddc9;
+    --line-strong: #d4c4a8;
+    --burgundy: #7c1f1f;
+    --burgundy-dark: #5a1414;
+    --brass: #b8893d;
+    --display-font: 'Fraunces', serif;
+    --body-font: 'DM Sans', sans-serif;
+    --sidebar-w: 72px;
+  }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { font-size: 16px; }
+  body {
+    font-family: var(--body-font);
+    background: var(--paper);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  body::after {
+    content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+    opacity: 0.025; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 256px;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
+  @keyframes slideIn {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+  }
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 9999px; }
+  @media (max-width: 768px) {
+    .sidebar-nav { display: none !important; }
+    .main-area { margin-left: 0 !important; }
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="components-v3.jsx"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel">
+
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "burgundy": "#7c1f1f",
+  "paperTone": "#f7f2ea",
+  "displayFont": "Fraunces",
+  "coverRatio": "16\/9",
+  "cardDensity": "normal"
+}/*EDITMODE-END*/;
+
+const EVENTS = [
+  { id:'evt-01', title:'Abendkonzert im Park', subtitle:'Ein Sommerabend mit Jazz und Soul', category:'Konzert', venue:'Parkhaus', district:'Kreis 4', size:'major', time:'19:30', dateShort:'So, 17. Mai', going:324, price:'ab CHF 45' },
+  { id:'evt-02', title:'Streichquartett Nr. 14', subtitle:'Kammermusik-Zyklus Frühling', category:'Klassik', venue:'Tonhalle', district:'Enge', size:'mega', time:'20:00', dateShort:'So, 17. Mai', going:891, price:'ab CHF 65' },
+  { id:'evt-03', title:'Open Mic Night', subtitle:'Offene Bühne für Poesie und Comedy', category:'Comedy', venue:'Café Plüsch', district:'Niederdorf', size:'intimate', time:'21:00', dateShort:'So, 17. Mai', going:42, price:'Eintritt frei' },
+  { id:'evt-04', title:'Techno im Keller', subtitle:'Bassgetriebene Nacht', category:'Klubs', venue:'Zukunft', district:'Kreis 5', size:'mid', time:'23:00', dateShort:'So, 17. Mai', going:187, price:'ab CHF 25' },
+  { id:'evt-05', title:'Skulptur & Licht', subtitle:'Neue Werke aus der Galerie', category:'Kunst', venue:'Haus Konstruktiv', district:'City', size:'mid', time:'18:00', dateShort:'So, 17. Mai', going:73, price:'ab CHF 12' },
+  { id:'evt-06', title:'Sommertheater', subtitle:'Klassiker unter freiem Himmel', category:'Theater', venue:'Rigiblick', district:'Oberstrass', size:'major', time:'19:00', dateShort:'So, 17. Mai', going:256, price:'ab CHF 38' },
+];
+
+const UPCOMING = [
+  { id:'evt-11', title:'Volkshaus Sessions', subtitle:'Drei Bands, ein Abend', category:'Konzert', venue:'Volkshaus', district:'Kreis 4', size:'major', time:'20:00', dateShort:'Di, 19. Mai', going:412, price:'ab CHF 35' },
+  { id:'evt-12', title:'Weinprobe Seefeld', subtitle:'Biodynamische Weine aus dem Tessin', category:'Gastro', venue:'Vinothek Rosi', district:'Seefeld', size:'intimate', time:'18:30', dateShort:'Mi, 20. Mai', going:28, price:'ab CHF 55' },
+  { id:'evt-13', title:'Impro-Theater', subtitle:'Spontan, schnell, schamlos gut', category:'Theater', venue:"Miller's Studio", district:'Niederdorf', size:'mid', time:'20:30', dateShort:'Mi, 20. Mai', going:95, price:'ab CHF 22' },
+  { id:'evt-14', title:'Flohmarkt Bürkliplatz', subtitle:'Jeden Samstag am See', category:'Volksfest', venue:'Bürkliplatz', district:'City', size:'mega', time:'07:00', dateShort:'Sa, 23. Mai', going:1203, price:'Eintritt frei' },
+  { id:'evt-15', title:'DJ Set am Hafen', subtitle:'Sunset-Vibes direkt am Wasser', category:'Klubs', venue:'Hafen Enge', district:'Enge', size:'mid', time:'17:00', dateShort:'Sa, 23. Mai', going:344, price:'Eintritt frei' },
+];
+
+const CAROUSEL_SLIDES = [
+  { id:'hl-01', type:'highlight', title:'Züri Fäscht Warm-Up', subtitle:'Der Countdown beginnt — das grösste Volksfest am See', size:'mega' },
+  { id:'hl-02', type:'aftermath', title:'Nachtflohmarkt am Viadukt', subtitle:'Letzten Freitag — 876 waren da', size:'major', review:{ text:'Beste Stimmung seit Jahren. Der DJ am Eingang war unfassbar.', author:'Lena M.', upvotes:47 } },
+  { id:'hl-03', type:'poll', title:'Was wollt ihr diesen Sommer?', subtitle:'Community-Umfrage — stimme jetzt ab', poll:{ options:[{ label:'Mehr Open-Air Konzerte', votes:234 },{ label:'Strassenfeste in den Quartieren', votes:189 },{ label:'Late-Night Museumsnächte', votes:156 },{ label:'Food-Festival am See', votes:201 }] } },
+  { id:'hl-04', type:'highlight', title:'Sinfoniekonzert: Mahler Nr. 5', subtitle:'Tonhalle Zürich — Donnerstag 19:30', size:'mega' },
+  { id:'hl-05', type:'aftermath', title:'Comedy Night im Kaufleuten', subtitle:'Letzte Woche — ausverkauft', size:'major', review:{ text:'Tränen gelacht. Der letzte Act hat den Saal zerlegt.', author:'Marc B.', upvotes:32 } },
+];
+
+const CATEGORIES = ['Alle','Konzert','Klassik','Klubs','Comedy','Theater','Kunst','Festival','Volksfest','Sport','Gastro'];
+
+function App() {
+  const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  const [activeFilter, setActiveFilter] = React.useState('Alle');
+  const [activeNav, setActiveNav] = React.useState('home');
+  const [activeTab, setActiveTab] = React.useState('tonight');
+  const openEvent = (evt) => { window.location.href = 'Event Detail.html#event=' + evt.id; };
+
+  React.useEffect(() => {
+    const root = document.documentElement;
+    root.style.setProperty('--burgundy', tweaks.burgundy);
+    root.style.setProperty('--paper', tweaks.paperTone);
+    document.body.style.background = tweaks.paperTone;
+    const fontMap = { 'Fraunces':"'Fraunces', serif", 'Playfair Display':"'Playfair Display', serif", 'Lora':"'Lora', serif" };
+    root.style.setProperty('--display-font', fontMap[tweaks.displayFont] || fontMap['Fraunces']);
+  }, [tweaks]);
+
+  const filteredEvents = activeFilter === 'Alle' ? EVENTS : EVENTS.filter(e => e.category === activeFilter);
+
+  return (
+    <div style={{ display:'flex', minHeight:'100vh' }}>
+      <SidebarNav active={activeNav} onNavigate={setActiveNav} />
+
+      <div className="main-area" style={{ marginLeft:'var(--sidebar-w)', flex:1, minWidth:0 }}>
+        {/* Top bar */}
+        <header style={{
+          position:'sticky', top:0, zIndex:100, height:64,
+          background:'rgba(247,242,234,0.85)', backdropFilter:'blur(12px)',
+          borderBottom:'1px solid var(--line)',
+          display:'flex', alignItems:'center', justifyContent:'space-between',
+          padding:'0 32px',
+        }}>
+          <div style={{ display:'flex', alignItems:'baseline', gap:12 }}>
+            <span style={{ fontFamily:'var(--display-font)', fontSize:24, fontWeight:500, letterSpacing:'-0.02em', fontVariationSettings:'"SOFT" 50, "WONK" 0' }}>ZüriBühni</span>
+            <span style={{ fontSize:10, letterSpacing:'0.2em', textTransform:'uppercase', color:'var(--ink-faint)' }}>EST. 2026</span>
+          </div>
+          <div style={{ display:'flex', gap:4, background:'var(--paper-dim)', borderRadius:9999, padding:3 }}>
+            {[{key:'tonight',label:'Heute Abend'},{key:'week',label:'Diese Woche'},{key:'aftermath',label:'Aftermath'}].map(t=>(
+              <button key={t.key} onClick={()=>setActiveTab(t.key)} style={{ padding:'6px 16px',borderRadius:9999,border:'none',cursor:'pointer',fontSize:14,fontFamily:'var(--body-font)',fontWeight:500,background:activeTab===t.key?'var(--ink)':'transparent',color:activeTab===t.key?'var(--paper)':'var(--ink-muted)',transition:'all 200ms' }}>{t.label}</button>
+            ))}
+          </div>
+        </header>
+
+        <div style={{ maxWidth:1080, margin:'0 auto', padding:'32px 32px 96px' }}>
+          <HeroCarousel slides={CAROUSEL_SLIDES} />
+
+          {/* Stats */}
+          <div style={{ display:'flex', gap:24, marginTop:32, flexWrap:'wrap' }}>
+            <LiveCounter count={1847} />
+            <div style={{ padding:'16px 20px', borderRadius:8, border:'1px solid var(--line)', background:'var(--card)', display:'flex', alignItems:'center', gap:12 }}>
+              <div style={{ width:32,height:32,borderRadius:8,background:'var(--burgundy)',display:'flex',alignItems:'center',justifyContent:'center' }}>
+                <span style={{ color:'var(--paper)',fontSize:16,fontFamily:'var(--display-font)',fontVariationSettings:'"SOFT" 50, "WONK" 0' }}>6</span>
+              </div>
+              <div>
+                <div style={{ fontSize:14,fontFamily:'var(--body-font)',fontWeight:500 }}>Events heute</div>
+                <div style={{ fontSize:11,fontFamily:'var(--body-font)',color:'var(--ink-faint)' }}>Kuratiert für dich</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Heute Abend */}
+          <section style={{ marginTop:48 }}>
+            <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline', marginBottom:8 }}>
+              <h1 style={{ fontFamily:'var(--display-font)', fontSize:'clamp(36px,4vw,56px)', lineHeight:1, letterSpacing:'-0.02em', fontWeight:300, fontVariationSettings:'"SOFT" 50, "WONK" 0' }}>Heute Abend.</h1>
+              <div style={{ fontSize:10, letterSpacing:'0.25em', textTransform:'uppercase', color:'var(--ink-faint)' }}>Sonntag · 17. Mai 2026</div>
+            </div>
+            <p style={{ fontSize:16, lineHeight:1.6, color:'var(--ink-muted)', marginBottom:24, maxWidth:500 }}>
+              {EVENTS.length} kuratierte Events, von der Tonhalle bis zum kleinen Jazz-Klub.
+            </p>
+            <div style={{ display:'flex', gap:8, overflowX:'auto', paddingBottom:4, WebkitOverflowScrolling:'touch', marginBottom:24 }}>
+              {CATEGORIES.map(cat => <FilterPill key={cat} label={cat} active={activeFilter===cat} onClick={()=>setActiveFilter(cat)} />)}
+            </div>
+            <div style={{ display:'grid', gridTemplateColumns:tweaks.cardDensity==='compact'?'repeat(auto-fill,minmax(220px,1fr))':'repeat(auto-fill,minmax(280px,1fr))', gap:24 }}>
+              {filteredEvents.map((evt,i) => <EventCard key={evt.id} event={evt} index={i} onClick={openEvent} />)}
+            </div>
+            {filteredEvents.length===0 && <p style={{ textAlign:'center',color:'var(--ink-muted)',fontSize:18,padding:'48px 0' }}>Keine Events in dieser Kategorie.</p>}
+          </section>
+
+          {/* Diese Woche */}
+          <section style={{ marginTop:64 }}>
+            <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline', borderBottom:'1px solid var(--line)', paddingBottom:16, marginBottom:8 }}>
+              <h2 style={{ fontFamily:'var(--display-font)', fontSize:32, lineHeight:1.1, fontVariationSettings:'"SOFT" 50, "WONK" 0', letterSpacing:'-0.02em', fontWeight:400 }}>Diese Woche kommt</h2>
+              <span style={{ fontSize:10, letterSpacing:'0.15em', textTransform:'uppercase', color:'var(--ink-faint)', cursor:'pointer' }}>Alle anzeigen →</span>
+            </div>
+            {UPCOMING.map((evt,i) => <CompactCard key={evt.id} event={evt} index={i} onClick={openEvent} />)}
+          </section>
+
+          {/* Community Pulse */}
+          <section style={{ marginTop:64 }}>
+            <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline', borderBottom:'1px solid var(--line)', paddingBottom:16, marginBottom:24 }}>
+              <h2 style={{ fontFamily:'var(--display-font)', fontSize:32, lineHeight:1.1, fontVariationSettings:'"SOFT" 50, "WONK" 0', letterSpacing:'-0.02em', fontWeight:400 }}>Community Pulse</h2>
+            </div>
+            <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(300px,1fr))', gap:20 }}>
+              <div style={{ padding:24,borderRadius:8,border:'1px solid var(--line)',background:'var(--card)' }}>
+                <div style={{ fontSize:10,letterSpacing:'0.15em',textTransform:'uppercase',color:'var(--brass)',fontWeight:500,marginBottom:12 }}>Top Review der Woche</div>
+                <div style={{ borderLeft:'2px solid var(--burgundy)',paddingLeft:16 }}>
+                  <p style={{ fontSize:15,lineHeight:1.6,fontStyle:'italic' }}>«Die Akustik in der Tonhalle ist jedes Mal aufs Neue überwältigend.»</p>
+                  <div style={{ display:'flex',alignItems:'center',gap:8,marginTop:12 }}>
+                    <Avatar name="Anna K." size={28} />
+                    <span style={{ fontSize:13,color:'var(--ink-muted)' }}>Anna K. · Streichquartett Nr. 14</span>
+                    <span style={{ fontSize:12,color:'var(--brass)',marginLeft:'auto' }}>▲ 63</span>
+                  </div>
+                </div>
+              </div>
+
+              <div style={{ padding:24,borderRadius:8,border:'1px solid var(--line)',background:'var(--card)' }}>
+                <div style={{ fontSize:10,letterSpacing:'0.15em',textTransform:'uppercase',color:'var(--ink-faint)',fontWeight:500,marginBottom:12 }}>Aktive Umfrage</div>
+                <h3 style={{ fontFamily:'var(--display-font)',fontSize:20,fontVariationSettings:'"SOFT" 50, "WONK" 0',marginBottom:16,lineHeight:1.2 }}>Welcher Venue hat die beste Stimmung?</h3>
+                <PollWidget poll={{ options:[{label:'Kaufleuten',votes:145},{label:'Hive',votes:198},{label:'Tonhalle',votes:167},{label:'Zukunft',votes:89}] }} />
+              </div>
+
+              <div style={{ padding:24,borderRadius:8,border:'1px solid var(--line)',background:'var(--card)' }}>
+                <div style={{ fontSize:10,letterSpacing:'0.15em',textTransform:'uppercase',color:'var(--ink-faint)',fontWeight:500,marginBottom:16 }}>Trending diese Woche</div>
+                {[{tag:'open-air',count:34},{tag:'jazz',count:21},{tag:'afterwork',count:18},{tag:'underground',count:15},{tag:'familienfreundlich',count:12}].map(t=>(
+                  <div key={t.tag} style={{ display:'flex',justifyContent:'space-between',alignItems:'center',padding:'8px 0',borderBottom:'1px solid var(--line)' }}>
+                    <span style={{ fontSize:13,padding:'2px 10px',borderRadius:9999,border:'1px solid var(--line)' }}>{t.tag}</span>
+                    <span style={{ fontSize:12,color:'var(--ink-faint)' }}>{t.count} Events</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <footer style={{ borderTop:'1px solid var(--line)', padding:32, textAlign:'center', fontSize:12, color:'var(--ink-faint)' }}>
+          <span style={{ fontFamily:'var(--display-font)', fontSize:16, fontVariationSettings:'"SOFT" 50, "WONK" 0', color:'var(--ink-muted)' }}>ZüriBühni</span>
+          <span style={{ margin:'0 12px' }}>·</span>Kuratiert für Zürich
+        </footer>
+      </div>
+
+
+
+      {/* Tweaks */}
+      <TweaksPanel>
+        <TweakSection title="Farben">
+          <TweakColor label="Akzentfarbe" value={tweaks.burgundy} onChange={v=>setTweak('burgundy',v)} />
+          <TweakColor label="Hintergrund" value={tweaks.paperTone} onChange={v=>setTweak('paperTone',v)} />
+        </TweakSection>
+        <TweakSection title="Typografie">
+          <TweakSelect label="Display-Schrift" value={tweaks.displayFont} options={['Fraunces','Playfair Display','Lora']} onChange={v=>setTweak('displayFont',v)} />
+        </TweakSection>
+        <TweakSection title="Cards">
+          <TweakSelect label="Cover-Ratio" value={tweaks.coverRatio} options={['1/1','3/2','16/9','4/3']} onChange={v=>setTweak('coverRatio',v)} />
+          <TweakRadio label="Dichte" value={tweaks.cardDensity} options={['normal','compact']} onChange={v=>setTweak('cardDensity',v)} />
+        </TweakSection>
+      </TweaksPanel>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
