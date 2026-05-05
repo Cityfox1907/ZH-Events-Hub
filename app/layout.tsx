@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Fraunces, DM_Sans } from "next/font/google";
 import { Navigation } from "@/components/Navigation";
+import { Sidebar } from "@/components/Sidebar";
 import { ToastProvider } from "@/components/Toast";
 import "./globals.css";
 
@@ -31,8 +32,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="bg-paper text-ink antialiased min-h-screen flex flex-col">
         <ToastProvider>
           <Navigation />
-          <main className="flex-1">{children}</main>
-          <SiteFooter />
+          <div className="flex-1 flex">
+            <Sidebar />
+            <div className="flex-1 min-w-0 flex flex-col">
+              <main className="flex-1">{children}</main>
+              <SiteFooter />
+            </div>
+          </div>
         </ToastProvider>
       </body>
     </html>
@@ -42,7 +48,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 function SiteFooter() {
   return (
     <footer className="mt-16 border-t border-line">
-      <div className="container-editorial py-8 flex flex-wrap items-center justify-center gap-3 text-[12px] text-ink-faint text-center">
+      <div className="px-5 md:px-8 py-8 flex flex-wrap items-center justify-center gap-3 text-[12px] text-ink-faint text-center">
         <span className="font-display text-[16px] text-ink-muted">ZüriBühni</span>
         <span>·</span>
         <span>Kuratiert für Zürich</span>

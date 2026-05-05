@@ -26,8 +26,20 @@ export function Navigation() {
 
   return (
     <header className="sticky top-0 z-40 h-16 bg-paper/85 backdrop-blur-md border-b border-line">
-      <div className="container-editorial flex items-center justify-between h-full">
-        <Link href="/" className="flex items-baseline gap-3 group" aria-label="ZüriBühni Startseite">
+      <div className="flex items-center h-full pr-5 md:pr-8">
+        <div className="hidden md:flex w-[80px] h-full items-center justify-center shrink-0">
+          <span
+            aria-hidden
+            className="inline-flex items-center justify-center w-9 h-9 rounded-md bg-burgundy text-paper font-display text-[14px] tracking-[0.05em]"
+          >
+            ZB
+          </span>
+        </div>
+        <Link
+          href="/"
+          className="flex items-baseline gap-3 group pl-5 md:pl-0"
+          aria-label="ZüriBühni Startseite"
+        >
           <span className="font-display text-[24px] text-ink leading-none tracking-[-0.02em] transition-colors group-hover:text-burgundy">
             ZüriBühni
           </span>
@@ -35,6 +47,7 @@ export function Navigation() {
             EST. 2026
           </span>
         </Link>
+        <div className="flex-1" />
 
         <nav
           className="hidden md:flex items-center gap-1 bg-paper-dim rounded-full p-[3px]"
@@ -57,10 +70,10 @@ export function Navigation() {
           })}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 ml-3">
           <Link
             href="/neuer-event"
-            className="hidden md:inline-flex items-center gap-2 pl-3 pr-4 py-2 rounded-full border border-line-strong text-ink text-[13px] font-medium hover:bg-paper-dim transition-colors duration-200"
+            className="hidden lg:inline-flex items-center gap-2 pl-3 pr-4 py-2 rounded-full border border-line-strong text-ink text-[13px] font-medium hover:bg-paper-dim transition-colors duration-200"
           >
             <Plus className="w-3.5 h-3.5" strokeWidth={2} />
             Vorschlagen
