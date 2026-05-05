@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Check, Heart } from "lucide-react";
 import { isGoing, toggleGoing, goingCount } from "@/lib/going";
 import { useToast } from "./Toast";
 import { STORAGE_EVENT } from "@/lib/storage";
@@ -36,7 +35,7 @@ export function GoingButton({ eventId, baseMax, size = "lg" }: Props) {
     }
   }
 
-  const padding = size === "lg" ? "px-6 py-4 text-[15px]" : "px-4 py-2.5 text-[13px]";
+  const height = size === "lg" ? "h-11 px-6 text-[14px]" : "h-9 px-4 text-[13px]";
 
   return (
     <button
@@ -44,24 +43,12 @@ export function GoingButton({ eventId, baseMax, size = "lg" }: Props) {
       onClick={handleClick}
       aria-pressed={going}
       aria-label={going ? "Anmeldung zurücknehmen" : "Ich gehe hin"}
-      className={`inline-flex items-center justify-center gap-2 rounded-full font-medium tracking-tight transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] ${padding} ${
-        going
-          ? "bg-paper-dim text-ink border border-line-strong hover:border-ink"
-          : "bg-burgundy text-card border border-burgundy hover:bg-burgundy-dark hover:border-burgundy-dark"
+      className={`inline-flex items-center justify-center gap-2 rounded-full font-medium transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${height} ${
+        going ? "bg-ink text-paper hover:bg-ink/90" : "bg-burgundy text-paper hover:bg-burgundy-dark"
       }`}
     >
-      {going ? (
-        <>
-          <Check className="w-4 h-4" strokeWidth={2} />
-          Du gehst hin
-        </>
-      ) : (
-        <>
-          <Heart className="w-4 h-4" strokeWidth={2} />
-          Ich gehe hin
-        </>
-      )}
-      <span className={`ml-1 tabular-nums ${going ? "text-ink-muted" : "text-card/85"}`}>
+      {going ? "✓ Du gehst hin" : "Ich gehe hin"}
+      <span className="ml-0.5 tabular-nums opacity-70">
         · {count.toLocaleString("de-CH").replace(/,/g, "'")}
       </span>
     </button>

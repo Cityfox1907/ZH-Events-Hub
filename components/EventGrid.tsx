@@ -13,7 +13,7 @@ export function EventGrid({ events, variant = "default", columns = "three" }: Pr
       ? "grid-cols-1 md:grid-cols-2"
       : "grid-cols-1 md:grid-cols-2 xl:grid-cols-3";
   return (
-    <div className={`grid ${cols} gap-6 md:gap-8`}>
+    <div className={`grid ${cols} gap-6`}>
       {events.map((event, idx) => (
         <EventCard key={event.id} event={event} variant={variant} index={idx} />
       ))}

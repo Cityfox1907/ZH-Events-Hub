@@ -48,9 +48,9 @@ export function ReviewList({ eventId }: Props) {
         </div>
       </div>
 
-      <ul className="space-y-6">
+      <ul className="space-y-7">
         {reviews.map((review) => (
-          <li key={review.id} className="fade-in border-t border-line pt-6 first:border-0 first:pt-0">
+          <li key={review.id} className="fade-in border-l-2 border-burgundy pl-5">
             <div className="flex items-center justify-between gap-3 mb-3">
               <div className="flex items-center gap-3">
                 <Avatar name={review.authorName} />

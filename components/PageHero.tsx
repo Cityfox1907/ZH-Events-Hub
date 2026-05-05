@@ -7,17 +7,22 @@ interface Props {
 
 export function PageHero({ eyebrow, title, lede, children }: Props) {
   return (
-    <section className="container-editorial pt-12 md:pt-20 pb-10 md:pb-14">
-      <div className="max-w-3xl">
-        <div className="eyebrow mb-5">{eyebrow}</div>
-        <h1 className="font-display text-[44px] leading-[1.02] md:text-[72px] md:leading-[1.0] tracking-[-0.02em] text-ink">
+    <section className="container-editorial pt-8 md:pt-12 pb-8 md:pb-10">
+      <div className="flex items-baseline justify-between gap-6 mb-2">
+        <h1 className="font-display text-[36px] leading-[1] md:text-[56px] md:leading-[1] tracking-[-0.02em] text-ink font-light">
           {title}
         </h1>
-        {lede ? (
-          <p className="mt-6 text-[16px] md:text-[18px] leading-relaxed text-ink-muted max-w-2xl">{lede}</p>
-        ) : null}
-        {children ? <div className="mt-8">{children}</div> : null}
+        <div className="hidden md:block text-[10px] uppercase tracking-[0.25em] text-ink-faint shrink-0">
+          {eyebrow}
+        </div>
       </div>
+      <div className="md:hidden text-[10px] uppercase tracking-[0.25em] text-ink-faint mb-3">
+        {eyebrow}
+      </div>
+      {lede ? (
+        <p className="mt-2 text-[16px] leading-relaxed text-ink-muted max-w-xl">{lede}</p>
+      ) : null}
+      {children ? <div className="mt-6">{children}</div> : null}
     </section>
   );
 }

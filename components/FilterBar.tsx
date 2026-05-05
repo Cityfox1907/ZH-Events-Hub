@@ -6,7 +6,6 @@ import type { CategoryId, SizeId, ZhEvent } from "@/lib/types";
 import { filterEvents } from "@/lib/events";
 import { EventGrid } from "./EventGrid";
 import { EmptyState } from "./EmptyState";
-import { Filter, X } from "lucide-react";
 
 interface Props {
   events: ZhEvent[];
@@ -23,7 +22,6 @@ export function FilterBar({
 }: Props) {
   const [activeCats, setActiveCats] = useState<CategoryId[]>([]);
   const [activeSizes, setActiveSizes] = useState<SizeId[]>([]);
-  const [showFilters, setShowFilters] = useState(false);
 
   const filtered = useMemo(
     () => filterEvents(events, { categories: activeCats, sizes: activeSizes }),
@@ -49,67 +47,26 @@ export function FilterBar({
     return CATEGORIES.filter((c) => set.has(c.id));
   }, [events]);
 
+  const allActive = !hasFilters;
+
   return (
     <div>
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-3">
-          <button
-            type="button"
-            onClick={() => setShowFilters((v) => !v)}
-            aria-expanded={showFilters}
-            aria-label="Filter ein- oder ausblenden"
-            className="inline-flex md:hidden items-center gap-2 px-3 py-2 rounded-full border border-line-strong text-[13px] text-ink hover:bg-paper-dim transition-colors"
-          >
-            <Filter className="w-3.5 h-3.5" strokeWidth={1.75} />
-            Filter
-            {hasFilters ? (
-              <span className="ml-1 inline-flex items-center justify-center w-5 h-5 rounded-full bg-burgundy text-card text-[10px] font-medium">
-                {activeCats.length + activeSizes.length}
-              </span>
-            ) : null}
-          </button>
-          <span className="hidden md:inline-block eyebrow">Filter</span>
-        </div>
-
-        <div className="flex items-center gap-3">
-          <span className="text-[12px] text-ink-faint tabular-nums">
-            {filtered.length} {filtered.length === 1 ? "Event" : "Events"}
-          </span>
-          {hasFilters ? (
-            <button
-              type="button"
-              onClick={clearAll}
-              className="inline-flex items-center gap-1 text-[12px] text-ink-muted hover:text-burgundy transition-colors"
-            >
-              <X className="w-3 h-3" strokeWidth={1.75} />
-              Zurücksetzen
-            </button>
-          ) : null}
-        </div>
+      <div
+        className="flex gap-2 overflow-x-auto pb-1 mb-6"
+        style={{ WebkitOverflowScrolling: "touch" }}
+      >
+        <FilterPill label="Alle" active={allActive} onClick={clearAll} />
+        {presentCats.map((cat) => (
+          <FilterPill
+            key={cat.id}
+            label={cat.label}
+            active={activeCats.includes(cat.id)}
+            onClick={() => toggleCat(cat.id)}
+          />
+        ))}
       </div>
 
-      <div className={`${showFilters ? "block" : "hidden"} md:block mb-8`}>
-        <div className="flex flex-wrap gap-2 mb-3">
-          {presentCats.map((cat) => {
-            const active = activeCats.includes(cat.id);
-            return (
-              <button
-                key={cat.id}
-                type="button"
-                onClick={() => toggleCat(cat.id)}
-                aria-pressed={active}
-                className={`px-3 py-1.5 rounded-full text-[12px] tracking-tight border transition-colors duration-200 ${
-                  active
-                    ? "bg-burgundy text-card border-burgundy"
-                    : "bg-transparent text-ink-muted border-line-strong hover:text-ink hover:border-ink"
-                }`}
-              >
-                {cat.label}
-              </button>
-            );
-          })}
-        </div>
-
+      <div className="flex items-center justify-between mb-6">
         <div className="flex flex-wrap gap-2">
           {SIZES.map((size) => {
             const active = activeSizes.includes(size.id);
@@ -119,9 +76,9 @@ export function FilterBar({
                 type="button"
                 onClick={() => toggleSize(size.id)}
                 aria-pressed={active}
-                className={`px-3 py-1.5 rounded-full text-[11px] uppercase tracking-[0.15em] border transition-colors duration-200 ${
+                className={`px-3 h-7 rounded-full text-[10px] uppercase tracking-[0.15em] font-medium border transition-colors duration-200 ${
                   active
-                    ? "bg-ink text-card border-ink"
+                    ? "bg-ink text-paper border-ink"
                     : "bg-transparent text-ink-faint border-line hover:text-ink hover:border-ink"
                 }`}
               >
@@ -130,6 +87,9 @@ export function FilterBar({
             );
           })}
         </div>
+        <span className="text-[12px] text-ink-faint tabular-nums shrink-0 ml-3">
+          {filtered.length} {filtered.length === 1 ? "Event" : "Events"}
+        </span>
       </div>
 
       {filtered.length === 0 ? (
@@ -138,5 +98,30 @@ export function FilterBar({
         <EventGrid events={filtered} variant={variant} />
       )}
     </div>
+  );
+}
+
+function FilterPill({
+  label,
+  active,
+  onClick,
+}: {
+  label: string;
+  active: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={active}
+      className={`h-8 px-[14px] rounded-full text-[10px] font-medium uppercase tracking-[0.1em] whitespace-nowrap shrink-0 transition-colors duration-200 ${
+        active
+          ? "bg-burgundy text-paper border border-burgundy"
+          : "bg-transparent text-ink-muted border border-line hover:bg-paper-dim hover:text-ink"
+      }`}
+    >
+      {label}
+    </button>
   );
 }

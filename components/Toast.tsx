@@ -60,7 +60,7 @@ function ToastBubble({ toast }: { toast: ToastMessage }) {
   return (
     <div
       role="status"
-      className={`pointer-events-auto toast-slide-up flex items-center gap-3 max-w-sm pl-4 pr-5 py-3 rounded-full bg-ink text-card text-[14px] font-medium card-shadow transition-opacity duration-300 ${
+      className={`pointer-events-auto toast-slide-up flex items-center gap-3 max-w-sm pl-4 pr-5 py-3 rounded-full bg-ink text-paper text-[14px] font-medium card-shadow transition-opacity duration-300 ${
         leaving ? "opacity-0" : "opacity-100"
       }`}
     >

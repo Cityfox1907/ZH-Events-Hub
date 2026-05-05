@@ -47,7 +47,7 @@ export function EventCard({ event, variant = "default", index = 0 }: Props) {
     return () => window.removeEventListener(STORAGE_EVENT, sync);
   }, [event.id, baseMax]);
 
-  const aspect = variant === "aftermath" ? "aspect-[4/3]" : "aspect-[3/2]";
+  const aspect = variant === "aftermath" ? "aspect-[16/9]" : "aspect-square";
   const animationDelay = `${Math.min(index * 60, 600)}ms`;
 
   return (
@@ -56,48 +56,43 @@ export function EventCard({ event, variant = "default", index = 0 }: Props) {
       className="group block stagger-fade-up focus:outline-none"
       style={{ animationDelay }}
     >
-      <article
-        className="relative overflow-hidden rounded-md bg-card border border-line card-shadow transition-[transform,box-shadow] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-[2px] group-hover:shadow-[0_4px_16px_rgba(28,25,23,0.08),0_0_0_1px_rgba(28,25,23,0.06)]"
-      >
+      <article className="relative overflow-hidden rounded-lg bg-card border border-line card-shadow transition-[transform,box-shadow] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-[2px] group-hover:shadow-[0_4px_16px_rgba(28,25,23,0.08),0_0_0_1px_rgba(28,25,23,0.06)]">
         <div
           className={`relative ${aspect} w-full`}
-          style={{ background: gradient.css, color: gradient.ink }}
+          style={{ background: gradient.css }}
           aria-label={`Visual für ${event.title}`}
         >
-          <div className="absolute inset-0 p-4 md:p-5 flex flex-col justify-between">
-            <div className="flex items-start justify-between gap-3">
-              <SizeBadge size={event.size} />
-              {variant === "aftermath" && rating !== null ? (
-                <span className="inline-flex items-center gap-1 px-2 py-1 rounded-sm bg-card/95 text-ink text-[11px] font-medium">
-                  <Star className="w-3 h-3 fill-burgundy text-burgundy" strokeWidth={1.5} />
-                  {rating.toFixed(1)}
-                </span>
-              ) : null}
+          <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.5)_0%,transparent_60%)]" aria-hidden />
+          <div className="absolute top-3 left-3 z-[1]">
+            <SizeBadge size={event.size} />
+          </div>
+          {variant === "aftermath" && rating !== null ? (
+            <div className="absolute top-3 right-3 z-[1] inline-flex items-center gap-1 px-2 py-1 rounded-full bg-paper/95 text-ink text-[11px] font-medium">
+              <Star className="w-3 h-3 fill-burgundy text-burgundy" strokeWidth={1.5} />
+              {rating.toFixed(1)}
             </div>
-
-            <div className="flex items-end justify-between gap-3">
-              <div className="text-[10px] uppercase tracking-[0.2em] opacity-80">
-                {formatDateShort(event.startDateTime)}
-              </div>
-              <div className="font-display text-2xl md:text-[28px] leading-none tabular-nums">
-                {formatTime(event.startDateTime)}
-              </div>
+          ) : null}
+          <div className="absolute bottom-3 right-3 z-[1] text-right">
+            <div className="font-display text-[28px] text-paper leading-none tabular-nums">
+              {formatTime(event.startDateTime)}
+            </div>
+            <div className="mt-1 text-[10px] uppercase tracking-[0.15em] text-paper/70">
+              {formatDateShort(event.startDateTime)}
             </div>
           </div>
         </div>
 
-        <div className="p-5 md:p-6">
-          <div className="eyebrow mb-3 truncate">
+        <div className="p-5 flex flex-col gap-2">
+          <div className="text-[10px] font-medium uppercase tracking-[0.15em] text-ink-faint truncate">
             {categoryLabel(event.category)} · {event.venue} · {event.neighborhood}
           </div>
-          <h3 className="font-display text-[22px] md:text-[24px] leading-[1.1] text-ink">
+          <h3 className="font-display text-[22px] leading-[1.15] text-ink tracking-[-0.02em]">
             {event.title}
           </h3>
           {event.subtitle ? (
-            <p className="mt-2 text-[14px] text-ink-muted leading-snug line-clamp-2">{event.subtitle}</p>
+            <p className="text-[14px] text-ink-muted leading-snug truncate">{event.subtitle}</p>
           ) : null}
-
-          <div className="mt-5 pt-4 border-t border-line flex items-center justify-between text-[12px] text-ink-muted">
+          <div className="mt-1 pt-3 border-t border-line flex items-center justify-between text-[12px] text-ink-muted">
             <span>
               {variant === "aftermath" ? (
                 <>
@@ -108,15 +103,60 @@ export function EventCard({ event, variant = "default", index = 0 }: Props) {
                 <>{going.toLocaleString("de-CH").replace(/,/g, "'")} gehen hin</>
               )}
             </span>
-            <span className="text-ink-faint">
+            <span>
               {event.priceFromChf ? `ab ${formatChf(event.priceFromChf)}` : "Eintritt frei"}
             </span>
           </div>
         </div>
 
-        <div className="absolute inset-0 pointer-events-none ring-0 ring-burgundy/0 group-focus-visible:ring-2 group-focus-visible:ring-burgundy rounded-md transition" aria-hidden />
+        <div
+          className="absolute inset-0 pointer-events-none ring-0 ring-burgundy/0 group-focus-visible:ring-2 group-focus-visible:ring-burgundy rounded-lg transition"
+          aria-hidden
+        />
       </article>
       <CategoryBadge category={event.category} className="sr-only" />
+    </Link>
+  );
+}
+
+interface CompactProps {
+  event: ZhEvent;
+  index?: number;
+}
+
+export function CompactEventCard({ event, index = 0 }: CompactProps) {
+  const gradient = gradientFor(event.id, event.category);
+  const animationDelay = `${Math.min(index * 60, 600)}ms`;
+
+  return (
+    <Link
+      href={`/event/${event.slug}`}
+      className="group block stagger-fade-up"
+      style={{ animationDelay }}
+    >
+      <div className="flex items-center gap-4 py-4 border-b border-line transition-colors duration-200 group-hover:bg-paper-dim/40 px-3 -mx-3 rounded-md">
+        <div
+          className="w-14 h-14 rounded-md shrink-0"
+          style={{ background: gradient.css }}
+          aria-hidden
+        />
+        <div className="flex-1 min-w-0">
+          <div className="text-[10px] font-medium uppercase tracking-[0.15em] text-ink-faint truncate">
+            {categoryLabel(event.category)} · {event.venue}
+          </div>
+          <div className="font-display text-[20px] leading-[1.2] text-ink tracking-[-0.02em] truncate">
+            {event.title}
+          </div>
+        </div>
+        <div className="text-right shrink-0">
+          <div className="font-display text-[22px] leading-none tabular-nums text-ink">
+            {formatTime(event.startDateTime)}
+          </div>
+          <div className="mt-1 text-[12px] text-ink-muted">
+            {formatDateShort(event.startDateTime)}
+          </div>
+        </div>
+      </div>
     </Link>
   );
 }
