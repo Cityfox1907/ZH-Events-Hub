@@ -232,7 +232,7 @@ export function EventForm() {
         <button
           type="submit"
           disabled={submitting}
-          className="px-6 py-3 rounded-full bg-burgundy text-card text-[15px] font-medium hover:bg-burgundy-dark transition-colors disabled:opacity-60"
+          className="px-6 py-3 rounded-full bg-burgundy text-paper text-[15px] font-medium hover:bg-burgundy-dark transition-colors disabled:opacity-60"
         >
           Event veröffentlichen
         </button>

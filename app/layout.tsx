@@ -41,29 +41,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 function SiteFooter() {
   return (
-    <footer className="mt-24 border-t border-line">
-      <div className="container-editorial py-12 md:py-16 grid gap-8 md:grid-cols-3 items-start">
-        <div>
-          <div className="font-display text-2xl text-ink mb-2">ZüriBühni</div>
-          <p className="text-[14px] text-ink-muted leading-relaxed max-w-xs">
-            Live Atlas für Zürich. Kuratiert, nicht gelistet. Wir sammeln, was den Abend macht — und was er war.
-          </p>
-        </div>
-        <div>
-          <div className="eyebrow mb-3">Entdecken</div>
-          <ul className="space-y-2 text-[14px] text-ink">
-            <li><a href="/" className="hover:text-burgundy transition-colors">Heute Abend</a></li>
-            <li><a href="/woche" className="hover:text-burgundy transition-colors">Diese Woche</a></li>
-            <li><a href="/aftermath" className="hover:text-burgundy transition-colors">Aftermath</a></li>
-          </ul>
-        </div>
-        <div>
-          <div className="eyebrow mb-3">Beitragen</div>
-          <ul className="space-y-2 text-[14px] text-ink">
-            <li><a href="/neuer-event" className="hover:text-burgundy transition-colors">Event vorschlagen</a></li>
-          </ul>
-          <p className="mt-6 text-[11px] text-ink-faint">© 2026 ZüriBühni. Mit Sorgfalt aus Zürich.</p>
-        </div>
+    <footer className="mt-16 border-t border-line">
+      <div className="container-editorial py-8 flex flex-wrap items-center justify-center gap-3 text-[12px] text-ink-faint text-center">
+        <span className="font-display text-[16px] text-ink-muted">ZüriBühni</span>
+        <span>·</span>
+        <span>Kuratiert für Zürich</span>
+        <span>·</span>
+        <a href="/" className="hover:text-burgundy transition-colors">Heute</a>
+        <a href="/woche" className="hover:text-burgundy transition-colors">Woche</a>
+        <a href="/aftermath" className="hover:text-burgundy transition-colors">Aftermath</a>
+        <a href="/neuer-event" className="hover:text-burgundy transition-colors">Vorschlagen</a>
       </div>
     </footer>
   );

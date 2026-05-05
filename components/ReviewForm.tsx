@@ -144,7 +144,7 @@ export function ReviewForm({ eventId }: Props) {
       <div className="flex items-center gap-3 pt-2">
         <button
           type="submit"
-          className="px-5 py-2.5 rounded-full bg-burgundy text-card text-[14px] font-medium hover:bg-burgundy-dark transition-colors"
+          className="px-5 py-2.5 rounded-full bg-burgundy text-paper text-[14px] font-medium hover:bg-burgundy-dark transition-colors"
         >
           Review veröffentlichen
         </button>
