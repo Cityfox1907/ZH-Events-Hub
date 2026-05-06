@@ -71,6 +71,16 @@ export function getWeekEvents(ref: Date = now()): ZhEvent[] {
   return sortByStart(getAllEvents().filter((e) => isThisWeek(e, ref) && !isPast(e, ref)));
 }
 
+export function isThisMonth(event: ZhEvent, ref: Date = now()): boolean {
+  const start = new Date(event.startDateTime);
+  const monthEnd = endOfDay(addDays(ref, 30));
+  return start >= startOfDay(ref) && start <= monthEnd;
+}
+
+export function getMonthEvents(ref: Date = now()): ZhEvent[] {
+  return sortByStart(getAllEvents().filter((e) => isThisMonth(e, ref) && !isPast(e, ref)));
+}
+
 export function getUpcomingEvents(ref: Date = now()): ZhEvent[] {
   return sortByStart(getAllEvents().filter((e) => !isPast(e, ref)));
 }
