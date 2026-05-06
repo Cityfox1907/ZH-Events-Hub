@@ -8,7 +8,6 @@ import { SizeBadge } from "./SizeBadge";
 import { CategoryBadge } from "./CategoryBadge";
 import { gradientFor } from "@/lib/gradients";
 import { formatTime, formatDateShort, formatChf } from "@/lib/format";
-import { goingCount, pseudoBaseCount } from "@/lib/going";
 import { averageRating, getReviewsForEvent } from "@/lib/reviews";
 import { getPhotosForEvent } from "@/lib/photos";
 import { categoryLabel } from "@/lib/categories";
@@ -20,24 +19,14 @@ interface Props {
   index?: number;
 }
 
-const SIZE_BASE: Record<ZhEvent["size"], number> = {
-  mega: 4800,
-  major: 1400,
-  mid: 540,
-  intimate: 180,
-};
-
 export function EventCard({ event, variant = "default", index = 0 }: Props) {
   const gradient = gradientFor(event.id, event.category);
-  const baseMax = SIZE_BASE[event.size];
-  const [going, setGoing] = useState(() => pseudoBaseCount(event.id, baseMax));
   const [rating, setRating] = useState<number | null>(null);
   const [reviewCount, setReviewCount] = useState(0);
   const [photoCount, setPhotoCount] = useState(0);
 
   useEffect(() => {
     const sync = () => {
-      setGoing(goingCount(event.id, baseMax));
       setRating(averageRating(event.id));
       setReviewCount(getReviewsForEvent(event.id).length);
       setPhotoCount(getPhotosForEvent(event.id).length);
@@ -45,7 +34,7 @@ export function EventCard({ event, variant = "default", index = 0 }: Props) {
     sync();
     window.addEventListener(STORAGE_EVENT, sync);
     return () => window.removeEventListener(STORAGE_EVENT, sync);
-  }, [event.id, baseMax]);
+  }, [event.id]);
 
   const aspect = variant === "aftermath" ? "aspect-[16/9]" : "aspect-square";
   const animationDelay = `${Math.min(index * 60, 600)}ms`;
@@ -58,11 +47,20 @@ export function EventCard({ event, variant = "default", index = 0 }: Props) {
     >
       <article className="relative overflow-hidden rounded-lg bg-card border border-line card-shadow transition-[transform,box-shadow] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-[2px] group-hover:shadow-[0_4px_16px_rgba(28,25,23,0.08),0_0_0_1px_rgba(28,25,23,0.06)]">
         <div
-          className={`relative ${aspect} w-full`}
+          className={`relative ${aspect} w-full overflow-hidden`}
           style={{ background: gradient.css }}
           aria-label={`Visual für ${event.title}`}
         >
-          <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.5)_0%,transparent_60%)]" aria-hidden />
+          {event.imageUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={event.imageUrl}
+              alt=""
+              loading="lazy"
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+            />
+          ) : null}
+          <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.55)_0%,rgba(0,0,0,0.1)_45%,transparent_75%)]" aria-hidden />
           <div className="absolute top-3 left-3 z-[1]">
             <SizeBadge size={event.size} />
           </div>
@@ -100,7 +98,7 @@ export function EventCard({ event, variant = "default", index = 0 }: Props) {
                   {photoCount > 0 ? ` · ${photoCount} ${photoCount === 1 ? "Foto" : "Fotos"}` : ""}
                 </>
               ) : (
-                <>{going.toLocaleString("de-CH").replace(/,/g, "'")} gehen hin</>
+                <>{event.tags[0] ?? categoryLabel(event.category)}</>
               )}
             </span>
             <span>
@@ -136,10 +134,20 @@ export function CompactEventCard({ event, index = 0 }: CompactProps) {
     >
       <div className="flex items-center gap-4 py-4 border-b border-line transition-colors duration-200 group-hover:bg-paper-dim/40 px-3 -mx-3 rounded-md">
         <div
-          className="w-14 h-14 rounded-md shrink-0"
+          className="relative w-14 h-14 rounded-md shrink-0 overflow-hidden"
           style={{ background: gradient.css }}
           aria-hidden
-        />
+        >
+          {event.imageUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={event.imageUrl}
+              alt=""
+              loading="lazy"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          ) : null}
+        </div>
         <div className="flex-1 min-w-0">
           <div className="text-[10px] font-medium uppercase tracking-[0.15em] text-ink-faint truncate">
             {categoryLabel(event.category)} · {event.venue}

@@ -81,11 +81,19 @@ export function EventDetailView({ slug }: Props) {
   return (
     <article>
       <header
-        className="relative w-full aspect-[21/9] min-h-[280px] md:min-h-[360px]"
+        className="relative w-full aspect-[21/9] min-h-[280px] md:min-h-[360px] overflow-hidden"
         style={{ background: gradient.css }}
       >
+        {event.imageUrl ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={event.imageUrl}
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        ) : null}
         <div
-          className="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.7)_0%,rgba(0,0,0,0.15)_50%,transparent_100%)]"
+          className="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.75)_0%,rgba(0,0,0,0.2)_50%,rgba(0,0,0,0.05)_100%)]"
           aria-hidden
         />
         <Link

@@ -68,6 +68,23 @@ export function HeroCarousel({ events }: Props) {
         className="block relative aspect-[16/10] sm:aspect-[16/8] md:aspect-[16/7] focus:outline-none"
         aria-label={`Zum Event: ${current.title}`}
       >
+        {current.imageUrl ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            key={current.imageUrl}
+            src={current.imageUrl}
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        ) : null}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse at 30% 70%, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0) 60%), linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.05) 55%, rgba(0,0,0,0) 100%)",
+          }}
+          aria-hidden
+        />
         <div className="absolute top-5 left-5 md:top-7 md:left-8 flex items-center gap-2 z-[1]">
           {past ? (
             <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-brass/85 text-ink text-[10px] font-medium uppercase tracking-[0.18em]">
