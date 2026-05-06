@@ -40,6 +40,8 @@ export interface ZhEvent {
   priceFromChf?: number;
   ticketUrl?: string;
   tags: string[];
+  imageUrl?: string;
+  imageCredit?: string;
   source: "seed" | "user";
   createdAt: string; // ISO
 }

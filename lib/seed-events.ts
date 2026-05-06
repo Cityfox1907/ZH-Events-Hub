@@ -25,6 +25,8 @@ interface SeedDraft {
   priceFromChf?: number;
   ticketUrl?: string;
   tags: string[];
+  imageUrl?: string;
+  imageCredit?: string;
 }
 
 function build(draft: SeedDraft): ZhEvent {
@@ -51,6 +53,8 @@ export const SEED_EVENTS: readonly ZhEvent[] = [
     description:
       "Eine Million Menschen, dreißig Lovemobiles, ein Soundsystem, das die Limmat zum Vibrieren bringt. Die Parade zieht vom Utoquai über das Bürkliplatz an den Bahnhof und zurück. Bring leichte Schuhe, viel Wasser und Geduld am Tram.",
     tags: ["Techno", "Open Air", "Tradition"],
+    imageUrl: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1600&q=80&auto=format&fit=crop",
+    imageCredit: "Unsplash · Anthony Delanoix",
   }),
   build({
     title: "Züri Fäscht 2026",
@@ -64,6 +68,8 @@ export const SEED_EVENTS: readonly ZhEvent[] = [
     description:
       "Drei Tage Feuerwerk, Hochseilakte über der Limmat, Konzerte auf zehn Bühnen und Marktstände vom Bürkliplatz bis zum Bellevue. Das größte Volksfest der Schweiz, kuratiert in seiner urbansten Form.",
     tags: ["Feuerwerk", "Familie", "Tradition"],
+    imageUrl: "https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=1600&q=80&auto=format&fit=crop",
+    imageCredit: "Unsplash · Joshua Sukoff",
   }),
   build({
     title: "Sechseläuten 2026",
@@ -77,6 +83,8 @@ export const SEED_EVENTS: readonly ZhEvent[] = [
     description:
       "Die Zünfte ziehen in historischen Trachten durch die Innenstadt, der Böögg brennt um 18 Uhr — und je schneller sein Kopf explodiert, desto schöner wird der Sommer. Dieses Jahr in 12 Minuten 57 Sekunden.",
     tags: ["Tradition", "Zünfte", "Frühling"],
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Sechsel%C3%A4uten_2014_-_B%C3%B6%C3%B6gg_brennt.jpg/1600px-Sechsel%C3%A4uten_2014_-_B%C3%B6%C3%B6gg_brennt.jpg",
+    imageCredit: "Wikimedia Commons · Roland zh",
   }),
   build({
     title: "Knabenschiessen 2026",
@@ -90,6 +98,8 @@ export const SEED_EVENTS: readonly ZhEvent[] = [
     description:
       "Das Knabenschiessen ist Zürichs zweitgrößtes Volksfest. Kinder zielen mit Sturmgewehren auf Scheiben, Erwachsene auf Magenbrot. Beide Gruppen genießen es. Rummelplatz, Festwirtschaften, Riesenrad.",
     tags: ["Tradition", "Chilbi", "Familie"],
+    imageUrl: "https://images.unsplash.com/photo-1495555687398-3f50d6e79e1e?w=1600&q=80&auto=format&fit=crop",
+    imageCredit: "Unsplash · Cyrus Crossan",
   }),
   build({
     title: "Coldplay Live in Zürich",
@@ -104,6 +114,8 @@ export const SEED_EVENTS: readonly ZhEvent[] = [
     priceFromChf: 145,
     ticketUrl: "https://example.ch/tickets/coldplay",
     tags: ["Stadium", "Pop", "Headliner"],
+    imageUrl: "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1600&q=80&auto=format&fit=crop",
+    imageCredit: "Unsplash · Vishnu R Nair",
   }),
   build({
     title: "Adele — One Night Only",
@@ -118,6 +130,8 @@ export const SEED_EVENTS: readonly ZhEvent[] = [
     priceFromChf: 220,
     ticketUrl: "https://example.ch/tickets/adele",
     tags: ["Headliner", "Soul", "Limitiert"],
+    imageUrl: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1600&q=80&auto=format&fit=crop",
+    imageCredit: "Unsplash · Yvette de Wit",
   }),
   build({
     title: "Openair Zürich 2026",
@@ -133,6 +147,8 @@ export const SEED_EVENTS: readonly ZhEvent[] = [
     priceFromChf: 189,
     ticketUrl: "https://example.ch/tickets/openair",
     tags: ["Indie", "Hip-Hop", "Festival"],
+    imageUrl: "https://images.unsplash.com/photo-1506157786151-b8491531f063?w=1600&q=80&auto=format&fit=crop",
+    imageCredit: "Unsplash · Aranxa Esteve",
   }),
   build({
     title: "Caliente Festival 2026",
@@ -146,6 +162,8 @@ export const SEED_EVENTS: readonly ZhEvent[] = [
     description:
       "Salsa, Bachata, Reggaeton — drei Tage am Wasser, Tanzkurse für Anfängerinnen, Live-Acts aus Kuba, Kolumbien, Puerto Rico. Caipirinha, Mojito, Pisco Sour gehören zum Pflichtprogramm.",
     tags: ["Salsa", "Open Air", "Tanz"],
+    imageUrl: "https://images.unsplash.com/photo-1545128485-c400e7702796?w=1600&q=80&auto=format&fit=crop",
+    imageCredit: "Unsplash · Ardian Lumi",
   }),
   build({
     title: "Zurich Film Festival 2026",
@@ -161,6 +179,8 @@ export const SEED_EVENTS: readonly ZhEvent[] = [
     priceFromChf: 28,
     ticketUrl: "https://example.ch/tickets/zff",
     tags: ["Film", "Premieren", "Stars"],
+    imageUrl: "https://images.unsplash.com/photo-1489599735734-79b4af4a8a6c?w=1600&q=80&auto=format&fit=crop",
+    imageCredit: "Unsplash · Felix Mooneeram",
   }),
   build({
     title: "Theater Spektakel 2026",
@@ -174,6 +194,8 @@ export const SEED_EVENTS: readonly ZhEvent[] = [
     description:
       "Performance-Kunst, Tanz, experimentelles Theater am Zürichsee. Die Landiwiese wird zur offenen Bühne für Companies aus Lagos, Buenos Aires, Beirut und Berlin. Eintritt teilweise frei.",
     tags: ["Performance", "Tanz", "Sommer"],
+    imageUrl: "https://images.unsplash.com/photo-1503095396549-807759245b35?w=1600&q=80&auto=format&fit=crop",
+    imageCredit: "Unsplash · Kyle Head",
   }),
   build({
     title: "Tonhalle: Mahler Sinfonie Nr. 3",
@@ -188,6 +210,8 @@ export const SEED_EVENTS: readonly ZhEvent[] = [
     priceFromChf: 65,
     ticketUrl: "https://example.ch/tickets/tonhalle-mahler",
     tags: ["Sinfonik", "Mahler", "Järvi"],
+    imageUrl: "https://images.unsplash.com/photo-1465847899084-d164df4dedc6?w=1600&q=80&auto=format&fit=crop",
+    imageCredit: "Unsplash · Manuel Nägeli",
   }),
   build({
     title: "Opernhaus: Tristan und Isolde Premiere",
@@ -202,6 +226,8 @@ export const SEED_EVENTS: readonly ZhEvent[] = [
     priceFromChf: 92,
     ticketUrl: "https://example.ch/tickets/tristan",
     tags: ["Wagner", "Premiere", "Oper"],
+    imageUrl: "https://images.unsplash.com/photo-1580809361436-42a7ec204582?w=1600&q=80&auto=format&fit=crop",
+    imageCredit: "Unsplash · Gwen King",
   }),
   build({
     title: "Bligg — Album-Tour",
@@ -216,6 +242,8 @@ export const SEED_EVENTS: readonly ZhEvent[] = [
     priceFromChf: 68,
     ticketUrl: "https://example.ch/tickets/bligg",
     tags: ["Mundart", "Pop", "Heimspiel"],
+    imageUrl: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=1600&q=80&auto=format&fit=crop",
+    imageCredit: "Unsplash · Yvette de Wit",
   }),
   build({
     title: "ZSC Lions vs. EV Zug — Playoff Final",
@@ -230,6 +258,8 @@ export const SEED_EVENTS: readonly ZhEvent[] = [
     priceFromChf: 65,
     ticketUrl: "https://example.ch/tickets/zsc",
     tags: ["Eishockey", "Playoff", "Heimspiel"],
+    imageUrl: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=1600&q=80&auto=format&fit=crop",
+    imageCredit: "Unsplash · Markus Spiske",
   }),
   build({
     title: "Hip-Hop Night im Kaufleuten",
@@ -245,6 +275,8 @@ export const SEED_EVENTS: readonly ZhEvent[] = [
     priceFromChf: 25,
     ticketUrl: "https://example.ch/tickets/kaufleuten-hiphop",
     tags: ["Hip-Hop", "Spätabend", "DJ-Set"],
+    imageUrl: "https://images.unsplash.com/photo-1571266028243-d220c6a7ace2?w=1600&q=80&auto=format&fit=crop",
+    imageCredit: "Unsplash · Marvin Meyer",
   }),
   build({
     title: "Stand-Up Comedy: Patti Basler",
@@ -259,6 +291,8 @@ export const SEED_EVENTS: readonly ZhEvent[] = [
     priceFromChf: 52,
     ticketUrl: "https://example.ch/tickets/basler",
     tags: ["Satire", "Mundart", "Politik"],
+    imageUrl: "https://images.unsplash.com/photo-1527224538127-2104bb71c51b?w=1600&q=80&auto=format&fit=crop",
+    imageCredit: "Unsplash · Zachary Smith",
   }),
   build({
     title: "Vernissage: Pipilotti Rist — Neue Arbeiten",
@@ -271,6 +305,8 @@ export const SEED_EVENTS: readonly ZhEvent[] = [
     description:
       "Pipilotti Rist kehrt mit neuen Video-Installationen ins Kunsthaus zurück. Ein Saal voller schwebender Projektoren, ein zweiter mit Licht-Skulpturen aus Glasfaser. Eröffnungsrede von Ann Demeester um 18:30.",
     tags: ["Vernissage", "Video-Art", "Pipilotti Rist"],
+    imageUrl: "https://images.unsplash.com/photo-1545987796-200677ee1011?w=1600&q=80&auto=format&fit=crop",
+    imageCredit: "Unsplash · Antenna",
   }),
   build({
     title: "Schauspielhaus: Reigen",
@@ -285,6 +321,8 @@ export const SEED_EVENTS: readonly ZhEvent[] = [
     priceFromChf: 45,
     ticketUrl: "https://example.ch/tickets/reigen",
     tags: ["Schnitzler", "Stemann", "Repertoire"],
+    imageUrl: "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=1600&q=80&auto=format&fit=crop",
+    imageCredit: "Unsplash · Rob Laughter",
   }),
   build({
     title: "Vintage-Uhren-Markt",
@@ -298,6 +336,8 @@ export const SEED_EVENTS: readonly ZhEvent[] = [
     description:
       "Vierzig kuratierte Händlerinnen aus der Schweiz, Italien, Japan. Rolex Submariner aus den Sechzigern, frühe Patek Calatrava, militärische Heuer-Chronographen. Probieren ausdrücklich erlaubt.",
     tags: ["Vintage", "Uhren", "Sammler"],
+    imageUrl: "https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?w=1600&q=80&auto=format&fit=crop",
+    imageCredit: "Unsplash · Jaelynn Castillo",
   }),
   build({
     title: "Kosmos: Schweizer Doku-Premiere «Bergdorf»",
@@ -312,6 +352,8 @@ export const SEED_EVENTS: readonly ZhEvent[] = [
     priceFromChf: 22,
     ticketUrl: "https://example.ch/tickets/bergdorf",
     tags: ["Dokfilm", "Premiere", "Schweiz"],
+    imageUrl: "https://images.unsplash.com/photo-1551524559-8af4e6624178?w=1600&q=80&auto=format&fit=crop",
+    imageCredit: "Unsplash · Dino Reichmuth",
   }),
   build({
     title: "Amelie Lens — 6h DJ-Set",
@@ -327,6 +369,8 @@ export const SEED_EVENTS: readonly ZhEvent[] = [
     priceFromChf: 55,
     ticketUrl: "https://example.ch/tickets/lens",
     tags: ["Techno", "Headliner", "Limitiert"],
+    imageUrl: "https://images.unsplash.com/photo-1493676304819-0d7a8d026dcf?w=1600&q=80&auto=format&fit=crop",
+    imageCredit: "Unsplash · Maxime Bhm",
   }),
   build({
     title: "Nik Bärtsch's Mobile",
@@ -341,6 +385,8 @@ export const SEED_EVENTS: readonly ZhEvent[] = [
     priceFromChf: 38,
     ticketUrl: "https://example.ch/tickets/baertsch",
     tags: ["Jazz", "Minimalismus", "Bärtsch"],
+    imageUrl: "https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?w=1600&q=80&auto=format&fit=crop",
+    imageCredit: "Unsplash · Dolo Iglesias",
   }),
   build({
     title: "Designer-Flohmarkt am Helvetiaplatz",
@@ -354,6 +400,8 @@ export const SEED_EVENTS: readonly ZhEvent[] = [
     description:
       "Fünfunddreißig kuratierte Stände — Issey Miyake, Comme des Garçons, frühe Maison Margiela, Schweizer Newcomer-Brands. Kein Fast-Fashion, kein H&M-Resale. Eintritt frei, Apéro ab 16 Uhr.",
     tags: ["Vintage", "Fashion", "Markt"],
+    imageUrl: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1600&q=80&auto=format&fit=crop",
+    imageCredit: "Unsplash · Hannah Morgan",
   }),
   build({
     title: "Pop-up Dinner mit Sven Wassmer",
@@ -368,6 +416,8 @@ export const SEED_EVENTS: readonly ZhEvent[] = [
     priceFromChf: 280,
     ticketUrl: "https://example.ch/tickets/wassmer",
     tags: ["Sterne", "Pop-up", "Pairing"],
+    imageUrl: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600&q=80&auto=format&fit=crop",
+    imageCredit: "Unsplash · Jay Wennington",
   }),
   build({
     title: "Comedy Open Mic",
@@ -382,6 +432,8 @@ export const SEED_EVENTS: readonly ZhEvent[] = [
     priceFromChf: 15,
     ticketUrl: "https://example.ch/tickets/openmic",
     tags: ["Open Mic", "Newcomer", "Wöchentlich"],
+    imageUrl: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1600&q=80&auto=format&fit=crop",
+    imageCredit: "Unsplash · Kane Reinholdtsen",
   }),
   build({
     title: "Tesla Cybertruck — Schweiz Showcase",
@@ -395,6 +447,8 @@ export const SEED_EVENTS: readonly ZhEvent[] = [
     description:
       "Drei Cybertrucks in den Versionen Cyberbeast, AWD und RWD. Test-Sitzgelegenheit, technische Walkarounds zu jeder vollen Stunde, Fragerunde mit dem Tesla-Engineering-Team aus Berlin.",
     tags: ["Auto", "Tech", "Showcase"],
+    imageUrl: "https://images.unsplash.com/photo-1561492287-79e7d0d8d6e0?w=1600&q=80&auto=format&fit=crop",
+    imageCredit: "Unsplash · Charlie Deets",
   }),
   build({
     title: "Taylor Swift — Eras Tour",
@@ -408,6 +462,8 @@ export const SEED_EVENTS: readonly ZhEvent[] = [
       "Drei Stunden, zehn Eras, vierundvierzig Songs. Die letzte europäische Show der Tour, mit zwei Surprise-Songs, die Swift seit Buenos Aires nicht mehr gespielt hat. Friendship-Bracelet-Tausch im Foyer.",
     priceFromChf: 175,
     tags: ["Stadium", "Pop", "Eras"],
+    imageUrl: "https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=1600&q=80&auto=format&fit=crop",
+    imageCredit: "Unsplash · Hanny Naibaho",
   }),
   build({
     title: "Schauspielhaus: Reigen Premiere",
@@ -421,6 +477,8 @@ export const SEED_EVENTS: readonly ZhEvent[] = [
       "Premierenabend mit Empfang im Foyer. Drei Stunden, eine Pause, geschlechterfluide Besetzung. Maja Schöne und Sebastian Rudolph eröffnen die Sequenz.",
     priceFromChf: 75,
     tags: ["Premiere", "Schnitzler", "Stemann"],
+    imageUrl: "https://images.unsplash.com/photo-1503095396549-807759245b35?w=1600&q=80&auto=format&fit=crop",
+    imageCredit: "Unsplash · Kyle Head",
   }),
 ] as const;
 
