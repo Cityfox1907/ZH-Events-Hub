@@ -56,6 +56,7 @@ function SiteFooter() {
         <a href="/" className="hover:text-burgundy transition-colors">Heute</a>
         <a href="/woche" className="hover:text-burgundy transition-colors">Woche</a>
         <a href="/aftermath" className="hover:text-burgundy transition-colors">Aftermath</a>
+        <a href="/pinnwand" className="hover:text-burgundy transition-colors">Pinnwand</a>
         <a href="/neuer-event" className="hover:text-burgundy transition-colors">Vorschlagen</a>
       </div>
     </footer>

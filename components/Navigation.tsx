@@ -9,6 +9,7 @@ const NAV = [
   { href: "/", label: "Heute Abend" },
   { href: "/woche", label: "Diese Woche" },
   { href: "/aftermath", label: "Aftermath" },
+  { href: "/pinnwand", label: "Pinnwand" },
 ] as const;
 
 export function Navigation() {

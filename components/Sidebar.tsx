@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, CalendarDays, Star, BarChart3, Search } from "lucide-react";
+import { Home, CalendarDays, Star, MessageSquareText, BarChart3, Search } from "lucide-react";
 
 const ITEMS = [
   { href: "/", label: "Home", icon: Home },
   { href: "/woche", label: "Kalender", icon: CalendarDays },
   { href: "/aftermath", label: "Aftermath", icon: Star },
+  { href: "/pinnwand", label: "Pinnwand", icon: MessageSquareText },
   { href: "/umfragen", label: "Umfragen", icon: BarChart3 },
   { href: "/entdecken", label: "Entdecken", icon: Search },
 ] as const;
