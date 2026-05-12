@@ -29,10 +29,10 @@ export default async function PulseDetailPage({
       <RecentlyViewedTracker module="pulse" id={ev.id} title={ev.title} cover={ev.cover_image} />
 
       <Link
-        href="/pulse"
+        href="/puls"
         className="inline-flex items-center gap-1 text-[13px] text-ink-muted hover:text-burgundy mb-6"
       >
-        <ChevronLeft className="w-4 h-4" /> Zurück zu Pulse
+        <ChevronLeft className="w-4 h-4" /> Zurück zum Puls
       </Link>
 
       <div className="grid lg:grid-cols-[1fr_360px] gap-8">

@@ -32,7 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="bg-paper text-ink antialiased min-h-screen flex flex-col">
         <ToastProvider>
           <Header />
-          <main className="flex-1">{children}</main>
+          <main className="flex-1 pb-16 md:pb-0">{children}</main>
           <Footer />
         </ToastProvider>
       </body>

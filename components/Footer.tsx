@@ -6,11 +6,11 @@ const COLS: { title: string; links: { label: string; href: string }[] }[] = [
     title: "Für Entdecker",
     links: [
       { label: "Entdecken", href: "/entdecken" },
-      { label: "Orte", href: "/orte" },
-      { label: "Puls", href: "/puls" },
+      { label: "Puls · Feed", href: "/puls" },
+      { label: "Stadt-Stimmen", href: "/puls/stimmen" },
+      { label: "Puls · Live", href: "/puls/live" },
       { label: "Markt", href: "/markt" },
-      { label: "Stimmen", href: "/stimmen" },
-      { label: "Favoriten", href: "/favorites" },
+      { label: "Profil", href: "/profile" },
     ],
   },
   {

@@ -3,31 +3,33 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Heart, UserCircle2, Menu, X, LogOut } from "lucide-react";
+import {
+  Compass,
+  MessageSquare,
+  ShoppingBag,
+  UserCircle2,
+  LogOut,
+  Home,
+} from "lucide-react";
 import { AuthModal } from "./AuthModal";
 import { GlobalSearchTrigger } from "./GlobalSearch";
 import { NotificationBell } from "./NotificationBell";
 import { LiveCounter } from "./LiveCounter";
-import { useFavoriteCount } from "./BookmarkButton";
 import { getUser, logout, onStorageChange } from "@/lib/storage";
 import type { MockUser } from "@/lib/types";
 import { useToast } from "./Toast";
 
 const NAV = [
-  { href: "/entdecken", label: "Entdecken" },
-  { href: "/orte", label: "Orte" },
-  { href: "/markt", label: "Markt" },
-  { href: "/puls", label: "Puls" },
-  { href: "/stimmen", label: "Stimmen" },
+  { href: "/entdecken", label: "Entdecken", Icon: Compass },
+  { href: "/puls", label: "Puls", Icon: MessageSquare },
+  { href: "/markt", label: "Markt", Icon: ShoppingBag },
 ];
 
 export function Header() {
   const pathname = usePathname();
   const [authOpen, setAuthOpen] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
   const [user, setUser] = useState<MockUser | null>(null);
   const [profileMenu, setProfileMenu] = useState(false);
-  const favCount = useFavoriteCount();
   const { push } = useToast();
 
   useEffect(() => {
@@ -36,9 +38,12 @@ export function Header() {
   }, []);
 
   useEffect(() => {
-    setMobileOpen(false);
     setProfileMenu(false);
   }, [pathname]);
+
+  function isActive(href: string) {
+    return pathname === href || pathname.startsWith(href + "/");
+  }
 
   return (
     <>
@@ -50,15 +55,14 @@ export function Header() {
             </span>
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-0.5 ml-3">
+          <nav className="hidden md:flex items-center gap-1 ml-4">
             {NAV.map((item) => {
-              const active =
-                pathname === item.href || pathname.startsWith(item.href + "/");
+              const active = isActive(item.href);
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`px-2 py-2 text-[11px] uppercase tracking-[0.14em] font-medium transition-colors ${
+                  className={`px-3 py-2 text-[11.5px] uppercase tracking-[0.14em] font-medium transition-colors ${
                     active ? "text-burgundy" : "text-ink-muted hover:text-ink"
                   }`}
                 >
@@ -80,24 +84,12 @@ export function Header() {
 
             <NotificationBell />
 
-            <Link
-              href="/favorites"
-              className="relative p-2 rounded-full border border-line hover:border-burgundy transition-colors"
-              aria-label="Favoriten"
-            >
-              <Heart className={`w-4 h-4 ${favCount > 0 ? "fill-burgundy text-burgundy" : ""}`} />
-              {favCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-burgundy text-paper text-[10px] font-medium flex items-center justify-center">
-                  {favCount}
-                </span>
-              )}
-            </Link>
-
             {user ? (
               <div className="relative">
                 <button
                   onClick={() => setProfileMenu((v) => !v)}
                   className="flex items-center gap-2 px-3 py-2 rounded-full border border-line hover:border-burgundy transition-colors"
+                  aria-label="Profil"
                 >
                   <UserCircle2 className="w-5 h-5 text-burgundy" />
                   <span className="text-[13px] hidden md:inline">{user.name}</span>
@@ -114,7 +106,7 @@ export function Header() {
                       href="/favorites"
                       className="block px-4 py-2 text-[13px] hover:bg-paper-dim"
                     >
-                      Favoriten ({favCount})
+                      Bookmarks
                     </Link>
                     <Link
                       href="/provider/dashboard"
@@ -135,61 +127,84 @@ export function Header() {
                 )}
               </div>
             ) : (
-              <button
-                onClick={() => setAuthOpen(true)}
-                className="hidden sm:inline-flex px-4 py-2 text-[13px] font-medium rounded-full border border-line hover:border-burgundy hover:text-burgundy transition-colors"
-              >
-                Anmelden
-              </button>
-            )}
-
-            <button
-              className="md:hidden p-2"
-              onClick={() => setMobileOpen((v) => !v)}
-              aria-label="Menü"
-            >
-              {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
-          </div>
-        </div>
-
-        {mobileOpen && (
-          <div className="md:hidden border-t border-line bg-paper">
-            <nav className="container-editorial py-3 flex flex-col">
-              {NAV.map((item) => {
-                const active =
-                  pathname === item.href || pathname.startsWith(item.href + "/");
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`py-3 text-[14px] uppercase tracking-[0.16em] font-medium border-b border-line last:border-b-0 ${
-                      active ? "text-burgundy" : "text-ink-muted"
-                    }`}
-                  >
-                    {item.label}
-                  </Link>
-                );
-              })}
-              <Link
-                href="/for-providers"
-                className="py-3 text-[14px] uppercase tracking-[0.16em] font-medium border-b border-line text-ink-muted"
-              >
-                Anbieter werden
-              </Link>
-              {!user && (
+              <>
                 <button
                   onClick={() => setAuthOpen(true)}
-                  className="mt-3 px-4 py-2.5 rounded-full border border-line text-[13px] font-medium"
+                  className="hidden sm:inline-flex px-4 py-2 text-[13px] font-medium rounded-full border border-line hover:border-burgundy hover:text-burgundy transition-colors"
                 >
                   Anmelden
                 </button>
-              )}
-            </nav>
+                <Link
+                  href="/profile"
+                  className="sm:hidden p-2 rounded-full border border-line hover:border-burgundy"
+                  aria-label="Profil"
+                >
+                  <UserCircle2 className="w-4 h-4" />
+                </Link>
+              </>
+            )}
           </div>
-        )}
+        </div>
       </header>
+
+      {/* MOBILE BOTTOM NAV — sticky at bottom on small screens */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-paper/95 backdrop-blur border-t border-line">
+        <ul className="grid grid-cols-5">
+          <BottomItem href="/" label="Home" Icon={Home} active={pathname === "/"} />
+          <BottomItem
+            href="/entdecken"
+            label="Entdecken"
+            Icon={Compass}
+            active={isActive("/entdecken")}
+          />
+          <BottomItem
+            href="/puls"
+            label="Puls"
+            Icon={MessageSquare}
+            active={isActive("/puls")}
+          />
+          <BottomItem
+            href="/markt"
+            label="Markt"
+            Icon={ShoppingBag}
+            active={isActive("/markt")}
+          />
+          <BottomItem
+            href="/profile"
+            label="Profil"
+            Icon={UserCircle2}
+            active={isActive("/profile")}
+          />
+        </ul>
+      </nav>
+
       <AuthModal open={authOpen} onClose={() => setAuthOpen(false)} />
     </>
+  );
+}
+
+function BottomItem({
+  href,
+  label,
+  Icon,
+  active,
+}: {
+  href: string;
+  label: string;
+  Icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+  active: boolean;
+}) {
+  return (
+    <li>
+      <Link
+        href={href}
+        className={`flex flex-col items-center justify-center gap-0.5 py-2 text-[10px] font-medium transition-colors ${
+          active ? "text-burgundy" : "text-ink-muted"
+        }`}
+      >
+        <Icon className="w-5 h-5" strokeWidth={active ? 2 : 1.5} />
+        <span>{label}</span>
+      </Link>
+    </li>
   );
 }

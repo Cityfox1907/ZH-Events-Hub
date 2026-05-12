@@ -14,6 +14,8 @@ import {
   Smile,
   Meh,
   Frown,
+  X,
+  IceCream,
 } from "lucide-react";
 import {
   DAILY_POLL,
@@ -36,36 +38,39 @@ import {
   onStorageChange,
 } from "@/lib/storage";
 import { useToast } from "@/components/Toast";
+import { PulsSubNav } from "@/components/PulsSubNav";
 
-type Tab = "frage" | "initiativen" | "index";
+type Section = "frage" | "initiativen" | "index";
 
-const TABS: { key: Tab; label: string; icon: React.ReactNode }[] = [
+const SECTIONS: { key: Section; label: string; icon: React.ReactNode }[] = [
   { key: "frage", label: "Frage des Tages", icon: <HelpCircle className="w-4 h-4" /> },
   { key: "initiativen", label: "Initiativen & Debatten", icon: <Megaphone className="w-4 h-4" /> },
   { key: "index", label: "Zürich-Index", icon: <BarChart3 className="w-4 h-4" /> },
 ];
 
-export default function StimmenPage() {
-  const [tab, setTab] = useState<Tab>("frage");
+export default function PulsStimmenPage() {
+  const [section, setSection] = useState<Section>("frage");
 
   return (
     <>
-      <section className="container-editorial pt-10 pb-4">
-        <p className="eyebrow">Stimmen · Stadt-Demokratie</p>
-        <h1 className="font-display text-4xl md:text-5xl mt-2 leading-tight">
+      <PulsSubNav />
+
+      <section className="container-editorial pt-8 pb-4">
+        <p className="eyebrow">Puls · Stadt-Stimmen</p>
+        <h1 className="font-display text-3xl md:text-4xl mt-2 leading-tight">
           Was Zürich denkt.
         </h1>
-        <p className="text-ink-muted text-[15px] mt-2 max-w-xl">
+        <p className="text-ink-muted text-[14px] mt-2 max-w-xl">
           Tägliche Umfragen, Bürger-Initiativen und ein lebendiges Stadt-Stimmungsbild.
         </p>
 
         <div className="mt-5 flex flex-wrap gap-2">
-          {TABS.map((t) => (
+          {SECTIONS.map((t) => (
             <button
               key={t.key}
-              onClick={() => setTab(t.key)}
+              onClick={() => setSection(t.key)}
               className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-medium transition-colors ${
-                tab === t.key
+                section === t.key
                   ? "bg-ink text-paper"
                   : "bg-card border border-line text-ink-muted hover:border-burgundy"
               }`}
@@ -78,17 +83,13 @@ export default function StimmenPage() {
       </section>
 
       <section className="container-editorial pb-20">
-        {tab === "frage" && <FrageTab />}
-        {tab === "initiativen" && <InitiativenTab />}
-        {tab === "index" && <IndexTab />}
+        {section === "frage" && <FrageTab />}
+        {section === "initiativen" && <InitiativenTab />}
+        {section === "index" && <IndexTab />}
       </section>
     </>
   );
 }
-
-// ─────────────────────────────────────────────────────────────
-// TAB 1: FRAGE DES TAGES
-// ─────────────────────────────────────────────────────────────
 
 function FrageTab() {
   const [voted, setVoted] = useState<string | null>(null);
@@ -99,12 +100,15 @@ function FrageTab() {
     return onStorageChange(() => setVoted(getPollVotes()[DAILY_POLL.id] ?? null));
   }, []);
 
-  const total = DAILY_POLL.options.reduce((s, o) => s + o.votes + (voted === o.id ? 1 : 0), 0);
+  const total = DAILY_POLL.options.reduce(
+    (s, o) => s + o.votes + (voted === o.id ? 1 : 0),
+    0,
+  );
 
   function vote(optionId: string) {
     if (voted) return;
     castPollVote(DAILY_POLL.id, optionId);
-    push("✓ Stimme abgegeben (Demo)", "success");
+    push("Stimme abgegeben (Demo)", "success");
   }
 
   return (
@@ -129,8 +133,8 @@ function FrageTab() {
                   isMine
                     ? "border-burgundy bg-burgundy/5"
                     : voted
-                    ? "border-line bg-paper-dim/40"
-                    : "border-line bg-paper hover:border-burgundy hover:bg-paper-dim/40"
+                      ? "border-line bg-paper-dim/40"
+                      : "border-line bg-paper hover:border-burgundy hover:bg-paper-dim/40"
                 }`}
               >
                 {voted && (
@@ -143,7 +147,7 @@ function FrageTab() {
                 )}
                 <div className="relative flex items-center justify-between gap-3">
                   <div className="flex items-center gap-2">
-                    <span className="text-xl">{o.emoji}</span>
+                    <IceCream className="w-4 h-4 text-ink-muted" />
                     <span className="font-medium text-[14px]">{o.label}</span>
                     {isMine && <Check className="w-4 h-4 text-burgundy" />}
                   </div>
@@ -163,11 +167,12 @@ function FrageTab() {
 
         {voted ? (
           <p className="text-[12px] text-ink-faint mt-4">
-            Total: <strong className="text-ink-muted">{total.toLocaleString("de-CH")}</strong> Stimmen · Nach Stadtteil filtern ↗
+            Total: <strong className="text-ink-muted">{total.toLocaleString("de-CH")}</strong>{" "}
+            Stimmen
           </p>
         ) : (
           <p className="text-[12.5px] text-ink-muted mt-4">
-            Klicke eine Option, um deine Stimme abzugeben. Du siehst danach die Live-Ergebnisse.
+            Klicke eine Option, um deine Stimme abzugeben. Danach siehst du die Live-Ergebnisse.
           </p>
         )}
       </div>
@@ -193,10 +198,6 @@ function FrageTab() {
   );
 }
 
-// ─────────────────────────────────────────────────────────────
-// TAB 2: INITIATIVEN & DEBATTEN
-// ─────────────────────────────────────────────────────────────
-
 function InitiativenTab() {
   const [supports, setSupports] = useState<string[]>([]);
   const [votes, setVotes] = useState<{ [k: string]: 1 | -1 | 0 }>({});
@@ -212,12 +213,15 @@ function InitiativenTab() {
     return onStorageChange(refresh);
   }, []);
 
-  const sorted = useMemo(() => INITIATIVES.slice().sort((a, b) => b.upvotes - a.upvotes), []);
+  const sorted = useMemo(
+    () => INITIATIVES.slice().sort((a, b) => b.upvotes - a.upvotes),
+    [],
+  );
   const detail = openId ? INITIATIVES.find((i) => i.id === openId) : null;
 
   function handleSupport(id: string) {
     const added = toggleInitiativeSupport(id);
-    push(added ? "✓ Du unterstützt jetzt (Demo)" : "Unterstützung entfernt", "success");
+    push(added ? "Du unterstützt jetzt (Demo)" : "Unterstützung entfernt", "success");
   }
 
   function handleVote(id: string, v: 1) {
@@ -266,9 +270,7 @@ function InitiativenTab() {
                   >
                     {i.title}
                   </h3>
-                  <p className="text-[12.5px] text-ink-faint mt-1">
-                    von @{i.author}
-                  </p>
+                  <p className="text-[12.5px] text-ink-faint mt-1">von @{i.author}</p>
 
                   <div className="flex items-center gap-4 mt-3 text-[12px] text-ink-muted">
                     <button
@@ -295,7 +297,7 @@ function InitiativenTab() {
                             : "border border-line hover:border-burgundy hover:text-burgundy"
                         }`}
                       >
-                        {supported ? "✓ Unterstützt" : "Unterstützen"}
+                        {supported ? "Unterstützt" : "Unterstützen"}
                       </button>
                     )}
                   </div>
@@ -343,9 +345,9 @@ function InitiativeDetailModal({
         <button
           aria-label="Schliessen"
           onClick={onClose}
-          className="absolute top-4 right-4 text-ink-muted hover:text-ink text-xl leading-none"
+          className="absolute top-4 right-4 text-ink-muted hover:text-ink"
         >
-          ✕
+          <X className="w-5 h-5" />
         </button>
         <span className="text-[10.5px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-paper-dim text-ink-muted">
           {initiative.type}
@@ -363,10 +365,15 @@ function InitiativeDetailModal({
           <div className="grid md:grid-cols-2 gap-3 mt-5">
             {initiative.pro && (
               <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-xl">
-                <p className="text-[11px] uppercase tracking-wider text-emerald-700 font-medium">Pro</p>
+                <p className="text-[11px] uppercase tracking-wider text-emerald-700 font-medium">
+                  Pro
+                </p>
                 <ul className="mt-2 space-y-1.5">
                   {initiative.pro.map((p) => (
-                    <li key={p} className="text-[13px] text-emerald-900 flex items-start gap-1.5">
+                    <li
+                      key={p}
+                      className="text-[13px] text-emerald-900 flex items-start gap-1.5"
+                    >
                       <span>+</span> {p}
                     </li>
                   ))}
@@ -375,10 +382,15 @@ function InitiativeDetailModal({
             )}
             {initiative.contra && (
               <div className="p-4 bg-rose-50 border border-rose-200 rounded-xl">
-                <p className="text-[11px] uppercase tracking-wider text-rose-700 font-medium">Kontra</p>
+                <p className="text-[11px] uppercase tracking-wider text-rose-700 font-medium">
+                  Kontra
+                </p>
                 <ul className="mt-2 space-y-1.5">
                   {initiative.contra.map((p) => (
-                    <li key={p} className="text-[13px] text-rose-900 flex items-start gap-1.5">
+                    <li
+                      key={p}
+                      className="text-[13px] text-rose-900 flex items-start gap-1.5"
+                    >
                       <span>−</span> {p}
                     </li>
                   ))}
@@ -393,12 +405,12 @@ function InitiativeDetailModal({
             <button
               onClick={onSupport}
               className={`px-5 py-2.5 rounded-full text-[13px] font-medium transition-colors ${
-                supported
-                  ? "bg-burgundy text-paper"
-                  : "bg-burgundy text-paper hover:bg-burgundy-dark"
+                supported ? "bg-burgundy text-paper" : "bg-burgundy text-paper hover:bg-burgundy-dark"
               }`}
             >
-              {supported ? "✓ Du unterstützt" : `Unterstützen (${initiative.supporters.toLocaleString("de-CH")})`}
+              {supported
+                ? "Du unterstützt"
+                : `Unterstützen (${initiative.supporters.toLocaleString("de-CH")})`}
             </button>
           )}
           <button
@@ -410,16 +422,12 @@ function InitiativeDetailModal({
         </div>
 
         <p className="text-[11px] text-ink-faint mt-3">
-          {initiative.comments_count.toLocaleString("de-CH")} Kommentare · Kommentar-Thread folgt in Phase 4 (Demo)
+          {initiative.comments_count.toLocaleString("de-CH")} Kommentare · Thread folgt (Demo)
         </p>
       </div>
     </div>
   );
 }
-
-// ─────────────────────────────────────────────────────────────
-// TAB 3: ZÜRICH-INDEX
-// ─────────────────────────────────────────────────────────────
 
 function IndexTab() {
   const [myScore, setMyScore] = useState<number | null>(null);
@@ -428,17 +436,16 @@ function IndexTab() {
 
   function submitScore(v: number) {
     setMyScore(v);
-    push(`✓ Lebensqualität bewertet: ${v} / 10 (Demo)`, "success");
+    push(`Lebensqualität bewertet: ${v} / 10 (Demo)`, "success");
   }
 
   function submitMood(m: "pos" | "neu" | "neg") {
     setMyMood(m);
-    push("✓ Stimmung abgegeben (Demo)", "success");
+    push("Stimmung abgegeben (Demo)", "success");
   }
 
   return (
     <div className="grid lg:grid-cols-2 gap-4 md:gap-5">
-      {/* Quality of Life */}
       <div className="bg-card border border-line rounded-2xl p-6 card-shadow lg:col-span-2">
         <div className="flex items-start justify-between gap-4">
           <div>
@@ -451,8 +458,8 @@ function IndexTab() {
                   QUALITY_INDEX.trend > 0
                     ? "text-emerald-700"
                     : QUALITY_INDEX.trend < 0
-                    ? "text-rose-700"
-                    : "text-ink-muted"
+                      ? "text-rose-700"
+                      : "text-ink-muted"
                 }`}
               >
                 {QUALITY_INDEX.trend > 0 ? (
@@ -465,7 +472,11 @@ function IndexTab() {
               </p>
             </div>
             <p className="text-[12px] text-ink-faint mt-1">
-              Basiert auf <strong className="text-ink-muted">{QUALITY_INDEX.submissions.toLocaleString("de-CH")}</strong> Antworten
+              Basiert auf{" "}
+              <strong className="text-ink-muted">
+                {QUALITY_INDEX.submissions.toLocaleString("de-CH")}
+              </strong>{" "}
+              Antworten
             </p>
           </div>
         </div>
@@ -492,7 +503,6 @@ function IndexTab() {
         </div>
       </div>
 
-      {/* Safety */}
       <div className="bg-card border border-line rounded-2xl p-6 card-shadow">
         <p className="eyebrow">Sicherheits-Index nach Stadtteil</p>
         <table className="w-full mt-3 text-[13px]">
@@ -519,7 +529,6 @@ function IndexTab() {
         </table>
       </div>
 
-      {/* Restaurants */}
       <div className="bg-card border border-line rounded-2xl p-6 card-shadow">
         <p className="eyebrow">Restaurant-Qualität · Stadtteil</p>
         <table className="w-full mt-3 text-[13px]">
@@ -528,7 +537,10 @@ function IndexTab() {
               <tr key={d.name} className="border-b border-line last:border-b-0">
                 <td className="py-2">{d.name}</td>
                 <td className="py-2 text-right tabular-nums">
-                  <span className="font-medium">⭐ {d.rating}</span>
+                  <span className="inline-flex items-center gap-1">
+                    <Smile className="w-3.5 h-3.5 text-brass" />
+                    {d.rating}
+                  </span>
                 </td>
                 <td className="py-2 pl-3 text-[11px] text-ink-faint w-24 text-right">
                   {d.reviews} Bewertungen
@@ -542,7 +554,6 @@ function IndexTab() {
         </p>
       </div>
 
-      {/* Top Tags */}
       <div className="bg-card border border-line rounded-2xl p-6 card-shadow">
         <p className="eyebrow">Was Zürcher diese Woche beschäftigt</p>
         <div className="mt-4 flex flex-wrap gap-1.5">
@@ -562,7 +573,6 @@ function IndexTab() {
         </div>
       </div>
 
-      {/* Mood Barometer */}
       <div className="bg-card border border-line rounded-2xl p-6 card-shadow">
         <p className="eyebrow">Stimmungs-Barometer · diese Woche</p>
         <div className="mt-4 flex items-center gap-2 h-3 rounded-full overflow-hidden">
@@ -583,19 +593,27 @@ function IndexTab() {
           />
         </div>
         <div className="mt-2 grid grid-cols-3 gap-2 text-[12px]">
-          <div><span className="text-emerald-700">😀 {MOOD_BAROMETER.positive}%</span> positiv</div>
-          <div className="text-center"><span className="text-amber-700">😐 {MOOD_BAROMETER.neutral}%</span> neutral</div>
-          <div className="text-right"><span className="text-rose-700">😞 {MOOD_BAROMETER.negative}%</span> negativ</div>
+          <div className="text-emerald-700 inline-flex items-center gap-1">
+            <Smile className="w-3.5 h-3.5" /> {MOOD_BAROMETER.positive}% positiv
+          </div>
+          <div className="text-center text-amber-700 inline-flex items-center justify-center gap-1">
+            <Meh className="w-3.5 h-3.5" /> {MOOD_BAROMETER.neutral}% neutral
+          </div>
+          <div className="text-right text-rose-700 inline-flex items-center justify-end gap-1">
+            <Frown className="w-3.5 h-3.5" /> {MOOD_BAROMETER.negative}% negativ
+          </div>
         </div>
 
         <div className="mt-5 pt-5 border-t border-line">
           <p className="text-[13px] text-ink-muted">Wie fühlst du dich diese Woche?</p>
           <div className="mt-2 flex gap-2">
-            {([
-              { key: "pos", icon: <Smile className="w-4 h-4" />, label: "Positiv" },
-              { key: "neu", icon: <Meh className="w-4 h-4" />, label: "Neutral" },
-              { key: "neg", icon: <Frown className="w-4 h-4" />, label: "Negativ" },
-            ] as const).map((m) => (
+            {(
+              [
+                { key: "pos", icon: <Smile className="w-4 h-4" />, label: "Positiv" },
+                { key: "neu", icon: <Meh className="w-4 h-4" />, label: "Neutral" },
+                { key: "neg", icon: <Frown className="w-4 h-4" />, label: "Negativ" },
+              ] as const
+            ).map((m) => (
               <button
                 key={m.key}
                 onClick={() => submitMood(m.key)}

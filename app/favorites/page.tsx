@@ -57,8 +57,8 @@ export default function FavoritesPage() {
               <Link href="/entdecken" className="px-4 py-2 rounded-full bg-burgundy text-paper text-[13px] hover:bg-burgundy-dark">
                 Events entdecken
               </Link>
-              <Link href="/orte" className="px-4 py-2 rounded-full border border-line text-[13px] hover:border-burgundy">
-                Orte ansehen
+              <Link href="/puls" className="px-4 py-2 rounded-full border border-line text-[13px] hover:border-burgundy">
+                Zum Puls-Feed
               </Link>
             </div>
           </div>
