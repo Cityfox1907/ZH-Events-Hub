@@ -14,6 +14,16 @@ const KEYS = {
   bookings: "zt:bookings",
   recent: "zt:recent",
   notifSeen: "zt:notif-seen",
+  // Phase 3
+  pulsVotes: "zt:puls-votes",
+  pulsBookmarks: "zt:puls-bookmarks",
+  pulsPosts: "zt:puls-userposts",
+  marktListings: "zt:markt-userlistings",
+  pollVotes: "zt:poll-votes",
+  initiativeVotes: "zt:initiative-votes",
+  initiativeSupports: "zt:initiative-supports",
+  district: "zt:district",
+  onboarded: "zt:onboarded",
 } as const;
 
 const CHANGE_EVENT = "zt:storage-change";
@@ -168,4 +178,136 @@ export function markNotifsRead(ids: string[]) {
   const seen = new Set(getReadNotifIds());
   ids.forEach((i) => seen.add(i));
   writeJSON(KEYS.notifSeen, Array.from(seen));
+}
+
+// ── PULS: Votes & Bookmarks ──────────────────────────────────
+export interface PulsVoteState {
+  [postId: string]: 1 | -1 | 0;
+}
+
+export function getPulsVotes(): PulsVoteState {
+  return readJSON<PulsVoteState>(KEYS.pulsVotes, {});
+}
+
+export function setPulsVote(postId: string, value: 1 | -1 | 0) {
+  const v = getPulsVotes();
+  if (value === 0) delete v[postId];
+  else v[postId] = value;
+  writeJSON(KEYS.pulsVotes, v);
+}
+
+export function getPulsBookmarks(): string[] {
+  return readJSON<string[]>(KEYS.pulsBookmarks, []);
+}
+
+export function togglePulsBookmark(postId: string) {
+  const list = getPulsBookmarks();
+  const next = list.includes(postId)
+    ? list.filter((id) => id !== postId)
+    : [...list, postId];
+  writeJSON(KEYS.pulsBookmarks, next);
+  return !list.includes(postId);
+}
+
+// ── PULS: user-posted (Local) ────────────────────────────────
+export interface UserPulsPost {
+  id: string;
+  type: string;
+  text: string;
+  tags: string[];
+  district: string;
+  ago: string;
+  upvotes: number;
+  comments_count: number;
+  author: string;
+}
+
+export function getUserPosts(): UserPulsPost[] {
+  return readJSON<UserPulsPost[]>(KEYS.pulsPosts, []);
+}
+
+export function addUserPost(post: Omit<UserPulsPost, "id" | "ago" | "upvotes" | "comments_count">) {
+  const list = getUserPosts();
+  const next: UserPulsPost = {
+    ...post,
+    id: `up-${Date.now()}`,
+    ago: "gerade eben",
+    upvotes: 1,
+    comments_count: 0,
+  };
+  writeJSON(KEYS.pulsPosts, [next, ...list]);
+  return next;
+}
+
+// ── MARKT: user-posted listings ──────────────────────────────
+export interface UserMarktListing {
+  id: string;
+  category: string;
+  title: string;
+  description: string;
+  district: string;
+  price?: string;
+  author: string;
+}
+
+export function getUserListings(): UserMarktListing[] {
+  return readJSON<UserMarktListing[]>(KEYS.marktListings, []);
+}
+
+export function addUserListing(l: Omit<UserMarktListing, "id">) {
+  const list = getUserListings();
+  const next: UserMarktListing = { ...l, id: `ul-${Date.now()}` };
+  writeJSON(KEYS.marktListings, [next, ...list]);
+  return next;
+}
+
+// ── STIMMEN: poll & initiative votes ─────────────────────────
+export function getPollVotes(): { [pollId: string]: string } {
+  return readJSON<{ [pollId: string]: string }>(KEYS.pollVotes, {});
+}
+
+export function castPollVote(pollId: string, optionId: string) {
+  const all = getPollVotes();
+  all[pollId] = optionId;
+  writeJSON(KEYS.pollVotes, all);
+}
+
+export function getInitiativeVotes(): { [initiativeId: string]: 1 | -1 } {
+  return readJSON<{ [k: string]: 1 | -1 }>(KEYS.initiativeVotes, {});
+}
+
+export function setInitiativeVote(id: string, val: 1 | -1 | 0) {
+  const v = getInitiativeVotes();
+  if (val === 0) delete v[id];
+  else v[id] = val;
+  writeJSON(KEYS.initiativeVotes, v);
+}
+
+export function getInitiativeSupports(): string[] {
+  return readJSON<string[]>(KEYS.initiativeSupports, []);
+}
+
+export function toggleInitiativeSupport(id: string) {
+  const list = getInitiativeSupports();
+  const next = list.includes(id) ? list.filter((x) => x !== id) : [...list, id];
+  writeJSON(KEYS.initiativeSupports, next);
+  return !list.includes(id);
+}
+
+// ── District preference ──────────────────────────────────────
+export function getDistrict(): string | null {
+  return readJSON<string | null>(KEYS.district, null);
+}
+
+export function setDistrict(d: string) {
+  writeJSON(KEYS.district, d);
+}
+
+// ── Onboarding ───────────────────────────────────────────────
+export function hasOnboarded(): boolean {
+  return readJSON<boolean>(KEYS.onboarded, false);
+}
+
+export function markOnboarded() {
+  writeJSON(KEYS.onboarded, true);
 }

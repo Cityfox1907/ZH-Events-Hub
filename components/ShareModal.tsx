@@ -36,7 +36,17 @@ export function ShareButton({
   );
 }
 
-function ShareModal({ title, onClose }: { title: string; onClose: () => void }) {
+export function ShareModal({
+  open,
+  title,
+  onClose,
+}: {
+  open?: boolean;
+  title: string;
+  url?: string;
+  onClose: () => void;
+}) {
+  if (open === false) return null;
   const { push } = useToast();
 
   useEffect(() => {

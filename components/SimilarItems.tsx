@@ -68,6 +68,10 @@ function pickItems(module: ModuleKey, currentId: string): Item[] {
           meta: `${e.datetime} · ${e.price_range}`,
           href: `/live/${e.id}`,
         }));
+    case "puls":
+    case "markt":
+    case "stimmen":
+      return [];
   }
 }
 
