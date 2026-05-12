@@ -128,7 +128,80 @@ export type ModuleKey =
   | "live"
   | "puls"
   | "markt"
-  | "stimmen";
+  | "stimmen"
+  | "entdecken"
+  | "orte";
+
+// ─────────────────────────────────────────────────────────────
+// ENTDECKEN — unified event adapter (Phase 4)
+// All time-bound events: Tonight + Live + Experience
+// ─────────────────────────────────────────────────────────────
+
+export type EventCategory =
+  | "music"
+  | "dinner"
+  | "art"
+  | "experience"
+  | "party"
+  | "networking"
+  | "sport"
+  | "family"
+  | "market"
+  | "theater";
+
+export type EventSource = "tonight" | "live" | "experience";
+
+export interface EventItem {
+  id: string;
+  source: EventSource;
+  title: string;
+  category: EventCategory;
+  category_label: string;
+  datetime: string;
+  date_iso: string;
+  bucket: Bucket;
+  venue: string;
+  district: string;
+  price: string;
+  price_band: "free" | "low" | "mid" | "high";
+  vibe_tags: Vibe[];
+  cover_image: string;
+  languages?: ("DE" | "EN" | "FR" | "IT")[];
+  trending?: boolean;
+  views_24h?: number;
+  tickets_left?: number;
+  added_at?: string;
+}
+
+// ─────────────────────────────────────────────────────────────
+// ORTE — permanent locations (Phase 4)
+// Restaurants, Bars, Badis, Aktivitäten, Museen
+// ─────────────────────────────────────────────────────────────
+
+export type PlaceKind =
+  | "restaurant"
+  | "bar"
+  | "badi"
+  | "activity"
+  | "museum";
+
+export interface Place {
+  id: string;
+  kind: PlaceKind;
+  source: "dine" | "place";
+  name: string;
+  subtype: string;
+  district: string;
+  address: string;
+  price_range: string;
+  description: string;
+  vibe_tags: Vibe[];
+  rating?: number;
+  review_count?: number;
+  cover_image: string;
+  hours: string;
+  trending?: boolean;
+}
 
 // ─────────────────────────────────────────────────────────────
 // PULS — Community-Feed (Phase 3)

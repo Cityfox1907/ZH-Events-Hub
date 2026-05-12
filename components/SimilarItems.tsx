@@ -71,6 +71,8 @@ function pickItems(module: ModuleKey, currentId: string): Item[] {
     case "puls":
     case "markt":
     case "stimmen":
+    case "entdecken":
+    case "orte":
       return [];
   }
 }
