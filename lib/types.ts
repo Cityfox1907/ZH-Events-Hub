@@ -1,72 +1,127 @@
-export type CategoryId =
-  | "konzert"
-  | "klassik"
-  | "theater"
-  | "comedy"
-  | "club"
-  | "kunst"
-  | "festival"
-  | "volksfest"
-  | "sport"
-  | "gastro"
-  | "mode";
+export type Vibe =
+  | "Premium"
+  | "Date Night"
+  | "Cultural"
+  | "Fine Dining"
+  | "Wine Pairing"
+  | "Indoor"
+  | "Outdoor"
+  | "Magical"
+  | "Casual"
+  | "Hidden Gem";
 
-export type SizeId = "mega" | "major" | "mid" | "intimate";
-
-export interface Category {
-  id: CategoryId;
-  label: string;
-  description: string;
-}
-
-export interface Size {
-  id: SizeId;
-  label: string;
-  capacity: string;
-}
-
-export interface ZhEvent {
+export interface TonightEvent {
   id: string;
-  slug: string;
   title: string;
-  subtitle?: string;
-  category: CategoryId;
-  size: SizeId;
-  startDateTime: string; // ISO
-  endDateTime?: string; // ISO
+  category: string;
+  datetime: string;
+  date_iso: string;
   venue: string;
-  neighborhood: string;
+  district: string;
+  price: string;
+  vibe_tags: Vibe[];
   description: string;
-  priceFromChf?: number;
-  ticketUrl?: string;
-  tags: string[];
-  imageUrl?: string;
-  imageCredit?: string;
-  source: "seed" | "user";
-  createdAt: string; // ISO
+  cover_image: string;
+  gallery: string[];
 }
 
-export interface Review {
+export interface DineVenue {
   id: string;
-  eventId: string;
-  rating: number; // 1-5
-  text: string;
-  seat?: string;
-  acoustics?: string;
-  authorName: string;
-  createdAt: string; // ISO
+  name: string;
+  type: string;
+  cuisine: string;
+  district: string;
+  address: string;
+  price_range: "CHF" | "CHF CHF" | "CHF CHF CHF" | "CHF CHF CHF CHF";
+  description: string;
+  vibe_tags: Vibe[];
+  rating: number;
+  review_count: number;
+  cover_image: string;
+  gallery: string[];
+  hours: string;
+  reviews: { author: string; rating: number; text: string; date: string }[];
 }
 
-export interface EventPhoto {
+export interface Experience {
   id: string;
-  eventId: string;
-  dataUrl: string; // base64
-  caption?: string;
-  createdAt: string; // ISO
+  title: string;
+  category: string;
+  host: string;
+  duration: string;
+  price_per_person: number;
+  max_participants: number;
+  meeting_point: string;
+  district: string;
+  description: string;
+  what_included: string[];
+  vibe_tags: Vibe[];
+  languages: ("DE" | "EN" | "FR" | "IT")[];
+  cover_image: string;
+  gallery: string[];
+  slots: { date: string; time: string; spots_left: number }[];
+}
+
+export type PulseTier = "Free" | "Premium" | "VIP";
+
+export interface PulseEvent {
+  id: string;
+  title: string;
+  type: string;
+  datetime: string;
+  date_iso: string;
+  venue: string;
+  max_attendees: number;
+  current_rsvp: number;
+  description: string;
+  curator_notes: string;
+  required_tier: PulseTier;
+  cover_image: string;
+}
+
+export interface LiveEvent {
+  id: string;
+  title: string;
+  type: string;
+  datetime: string;
+  date_iso: string;
+  venue: string;
+  price_range: string;
+  price_min: number;
+  price_max: number;
+  tickets_available: number;
+  description: string;
+  vibe_tags: Vibe[];
+  cover_image: string;
+  gallery: string[];
+}
+
+export type ModuleKey = "tonight" | "dine" | "experience" | "pulse" | "live";
+
+export interface BookmarkRecord {
+  module: ModuleKey;
+  id: string;
+  title: string;
+  savedAt: string;
+}
+
+export interface MockBooking {
+  id: string;
+  module: ModuleKey;
+  itemId: string;
+  itemTitle: string;
+  detail: string;
+  createdAt: string;
+}
+
+export interface MockUser {
+  email: string;
+  name: string;
+  tier: PulseTier;
 }
 
 export interface ToastMessage {
   id: string;
   text: string;
-  variant: "default" | "success" | "info";
+  variant?: "default" | "success";
 }
