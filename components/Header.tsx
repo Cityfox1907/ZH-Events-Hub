@@ -7,6 +7,7 @@ import { Heart, UserCircle2, Menu, X, LogOut } from "lucide-react";
 import { AuthModal } from "./AuthModal";
 import { GlobalSearchTrigger } from "./GlobalSearch";
 import { NotificationBell } from "./NotificationBell";
+import { LiveCounter } from "./LiveCounter";
 import { useFavoriteCount } from "./BookmarkButton";
 import { getUser, logout, onStorageChange } from "@/lib/storage";
 import type { MockUser } from "@/lib/types";
@@ -16,8 +17,10 @@ const NAV = [
   { href: "/tonight", label: "Tonight" },
   { href: "/dine", label: "Dine" },
   { href: "/experience", label: "Experience" },
-  { href: "/pulse", label: "Pulse" },
   { href: "/live", label: "Live" },
+  { href: "/puls", label: "Puls" },
+  { href: "/markt", label: "Markt" },
+  { href: "/stimmen", label: "Stimmen" },
 ];
 
 export function Header() {
@@ -49,7 +52,7 @@ export function Header() {
             </span>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-1 ml-4">
+          <nav className="hidden lg:flex items-center gap-0.5 ml-3">
             {NAV.map((item) => {
               const active =
                 pathname === item.href || pathname.startsWith(item.href + "/");
@@ -57,7 +60,7 @@ export function Header() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`px-2.5 py-2 text-[13px] uppercase tracking-[0.16em] font-medium transition-colors ${
+                  className={`px-2 py-2 text-[11px] uppercase tracking-[0.14em] font-medium transition-colors ${
                     active ? "text-burgundy" : "text-ink-muted hover:text-ink"
                   }`}
                 >
@@ -67,12 +70,13 @@ export function Header() {
             })}
           </nav>
 
-          <div className="hidden lg:block ml-auto">
+          <div className="hidden xl:flex items-center ml-auto gap-3">
+            <LiveCounter className="text-[12px] text-ink-muted" />
             <GlobalSearchTrigger variant="input" />
           </div>
 
-          <div className="ml-auto lg:ml-2 flex items-center gap-1.5">
-            <div className="lg:hidden">
+          <div className="ml-auto xl:ml-2 flex items-center gap-1.5">
+            <div className="xl:hidden">
               <GlobalSearchTrigger variant="icon" />
             </div>
 

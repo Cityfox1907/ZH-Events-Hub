@@ -9,6 +9,11 @@ import type {
   ProviderTestimonial,
   ProviderInquiry,
   MyReview,
+  PulsPost,
+  MarktListing,
+  DailyPoll,
+  InitiativeItem,
+  Achievement,
 } from "./types";
 
 const UNSPLASH = (id: string) =>
@@ -1104,6 +1109,22 @@ export const HERO_IMAGES = [
 export const NOTIFICATIONS: NotificationItem[] = [
   {
     id: "n1",
+    title: "PULS",
+    text: "Sara hat auf deinen Post 'Bester Coiffeur für Locken?' geantwortet.",
+    href: "/puls",
+    ago: "Vor 12 min",
+    unread: true,
+  },
+  {
+    id: "n2",
+    title: "STIMMEN",
+    text: "Neue Initiative: '24h-Tram am Wochenende' — 2'347 Stimmen schon.",
+    href: "/stimmen",
+    ago: "Vor 1h",
+    unread: true,
+  },
+  {
+    id: "n3",
     title: "Erinnerung",
     text: "Dein gespeichertes Event 'Vivaldi bei Nacht' startet morgen.",
     href: "/tonight/klang-kerzenschein",
@@ -1111,26 +1132,26 @@ export const NOTIFICATIONS: NotificationItem[] = [
     unread: true,
   },
   {
-    id: "n2",
-    title: "Neuer Pop-up",
-    text: "Sterne-Koch Cadonau — nur 12 Plätze frei.",
-    href: "/tonight/fruehstueck-cadonau",
-    ago: "Vor 5h",
+    id: "n4",
+    title: "MARKT",
+    text: "Designer-Sofa GRATIS — neue Anzeige in Kreis 8.",
+    href: "/markt",
+    ago: "Vor 3h",
     unread: true,
   },
   {
-    id: "n3",
+    id: "n5",
+    title: "PULS",
+    text: "Dein Post 'Sonnenuntergang Üetliberg' hat 50+ Upvotes erreicht.",
+    href: "/puls",
+    ago: "Vor 5h",
+  },
+  {
+    id: "n6",
     title: "Neue Bewertungen",
     text: "3 neue Bewertungen bei Maison Manesse.",
     href: "/dine/maison-manesse",
     ago: "Vor 1d",
-  },
-  {
-    id: "n4",
-    title: "Pulse",
-    text: "Founders' Table — noch 3 Plätze in deiner Stufe.",
-    href: "/pulse/founders-table",
-    ago: "Vor 2d",
   },
 ];
 
@@ -1362,4 +1383,961 @@ export const SEARCH_SUGGESTIONS = [
   "Vivaldi",
   "Rooftop",
   "Workshop",
+  "WG Kreis 5",
+  "24h-Tram",
+  "Glace-Laden",
 ];
+
+// ─────────────────────────────────────────────────────────────
+// PHASE 3 — COMMUNITY LAYER
+// ─────────────────────────────────────────────────────────────
+
+const AVATAR = (seed: string) =>
+  `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(seed)}&backgroundColor=f7f2ea,efe7d8,fdfaf3`;
+
+export const PULS_DISTRICTS = [
+  "Alle",
+  "Kreis 1",
+  "Kreis 2",
+  "Kreis 3",
+  "Kreis 4",
+  "Kreis 5",
+  "Kreis 6",
+  "Kreis 7",
+  "Kreis 8",
+  "Kreis 9",
+  "Kreis 10",
+  "Kreis 11",
+  "Kreis 12",
+  "Oerlikon",
+  "Schwamendingen",
+];
+
+export const PULS_POST_TYPES = [
+  { key: "spot-tipp", label: "Spot-Tipp", icon: "📍" },
+  { key: "frage", label: "Frage an die Stadt", icon: "❓" },
+  { key: "live-update", label: "Live-Update", icon: "🚨" },
+  { key: "erlebnis", label: "Erlebnis-Bericht", icon: "🎉" },
+  { key: "beobachtung", label: "Stadt-Beobachtung", icon: "💡" },
+  { key: "einladung", label: "Spontane Einladung", icon: "🍻" },
+  { key: "foto", label: "Foto-Moment", icon: "📸" },
+  { key: "diskussion", label: "Diskussion", icon: "🗣" },
+] as const;
+
+export const PULS_TAGS = [
+  "foodtipp",
+  "frage",
+  "livenow",
+  "foto",
+  "spontan",
+  "kultur",
+  "sport",
+  "stadtleben",
+  "kreis1",
+  "kreis4",
+  "kreis5",
+  "kreis8",
+  "brunch",
+  "wein",
+  "kunst",
+  "wandern",
+  "tram",
+  "fcz",
+  "wgsuche",
+  "networking",
+  "stadtpolitik",
+  "klima",
+];
+
+// ─────────────────────────────────────────────────────────────
+// PULS — 25 Posts
+// ─────────────────────────────────────────────────────────────
+
+export const PULS_POSTS: PulsPost[] = [
+  {
+    id: "p1",
+    author: "SaraVomKreis5",
+    avatar: AVATAR("SaraVomKreis5"),
+    district: "Kreis 5",
+    ago: "vor 12 Min",
+    type: "spot-tipp",
+    text:
+      "Habe heute das neue Brunch-Café an der Hardstrasse entdeckt — 'Daphne & Sons'. Aprikosen-Croissants sind WAHNSINN. Ohne Reservation kommt ihr Samstag nicht rein. Geheim-Tipp!",
+    tags: ["foodtipp", "kreis5", "brunch"],
+    upvotes: 47,
+    comments_count: 12,
+    badge: "verified",
+    hot: true,
+    comments: [
+      {
+        id: "p1c1",
+        author: "BrunchQueenZH",
+        district: "Kreis 5",
+        ago: "vor 8 Min",
+        text: "Ich war gestern dort — die Eier Benedict sind auch top!",
+        upvotes: 8,
+        avatar: AVATAR("BrunchQueenZH"),
+      },
+      {
+        id: "p1c2",
+        author: "FoodieMarc",
+        district: "Kreis 4",
+        ago: "vor 5 Min",
+        text: "Preise?",
+        upvotes: 2,
+        avatar: AVATAR("FoodieMarc"),
+      },
+    ],
+  },
+  {
+    id: "p2",
+    author: "TomZH",
+    avatar: AVATAR("TomZH"),
+    district: "Kreis 4",
+    ago: "vor 28 Min",
+    type: "frage",
+    text:
+      "Bester Coiffeur für Männer mit Locken in Zürich? Brauche jemanden, der versteht, was 'volumengerecht' bedeutet. Empfehlungen?",
+    tags: ["frage", "grooming"],
+    upvotes: 23,
+    comments_count: 31,
+    hot: true,
+  },
+  {
+    id: "p3",
+    author: "LisaVeloKurier",
+    avatar: AVATAR("LisaVeloKurier"),
+    district: "Kreis 1",
+    ago: "vor 1h",
+    type: "live-update",
+    text:
+      "Achtung: Bellevue komplett dicht wegen Demo. Tram 4/15/2 unterbrochen. Velo via Stadelhofen ausweichen. Update: bisher friedlich.",
+    tags: ["livenow", "verkehr", "bellevue"],
+    upvotes: 156,
+    comments_count: 24,
+    badge: "local-hero",
+    hot: true,
+  },
+  {
+    id: "p4",
+    author: "MarcDerZuger",
+    avatar: AVATAR("MarcDerZuger"),
+    district: "Kreis 6",
+    ago: "vor 2h",
+    type: "erlebnis",
+    text:
+      "Gestern beim Candlelight-Konzert im Schauspielhaus — wirklich magisch. Hatte Erwartungen, wurde übertroffen. Wer Date-Night sucht: das ist es.",
+    tags: ["erlebnis", "konzert", "datenight"],
+    upvotes: 89,
+    comments_count: 14,
+    badge: "verified",
+    link: {
+      module: "tonight",
+      id: "klang-kerzenschein",
+      label: "Vivaldi bei Nacht",
+    },
+  },
+  {
+    id: "p5",
+    author: "ZHpapa37",
+    avatar: AVATAR("ZHpapa37"),
+    district: "Oerlikon",
+    ago: "vor 3h",
+    type: "frage",
+    text:
+      "Wo geht ihr mit 2-jährigen Kindern hin, wenn's regnet? Indoor-Tipps ausser Technorama? FIFA-Museum? Tropenhaus? Brauche Inspiration.",
+    tags: ["familie", "regentag", "kinder"],
+    upvotes: 67,
+    comments_count: 42,
+  },
+  {
+    id: "p6",
+    author: "JonasDer8er",
+    avatar: AVATAR("JonasDer8er"),
+    district: "Kreis 8",
+    ago: "vor 4h",
+    type: "einladung",
+    text:
+      "Wer kommt heute 19:00 zum Pingpong-Tisch am Idaplatz? Bringe Bier. Open für alle. Erstmal 3-4 Leute zum Anfangen.",
+    tags: ["spontan", "kreis8", "pingpong"],
+    upvotes: 34,
+    comments_count: 8,
+    badge: "verified",
+  },
+  {
+    id: "p7",
+    author: "AnnaUrbanist",
+    avatar: AVATAR("AnnaUrbanist"),
+    district: "Kreis 4",
+    ago: "vor 5h",
+    type: "beobachtung",
+    text:
+      "Habt ihr gemerkt, dass das alte Globus-Gebäude an der Bahnhofstrasse seit Monaten leer steht? Was passiert da eigentlich? Jemand Infos?",
+    tags: ["stadtbeobachtung", "bahnhofstrasse"],
+    upvotes: 213,
+    comments_count: 67,
+    badge: "local-hero",
+    top_week: true,
+    hot: true,
+  },
+  {
+    id: "p8",
+    author: "FotoFrankZH",
+    avatar: AVATAR("FotoFrankZH"),
+    district: "Kreis 12",
+    ago: "vor 6h",
+    type: "foto",
+    text: "Sonnenuntergang heute am Üetliberg — Worte fehlen mir.",
+    tags: ["foto", "ueetliberg", "sunset"],
+    upvotes: 412,
+    comments_count: 23,
+    badge: "local-hero",
+    image: UNSPLASH("photo-1506452305024-9d3f02d1c9b5"),
+    top_week: true,
+    hot: true,
+  },
+  {
+    id: "p9",
+    author: "MailaTakipci",
+    avatar: AVATAR("MailaTakipci"),
+    district: "Kreis 4",
+    ago: "vor 8h",
+    type: "spot-tipp",
+    text:
+      "Türkisches Frühstück im Mavi Café (Langstrasse Nähe Hardplatz) ist ABSURD GUT. Die Sucuk-Eier… genug gesagt. Auch sonntags offen.",
+    tags: ["foodtipp", "langstrasse", "fruehstueck", "tuerkisch"],
+    upvotes: 78,
+    comments_count: 19,
+    badge: "verified",
+  },
+  {
+    id: "p10",
+    author: "SunnyExpatNYC",
+    avatar: AVATAR("SunnyExpatNYC"),
+    district: "Kreis 5",
+    ago: "vor 12h",
+    type: "frage",
+    text:
+      "Bin seit 3 Monaten in Zürich. Wo findet man echte Zürcher Locals, nicht nur andere Expats? Vereine? Run-Clubs? Suche Empfehlungen.",
+    tags: ["expat", "neuhier", "community"],
+    upvotes: 145,
+    comments_count: 89,
+  },
+  {
+    id: "p11",
+    author: "VeloPolitikerin",
+    avatar: AVATAR("VeloPolitikerin"),
+    district: "Kreis 1",
+    ago: "vor 14h",
+    type: "diskussion",
+    text:
+      "Stadtrat-Sitzung hat gerade entschieden: neue Velo-Schnellstrasse zwischen Hardbrücke und Stauffacher. Eure Meinungen?",
+    tags: ["stadtpolitik", "velo"],
+    upvotes: 387,
+    comments_count: 152,
+    badge: "stadt-stimme",
+    top_week: true,
+  },
+  {
+    id: "p12",
+    author: "WeinSommelier_LB",
+    avatar: AVATAR("WeinSommelier_LB"),
+    district: "Kreis 1",
+    ago: "vor 16h",
+    type: "spot-tipp",
+    text:
+      "Aktuell unterbewertet: Restaurant 'Cardinal' in der Altstadt. Junges Team, Schweizer Naturweine, faire Preise. Insider-Tipp bevor's voll wird.",
+    tags: ["foodtipp", "wein", "altstadt"],
+    upvotes: 92,
+    comments_count: 28,
+    badge: "verified",
+  },
+  {
+    id: "p13",
+    author: "MoutainGuy",
+    avatar: AVATAR("MoutainGuy"),
+    district: "Kreis 6",
+    ago: "vor 18h",
+    type: "einladung",
+    text:
+      "Samstag 7:00 Üetliberg-Wanderung. Treffpunkt Hauptbahnhof. Wer Bock hat, alle Levels willkommen. Wandere langsam, viel quatschen.",
+    tags: ["spontan", "wandern", "samstag"],
+    upvotes: 56,
+    comments_count: 23,
+  },
+  {
+    id: "p14",
+    author: "KunstAdaZH",
+    avatar: AVATAR("KunstAdaZH"),
+    district: "Kreis 4",
+    ago: "vor 20h",
+    type: "spot-tipp",
+    text:
+      "Tipp für Kunst-Junkies: Galerie Maag (Kreis 5) hat aktuell Show von Roman Signer. Kostenloser Eintritt, kleines Künstlergespräch Donnerstag um 18:00.",
+    tags: ["kunst", "kreis5", "ausstellung"],
+    upvotes: 41,
+    comments_count: 6,
+    badge: "verified",
+  },
+  {
+    id: "p15",
+    author: "FCZSupporter",
+    avatar: AVATAR("FCZSupporter"),
+    district: "Kreis 4",
+    ago: "vor 22h",
+    type: "live-update",
+    text: "FCZ heute 1:0 gegen Servette! Letzigrund kocht. Hopp Züri!",
+    tags: ["fcz", "fussball", "live"],
+    upvotes: 234,
+    comments_count: 67,
+  },
+  {
+    id: "p16",
+    author: "StreetFoodLisa",
+    avatar: AVATAR("StreetFoodLisa"),
+    district: "Kreis 5",
+    ago: "vor 1 Tag",
+    type: "beobachtung",
+    text:
+      "Habe gemerkt: alle drei neuen Restaurants im Kreis 5 sind asiatisch. Trend? Oder Zufall? Was glaubt ihr — welche Küche fehlt noch in Zürich?",
+    tags: ["foodscene", "trend"],
+    upvotes: 178,
+    comments_count: 94,
+  },
+  {
+    id: "p17",
+    author: "RentRefugee",
+    avatar: AVATAR("RentRefugee"),
+    district: "Kreis 3",
+    ago: "vor 1 Tag",
+    type: "frage",
+    text:
+      "Verrückte WG-Suche: Wohne in Untermiete in Kreis 3, muss raus bis Juli. Realistisches Budget 1'400. Tipps wo suchen ausser Tutti?",
+    tags: ["wohnen", "wgsuche"],
+    upvotes: 67,
+    comments_count: 31,
+  },
+  {
+    id: "p18",
+    author: "PapaJoeBern",
+    avatar: AVATAR("PapaJoeBern"),
+    district: "Kreis 7",
+    ago: "vor 1 Tag",
+    type: "spot-tipp",
+    text:
+      "Eltern: Spielplatz Burgwies in Kreis 7 ist komplett neu renoviert, mit grossem Wasserspiel-Bereich. Kinder bleiben 3+ Stunden, versprochen.",
+    tags: ["familie", "kreis7", "spielplatz"],
+    upvotes: 124,
+    comments_count: 38,
+    badge: "verified",
+  },
+  {
+    id: "p19",
+    author: "TechFounderNick",
+    avatar: AVATAR("TechFounderNick"),
+    district: "Kreis 5",
+    ago: "vor 2 Tage",
+    type: "einladung",
+    text:
+      "Founders + Tech-Leute in Zürich: Donnerstag 18:00 informeller Drink im Frau Gerolds Garten. Keine Pitches, einfach quatschen. Wer Bock hat, kommt.",
+    tags: ["networking", "tech", "spontan"],
+    upvotes: 89,
+    comments_count: 27,
+    badge: "verified",
+  },
+  {
+    id: "p20",
+    author: "TramFahrerinSophie",
+    avatar: AVATAR("TramFahrerinSophie"),
+    district: "Kreis 9",
+    ago: "vor 2 Tage",
+    type: "beobachtung",
+    text:
+      "Aus dem Tram-Cockpit: Heute viele Touristen, die nicht wissen, dass Tram 4 Richtung Werdhölzli geht. Vielleicht braucht's bessere Beschriftung beim HB?",
+    tags: ["tram", "stadtleben"],
+    upvotes: 312,
+    comments_count: 41,
+    badge: "local-hero",
+    top_week: true,
+  },
+  {
+    id: "p21",
+    author: "KaffeeAnnouncer",
+    avatar: AVATAR("KaffeeAnnouncer"),
+    district: "Kreis 1",
+    ago: "vor 2 Tage",
+    type: "foto",
+    text:
+      "Erster Cappuccino bei Acid in der Altstadt. Latte-Art-Game stark. Bohnen aus Äthiopien. Ich bin verliebt.",
+    tags: ["kaffee", "altstadt", "foto"],
+    upvotes: 76,
+    comments_count: 14,
+    image: UNSPLASH("photo-1495474472287-4d71bcdd2085"),
+  },
+  {
+    id: "p22",
+    author: "LehrerinZH",
+    avatar: AVATAR("LehrerinZH"),
+    district: "Schwamendingen",
+    ago: "vor 3 Tage",
+    type: "diskussion",
+    text:
+      "Eure Erfahrung: Zürcher Schulsystem aus Eltern-Sicht — was funktioniert, was nicht?",
+    tags: ["schule", "stadtpolitik"],
+    upvotes: 167,
+    comments_count: 113,
+    badge: "verified",
+  },
+  {
+    id: "p23",
+    author: "JazzliebhaberMartin",
+    avatar: AVATAR("JazzliebhaberMartin"),
+    district: "Kreis 5",
+    ago: "vor 3 Tage",
+    type: "spot-tipp",
+    text:
+      "Donnerstag jam-session im Moods, ab 22:00, freier Eintritt. Mein Lieblings-Ritual diese Saison. Trio aus Lyon, einfach kommen.",
+    tags: ["jazz", "musik", "kreis5"],
+    upvotes: 52,
+    comments_count: 8,
+  },
+  {
+    id: "p24",
+    author: "RunClubZH",
+    avatar: AVATAR("RunClubZH"),
+    district: "Kreis 8",
+    ago: "vor 3 Tage",
+    type: "einladung",
+    text:
+      "Suchen Mitläufer für unseren Donnerstagslauf am Zürichsee. Tempo 6-7min/km, 8-10km. Alle Levels willkommen. Treffpunkt Bürkliplatz 18:30.",
+    tags: ["laufen", "sport", "spontan"],
+    upvotes: 67,
+    comments_count: 22,
+    badge: "verified",
+  },
+  {
+    id: "p25",
+    author: "DesignBureauX",
+    avatar: AVATAR("DesignBureauX"),
+    district: "Kreis 4",
+    ago: "vor 4 Tage",
+    type: "frage",
+    text:
+      "Welche Schweizer Hardware-Firma kann uns Prototyp-Teile in Kleinmenge liefern (50 Stück, gefräste Aluteile)? Empfehlungen?",
+    tags: ["business", "handwerk"],
+    upvotes: 23,
+    comments_count: 17,
+  },
+];
+
+export const PULS_TRENDING_SIDEBAR = [
+  { title: "Globus-Gebäude steht leer", tag: "stadtbeobachtung", upvotes: 213, postId: "p7" },
+  { title: "Neue Velo-Schnellstrasse", tag: "stadtpolitik", upvotes: 387, postId: "p11" },
+  { title: "Sonnenuntergang Üetliberg", tag: "foto", upvotes: 412, postId: "p8" },
+  { title: "Türkisches Frühstück Mavi Café", tag: "foodtipp", upvotes: 78, postId: "p9" },
+  { title: "Coiffeur für Locken?", tag: "frage", upvotes: 31, postId: "p2" },
+];
+
+export const PULS_ACTIVE_NOW = 1247;
+export const PULS_WEEK_STATS = { posts: 8934, comments: 32107 };
+
+// ─────────────────────────────────────────────────────────────
+// MARKT — 18 Anzeigen über 10 Kategorien
+// ─────────────────────────────────────────────────────────────
+
+export const MARKT_CATEGORIES = [
+  { key: "wohnen", label: "WG / Wohnen", icon: "🏠", count: 47 },
+  { key: "jobs", label: "Lokale Jobs", icon: "💼", count: 23 },
+  { key: "moebel", label: "Möbel / Sachen", icon: "🛋", count: 89 },
+  { key: "mitfahr", label: "Mitfahrgelegenheiten", icon: "🚗", count: 12 },
+  { key: "haustier", label: "Haustier-Sitting", icon: "🐕", count: 18 },
+  { key: "tickets", label: "Ticket-Tausch", icon: "🎟", count: 6 },
+  { key: "freunde", label: "Freunde / Gleichgesinnte", icon: "👫", count: 34 },
+  { key: "dienstleistungen", label: "Dienstleistungen", icon: "🛠", count: 52 },
+  { key: "verschenken", label: "Verschenken / Tauschen", icon: "🎁", count: 29 },
+  { key: "lernen", label: "Lernen / Workshops", icon: "📚", count: 15 },
+] as const;
+
+export const MARKT_LISTINGS: MarktListing[] = [
+  // WG / WOHNEN (3)
+  {
+    id: "m1",
+    category: "wohnen",
+    title: "Helles WG-Zimmer Kreis 5, 1'350 CHF, ab Juli",
+    description:
+      "Suchen entspannten Mitbewohner ab 1. Juli. WG mit 2 Mädels (Designerinnen), Altbau, riesige Küche, Balkon. Tram 4 vor der Tür.",
+    author: "MarinaWG",
+    avatar: AVATAR("MarinaWG"),
+    rating: 4.8,
+    rating_count: 12,
+    district: "Kreis 5",
+    ago: "vor 2h",
+    expires: "in 3 Wochen",
+    price: "CHF 1'350 / Monat",
+    images: [
+      UNSPLASH("photo-1522708323590-d24dbb6b0267"),
+      UNSPLASH("photo-1505691938895-1758d7feb511"),
+    ],
+    badge: "verified",
+  },
+  {
+    id: "m2",
+    category: "wohnen",
+    title: "Wohnungstausch: Kreis 4 ↔ Kreis 6 für 3 Monate",
+    description:
+      "Habe 2.5 Zimmer in Kreis 6, suche temporären Tausch in Kreis 4 wegen Sabbatical. Juli-September.",
+    author: "TauschKurt",
+    avatar: AVATAR("TauschKurt"),
+    district: "Kreis 6",
+    ago: "vor 1 Tag",
+    expires: "in 1 Woche",
+    images: [UNSPLASH("photo-1502672260266-1c1ef2d93688")],
+    badge: "verified",
+  },
+  {
+    id: "m3",
+    category: "wohnen",
+    title: "Möbliertes Studio kurzfristig, 1'800/Monat",
+    description: "Voll möbliert, sofort beziehbar, 1 Monat min. Ideal für Übergang.",
+    author: "LandlordZH",
+    avatar: AVATAR("LandlordZH"),
+    district: "Oerlikon",
+    ago: "vor 3 Tage",
+    expires: "in 5 Tage",
+    price: "CHF 1'800 / Monat",
+    images: [UNSPLASH("photo-1493809842364-78817add7ffb")],
+  },
+
+  // JOBS (3)
+  {
+    id: "m4",
+    category: "jobs",
+    title: "Babysitter für Freitag-Abende, Kreis 7, 30 CHF/h",
+    description:
+      "Erfahrene Babysitterin gesucht für 2-jähriges Mädchen. Alle 2 Wochen freitags 19-23 Uhr. Referenzen bitte.",
+    author: "MamaSandra",
+    avatar: AVATAR("MamaSandra"),
+    district: "Kreis 7",
+    ago: "vor 4h",
+    expires: "in 2 Wochen",
+    price: "CHF 30 / Stunde",
+    badge: "verified",
+  },
+  {
+    id: "m5",
+    category: "jobs",
+    title: "Suche Aushilfe für Coffee-Shop Kreis 4, Wochenenden",
+    description: "Sa+So je 8h. CHF 25/h. Erfahrung nice-to-have, kein Muss.",
+    author: "CoffeeKreis4",
+    avatar: AVATAR("CoffeeKreis4"),
+    district: "Kreis 4",
+    ago: "vor 1 Tag",
+    expires: "in 2 Wochen",
+    price: "CHF 25 / Stunde",
+  },
+  {
+    id: "m6",
+    category: "jobs",
+    title: "Foto-Editor für lokale Brand, Projektbasis",
+    description:
+      "Brauchen jemanden für Bildbearbeitung (10-15 Bilder/Woche). Lightroom-Erfahrung. CHF 80/h.",
+    author: "BrandManagerY",
+    avatar: AVATAR("BrandManagerY"),
+    district: "Kreis 5",
+    ago: "vor 2 Tage",
+    expires: "in 1 Woche",
+    price: "CHF 80 / Stunde",
+  },
+
+  // MÖBEL (3)
+  {
+    id: "m7",
+    category: "verschenken",
+    title: "Designer-Sofa von Vitra GRATIS — nur Abholung",
+    description:
+      "Ziehe nach Bern, Vitra-Sofa (Polder-Modell) kommt nicht mit. Kostet neu 4'500, abzugeben gratis bei Selbstabholung. Erste bekommt.",
+    author: "MovingOut",
+    avatar: AVATAR("MovingOut"),
+    rating: 5.0,
+    rating_count: 8,
+    district: "Kreis 8",
+    ago: "vor 3h",
+    expires: "in 2 Tage",
+    price: "Gratis",
+    images: [UNSPLASH("photo-1555041469-a586c61ea9bc")],
+    badge: "local-hero",
+  },
+  {
+    id: "m8",
+    category: "moebel",
+    title: "Vintage-Hifi-Anlage Marantz, 450 CHF",
+    description: "Marantz 2230 Receiver + 2 Lautsprecher. Voll funktional, klingt warm.",
+    author: "HifiNerd",
+    avatar: AVATAR("HifiNerd"),
+    district: "Kreis 6",
+    ago: "vor 1 Tag",
+    expires: "in 2 Wochen",
+    price: "CHF 450",
+    images: [UNSPLASH("photo-1545454675-3531b543be5d")],
+  },
+  {
+    id: "m9",
+    category: "moebel",
+    title: "Velorahmen Bianchi, gebraucht, 280 CHF",
+    description: "Stahlrahmen, 56cm, gut erhalten. Inkl. Gabel.",
+    author: "CycleKurt",
+    avatar: AVATAR("CycleKurt"),
+    district: "Kreis 4",
+    ago: "vor 2 Tage",
+    expires: "in 1 Woche",
+    price: "CHF 280",
+    images: [UNSPLASH("photo-1532298229144-0ec0c57515c7")],
+  },
+
+  // MITFAHR (2)
+  {
+    id: "m10",
+    category: "mitfahr",
+    title: "Freitag nach Genf, 2 Plätze frei, 40 CHF/Platz",
+    description:
+      "Fahre Freitag 17:00 ab HB-Parking. Komme Sonntag-Abend zurück. 2 Plätze frei.",
+    author: "WeekendDriver",
+    avatar: AVATAR("WeekendDriver"),
+    district: "Kreis 1",
+    ago: "vor 5h",
+    expires: "in 3 Tage",
+    price: "CHF 40 / Platz",
+  },
+  {
+    id: "m11",
+    category: "mitfahr",
+    title: "Tessin am Wochenende — wer kommt mit?",
+    description: "Lugano-Trip, suche 2-3 Mitfahrer. Teilen Benzin + Maut.",
+    author: "TessinFan",
+    avatar: AVATAR("TessinFan"),
+    district: "Kreis 5",
+    ago: "vor 1 Tag",
+    expires: "in 4 Tage",
+  },
+
+  // HAUSTIER (2)
+  {
+    id: "m12",
+    category: "haustier",
+    title: "Suche zuverlässige Hund-Walker für Mo-Fr, 12-13 Uhr",
+    description: "Berner Sennenhund, super lieb, braucht Mittagspause-Walk.",
+    author: "DogParentZH",
+    avatar: AVATAR("DogParentZH"),
+    district: "Kreis 8",
+    ago: "vor 6h",
+    expires: "in 2 Wochen",
+    price: "CHF 25 / Walk",
+    badge: "verified",
+  },
+  {
+    id: "m13",
+    category: "haustier",
+    title: "Biete Katzen-Sitting in eurer Wohnung, 20 CHF/Tag",
+    description: "Studentin, sehr katzenerfahren, Referenzen vorhanden.",
+    author: "CatLover_Sara",
+    avatar: AVATAR("CatLover_Sara"),
+    rating: 4.9,
+    rating_count: 23,
+    district: "Kreis 5",
+    ago: "vor 2 Tage",
+    expires: "laufend",
+    price: "CHF 20 / Tag",
+  },
+
+  // TICKETS (1)
+  {
+    id: "m14",
+    category: "tickets",
+    title: "2 FCZ-Tickets Sonntag, Original 50, jetzt 35",
+    description: "Können nicht hin, Block C, Original-Tickets.",
+    author: "FCZFan",
+    avatar: AVATAR("FCZFan"),
+    district: "Kreis 4",
+    ago: "vor 1h",
+    expires: "in 2 Tage",
+    price: "CHF 35 / Ticket",
+  },
+
+  // FREUNDE (2)
+  {
+    id: "m15",
+    category: "freunde",
+    title: "Neu in Zürich, suche Lauf-Buddy für Sonntags-Lange-Läufe",
+    description:
+      "30J, M, ziehe gerade aus Hamburg um. Suche jemanden 30-40 für sonntägliche 15-20km Läufe. Tempo 5min/km.",
+    author: "NewbieFromDE",
+    avatar: AVATAR("NewbieFromDE"),
+    district: "Kreis 5",
+    ago: "vor 2 Tage",
+    expires: "laufend",
+  },
+  {
+    id: "m16",
+    category: "freunde",
+    title: "Suche Tandem-Partner Deutsch ↔ Italienisch",
+    description: "Italienische Muttersprachlerin, will Deutsch üben. 1×/Woche, Café Treffen.",
+    author: "CiaoFromMilan",
+    avatar: AVATAR("CiaoFromMilan"),
+    district: "Kreis 4",
+    ago: "vor 3 Tage",
+    expires: "laufend",
+  },
+
+  // DIENSTLEISTUNGEN (2)
+  {
+    id: "m17",
+    category: "dienstleistungen",
+    title: "Bin Yoga-Lehrerin, biete Privat-Stunden bei dir zu Hause",
+    description: "Hatha + Vinyasa, 90 CHF/Stunde, alle Levels",
+    author: "YogaWithAna",
+    avatar: AVATAR("YogaWithAna"),
+    rating: 5.0,
+    rating_count: 34,
+    district: "Kreis 6",
+    ago: "vor 1 Tag",
+    expires: "laufend",
+    price: "CHF 90 / Stunde",
+    badge: "local-hero",
+  },
+  {
+    id: "m18",
+    category: "dienstleistungen",
+    title: "Schreinerarbeiten und Möbel-Reparaturen, fair und schnell",
+    description:
+      "20 Jahre Erfahrung, Möbel-Restauration, Einbauten, Reparaturen. Faire Preise, Festpreis-Angebot.",
+    author: "SchreinerZH",
+    avatar: AVATAR("SchreinerZH"),
+    rating: 4.7,
+    rating_count: 47,
+    district: "Kreis 9",
+    ago: "vor 4 Tage",
+    expires: "laufend",
+    badge: "verified",
+  },
+];
+
+// ─────────────────────────────────────────────────────────────
+// STIMMEN — Tab 1: Frage des Tages
+// ─────────────────────────────────────────────────────────────
+
+export const DAILY_POLL: DailyPoll = {
+  id: "poll-2026-05-12",
+  question: "Bester Glace-Laden Zürichs?",
+  date: "Heute · 12. Mai 2026",
+  options: [
+    { id: "o1", label: "Movenpick Bahnhofstrasse", votes: 1247, emoji: "🍦" },
+    { id: "o2", label: "Gelati Da Mimmo (Kreis 4)", votes: 2089, emoji: "🍦" },
+    { id: "o3", label: "Mr. Lee Ice Cream (Kreis 5)", votes: 978, emoji: "🍦" },
+    { id: "o4", label: "Sprüngli", votes: 487, emoji: "🍦" },
+    { id: "o5", label: "Cremeria di Eros (Kreis 1)", votes: 652, emoji: "🍦" },
+  ],
+};
+
+export const PAST_POLLS = [
+  { id: "pp1", question: "9-Uhr-Tram am Wochenende: ja oder nein?", winner: "Ja", winner_pct: 67 },
+  { id: "pp2", question: "Welcher Stadtteil hat beste Cafészene?", winner: "Kreis 5", winner_pct: 41 },
+  { id: "pp3", question: "Würdest du Zürich-Grundeinkommen unterstützen?", winner: "Ja", winner_pct: 54 },
+  { id: "pp4", question: "Beste Schwimmbar im Sommer?", winner: "Frauenbad", winner_pct: 38 },
+];
+
+// ─────────────────────────────────────────────────────────────
+// STIMMEN — Tab 2: Initiativen & Debatten
+// ─────────────────────────────────────────────────────────────
+
+export const INITIATIVES: InitiativeItem[] = [
+  {
+    id: "i1",
+    type: "petition",
+    title: "24h-Tram zwischen Niederdorf und HB am Wochenende",
+    author: "StadtNachtleben",
+    avatar: AVATAR("StadtNachtleben"),
+    ago: "vor 5 Tagen",
+    upvotes: 2347,
+    comments_count: 234,
+    supporters: 1847,
+    description:
+      "Andere Städte haben es. Warum nicht Zürich? Wir verlieren Nachtleben an Zug, Basel, sogar Winterthur. Ein 24h-Tram am Wochenende zwischen Niederdorf und HB würde die Stadt wieder ins Bewegung bringen.",
+    pro: [
+      "Mehr Sicherheit nachts (weniger Auto-Verkehr)",
+      "Mehr Nachtleben in der Stadt",
+      "Anschluss an Nachtbus-Linien",
+    ],
+    contra: [
+      "Kosten für VBZ",
+      "Lärm in Wohnquartieren",
+    ],
+  },
+  {
+    id: "i2",
+    type: "debatte",
+    title: "Bahnhofplatz-Neugestaltung — was haltet ihr?",
+    author: "VeloPolitikerin",
+    avatar: AVATAR("VeloPolitikerin"),
+    ago: "vor 1 Woche",
+    upvotes: 1892,
+    comments_count: 432,
+    description:
+      "Die geplante Neugestaltung sieht weniger Tram-Spuren und mehr Fussgängerzone vor. Sinnvoll oder zu radikal?",
+  },
+  {
+    id: "i3",
+    type: "initiative",
+    title: "Mehr Velo-Wege in Kreis 4",
+    author: "VeloKurierin",
+    avatar: AVATAR("VeloKurierin"),
+    ago: "vor 1 Woche",
+    upvotes: 1456,
+    comments_count: 167,
+    supporters: 1234,
+    description:
+      "Kreis 4 hat die schlechteste Velo-Infrastruktur der Innenstadt. Wir fordern: 2 neue Velo-Schnellrouten bis 2028.",
+  },
+  {
+    id: "i4",
+    type: "petition",
+    title: "Späterer Club-Schluss am Wochenende",
+    author: "NachtklubKlaus",
+    avatar: AVATAR("NachtklubKlaus"),
+    ago: "vor 2 Wochen",
+    upvotes: 3012,
+    comments_count: 521,
+    supporters: 2487,
+    description:
+      "Aktuell schliesst Zürich um 04:00. Petition für 06:00 am Wochenende — wie in fast jeder europäischen Hauptstadt.",
+  },
+  {
+    id: "i5",
+    type: "debatte",
+    title: "Restaurant-Preise in Zürich — angemessen oder Wucher?",
+    author: "PreisDetektiv",
+    avatar: AVATAR("PreisDetektiv"),
+    ago: "vor 2 Wochen",
+    upvotes: 887,
+    comments_count: 312,
+    description:
+      "Pizza für 28 CHF, Hauptgang für 45 CHF. Sind das gerechtfertigte Preise oder zu viel?",
+  },
+  {
+    id: "i6",
+    type: "initiative",
+    title: "Kostenloses ZVV-Ticket für unter 25-Jährige",
+    author: "JungeZuercherin",
+    avatar: AVATAR("JungeZuercherin"),
+    ago: "vor 3 Wochen",
+    upvotes: 1743,
+    comments_count: 198,
+    supporters: 1389,
+    description:
+      "Junge Menschen sollen die Stadt erfahren können — unabhängig vom Geldbeutel. Kostenloses ZVV für unter 25.",
+  },
+  {
+    id: "i7",
+    type: "diskussion",
+    title: "Wo soll Zürich in 10 Jahren stehen?",
+    author: "StadtVisionärin",
+    avatar: AVATAR("StadtVisionärin"),
+    ago: "vor 3 Wochen",
+    upvotes: 612,
+    comments_count: 287,
+    description:
+      "Offene Frage an alle: Wie soll Zürich 2036 aussehen? Mehr Grün? Weniger Banken? Mehr Tech? Wir sammeln Visionen.",
+  },
+  {
+    id: "i8",
+    type: "petition",
+    title: "Mehr Bäume in Kreis 4-5 (Hitzeinseln)",
+    author: "KlimaAktivistin",
+    avatar: AVATAR("KlimaAktivistin"),
+    ago: "vor 1 Monat",
+    upvotes: 2108,
+    comments_count: 145,
+    supporters: 1672,
+    description:
+      "Kreis 4 und 5 sind im Sommer extreme Hitzeinseln. Wir fordern 500 neue Bäume in den nächsten 3 Jahren.",
+  },
+];
+
+// ─────────────────────────────────────────────────────────────
+// STIMMEN — Tab 3: Zürich-Index
+// ─────────────────────────────────────────────────────────────
+
+export const QUALITY_INDEX = {
+  score: 7.4,
+  trend: 0.2,
+  submissions: 4231,
+};
+
+export const SAFETY_BY_DISTRICT = [
+  { name: "Kreis 1", score: 8.2, trend: 0 },
+  { name: "Kreis 4", score: 6.8, trend: -0.3 },
+  { name: "Kreis 5", score: 7.4, trend: 0.1 },
+  { name: "Kreis 6", score: 8.1, trend: 0 },
+  { name: "Kreis 7", score: 8.5, trend: 0.2 },
+  { name: "Kreis 8", score: 8.0, trend: 0 },
+  { name: "Oerlikon", score: 7.2, trend: -0.1 },
+];
+
+export const RESTAURANT_BY_DISTRICT = [
+  { name: "Kreis 1", rating: 4.3, reviews: 143 },
+  { name: "Kreis 4", rating: 4.5, reviews: 287 },
+  { name: "Kreis 5", rating: 4.6, reviews: 412 },
+  { name: "Kreis 8", rating: 4.4, reviews: 98 },
+];
+
+export const TOP_TAGS = [
+  { tag: "wohnungssuche", count: 398 },
+  { tag: "verkehr", count: 267 },
+  { tag: "foodtipp", count: 256 },
+  { tag: "stadtpolitik", count: 189 },
+  { tag: "wetter", count: 167 },
+  { tag: "kunst", count: 143 },
+  { tag: "sport", count: 122 },
+  { tag: "kreis5", count: 108 },
+];
+
+export const MOOD_BAROMETER = { positive: 67, neutral: 23, negative: 10 };
+
+// ─────────────────────────────────────────────────────────────
+// Demo-Profile + Achievements
+// ─────────────────────────────────────────────────────────────
+
+export const DEMO_PROFILE = {
+  username: "DemoZuercher",
+  district: "Kreis 5",
+  karma: 247,
+  member_since: "März 2026",
+  posts: 12,
+  comments: 38,
+  listings: 6,
+  verification: "verified" as const,
+};
+
+export const ACHIEVEMENTS: Achievement[] = [
+  { id: "a1", label: "Erster Post", desc: "Du hast deinen ersten Post veröffentlicht.", unlocked: true, emoji: "🏆" },
+  { id: "a2", label: "10 Upvotes erhalten", desc: "Deine Posts wurden 10× hochgevoted.", unlocked: true, emoji: "🏆" },
+  { id: "a3", label: "100 Kommentare gepostet", desc: "Du bist aktiv in der Community.", unlocked: false, emoji: "🏆" },
+  { id: "a4", label: "Local Hero", desc: "50+ Karma — du bist anerkannt.", unlocked: true, emoji: "🏅" },
+  { id: "a5", label: "Stadt-Stimme", desc: "Verifiziert als Quartier-Vertreter.", unlocked: false, emoji: "🥈" },
+  { id: "a6", label: "Foto-Star", desc: "Foto-Post mit 100+ Upvotes.", unlocked: false, emoji: "📸" },
+];
+
+// ─────────────────────────────────────────────────────────────
+// Helpers (Phase 3)
+// ─────────────────────────────────────────────────────────────
+
+export function getPulsPost(id: string) {
+  return PULS_POSTS.find((p) => p.id === id);
+}
+
+export function getMarktListing(id: string) {
+  return MARKT_LISTINGS.find((l) => l.id === id);
+}
+
+export function getInitiative(id: string) {
+  return INITIATIVES.find((i) => i.id === id);
+}

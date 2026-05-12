@@ -4,11 +4,15 @@ import {
   CalendarHeart,
   UtensilsCrossed,
   Compass,
-  Crown,
   Sparkles,
   TrendingUp,
   Flame,
   Plus,
+  MessageCircle,
+  Megaphone,
+  Tag,
+  ArrowBigUp,
+  Users,
 } from "lucide-react";
 import { Card } from "@/components/Card";
 import {
@@ -16,6 +20,12 @@ import {
   DINE_VENUES,
   EXPERIENCES,
   LIVE_EVENTS,
+  PULS_POSTS,
+  MARKT_LISTINGS,
+  DAILY_POLL,
+  INITIATIVES,
+  PULS_ACTIVE_NOW,
+  PULS_WEEK_STATS,
   trendingDine,
   trendingTonight,
   newlyAdded,
@@ -26,6 +36,7 @@ import { HomeSearch } from "@/components/HomeSearch";
 import { HeroSlider } from "@/components/HeroSlider";
 import { DistrictExplorer } from "@/components/DistrictExplorer";
 import { RecentlyViewed } from "@/components/RecentlyViewed";
+import { OnboardingTour } from "@/components/OnboardingTour";
 
 const MODULES = [
   {
@@ -50,18 +61,32 @@ const MODULES = [
     Icon: Compass,
   },
   {
-    href: "/pulse",
-    label: "Pulse",
-    title: "Premium-Networking",
-    desc: "Kuratierte Dinners, Salons, Insider-Kreis.",
-    Icon: Crown,
-  },
-  {
     href: "/live",
     label: "Live",
     title: "Pop-up & Premium",
     desc: "Candlelight, Secret Suppers, Hochkaräter.",
     Icon: Sparkles,
+  },
+  {
+    href: "/puls",
+    label: "Puls",
+    title: "Community-Feed",
+    desc: "Tipps, Fragen, Live-Updates aus der Stadt.",
+    Icon: MessageCircle,
+  },
+  {
+    href: "/markt",
+    label: "Markt",
+    title: "Lokale Anzeigen",
+    desc: "WG, Jobs, Möbel, Sitter — unter Nachbarn.",
+    Icon: Tag,
+  },
+  {
+    href: "/stimmen",
+    label: "Stimmen",
+    title: "Stadt-Demokratie",
+    desc: "Umfragen, Bürger-Initiativen, Stadt-Index.",
+    Icon: Megaphone,
   },
 ];
 
@@ -77,6 +102,16 @@ export default function HomePage() {
   const trendingD = trendingDine();
   const newItems = newlyAdded();
   const nearSoldOut = nearlySoldOut();
+  const livePulsPosts = PULS_POSTS.slice()
+    .sort((a, b) => b.upvotes - a.upvotes)
+    .slice(0, 3);
+  const marktHighlights = [
+    MARKT_LISTINGS.find((l) => l.id === "m7"),
+    MARKT_LISTINGS.find((l) => l.id === "m1"),
+    MARKT_LISTINGS.find((l) => l.id === "m17"),
+  ].filter(Boolean) as typeof MARKT_LISTINGS;
+  const newInitiatives = INITIATIVES.slice(0, 2);
+  const pollTotal = DAILY_POLL.options.reduce((s, o) => s + o.votes, 0);
 
   return (
     <>
@@ -103,14 +138,64 @@ export default function HomePage() {
             <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px] text-ink-muted">
               <span className="inline-flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-burgundy zb-pulse" />
-                <span><strong className="text-ink font-medium">127</strong> Events heute</span>
+                <span><strong className="text-ink font-medium">{PULS_ACTIVE_NOW.toLocaleString("de-CH")}</strong> Zürcher online</span>
               </span>
               <span className="hidden sm:inline">·</span>
-              <span><strong className="text-ink font-medium">432</strong> Venues</span>
+              <span><strong className="text-ink font-medium">127</strong> Events heute</span>
               <span className="hidden sm:inline">·</span>
-              <span><strong className="text-ink font-medium">89</strong> Premium-Mitglieder</span>
+              <span><strong className="text-ink font-medium">{PULS_WEEK_STATS.posts.toLocaleString("de-CH")}</strong> Posts diese Woche</span>
             </div>
+
+            <p className="text-[13px] text-ink-faint mt-3 italic max-w-md">
+              Das digitale Wohnzimmer aller Zürcher. Entdecke, vernetze, gestalte mit.
+            </p>
           </div>
+        </div>
+      </section>
+
+      {/* LIVE AUS DEM PULS ─────────────────────────────────────── */}
+      <section className="container-editorial pt-12 pb-12">
+        <div className="flex items-baseline justify-between mb-6">
+          <div>
+            <p className="eyebrow mb-1">Community · Jetzt</p>
+            <h2 className="font-display text-3xl md:text-4xl">Live aus dem Puls</h2>
+          </div>
+          <Link
+            href="/puls"
+            className="text-[13px] font-medium text-burgundy hover:underline"
+          >
+            Alle Posts →
+          </Link>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
+          {livePulsPosts.map((p) => (
+            <Link
+              key={p.id}
+              href="/puls"
+              className="block p-5 bg-card border border-line rounded-2xl card-shadow card-shadow-hover transition-shadow"
+            >
+              <div className="flex items-center gap-2">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={p.avatar} alt="" className="w-7 h-7 rounded-full bg-paper-dim" />
+                <div className="flex-1 min-w-0">
+                  <p className="text-[12px] font-medium leading-none">@{p.author}</p>
+                  <p className="text-[10.5px] text-ink-faint mt-0.5">{p.district} · {p.ago}</p>
+                </div>
+              </div>
+              <p className="text-[14px] mt-3 line-clamp-3 leading-snug">{p.text}</p>
+              <div className="mt-3 flex items-center gap-3 text-[11.5px] text-ink-muted">
+                <span className="inline-flex items-center gap-1">
+                  <ArrowBigUp className="w-3.5 h-3.5" /> {p.upvotes}
+                </span>
+                <span>{p.comments_count} Kommentare</span>
+                {p.tags[0] && (
+                  <span className="ml-auto text-[10.5px] px-2 py-0.5 rounded-full bg-paper-dim">
+                    #{p.tags[0]}
+                  </span>
+                )}
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
 
@@ -152,10 +237,119 @@ export default function HomePage() {
       {/* RECENTLY VIEWED ──────────────────────────────────────── */}
       <RecentlyViewed />
 
+      {/* WAS DIE STADT FRAGT ──────────────────────────────────── */}
+      <section className="container-editorial pb-12">
+        <div className="flex items-baseline justify-between mb-6">
+          <div>
+            <p className="eyebrow mb-1">Stimmen · Stadt-Demokratie</p>
+            <h2 className="font-display text-3xl md:text-4xl">Was die Stadt fragt</h2>
+          </div>
+          <Link
+            href="/stimmen"
+            className="text-[13px] font-medium text-burgundy hover:underline"
+          >
+            Alle Initiativen →
+          </Link>
+        </div>
+        <div className="grid md:grid-cols-2 gap-4 md:gap-5">
+          {/* Poll preview */}
+          <Link
+            href="/stimmen"
+            className="p-6 bg-card border border-line rounded-2xl card-shadow card-shadow-hover transition-shadow"
+          >
+            <p className="eyebrow">Frage des Tages</p>
+            <h3 className="font-display text-2xl mt-1.5 leading-tight">
+              {DAILY_POLL.question}
+            </h3>
+            <div className="mt-4 space-y-1.5">
+              {DAILY_POLL.options.slice(0, 3).map((o) => {
+                const pct = Math.round((o.votes / pollTotal) * 100);
+                return (
+                  <div key={o.id}>
+                    <div className="flex items-center justify-between text-[12px]">
+                      <span className="font-medium">{o.emoji} {o.label}</span>
+                      <span className="text-ink-faint tabular-nums">{pct}%</span>
+                    </div>
+                    <div className="h-1.5 bg-paper-dim rounded-full mt-1 overflow-hidden">
+                      <div className="h-full bg-burgundy/60" style={{ width: `${pct}%` }} />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <p className="text-[11px] text-ink-faint mt-3">
+              {pollTotal.toLocaleString("de-CH")} Stimmen heute · Klick zum Abstimmen
+            </p>
+          </Link>
+
+          {/* Initiatives preview */}
+          <Link
+            href="/stimmen"
+            className="p-6 bg-card border border-line rounded-2xl card-shadow card-shadow-hover transition-shadow"
+          >
+            <p className="eyebrow">Neue Initiativen</p>
+            <h3 className="font-display text-2xl mt-1.5 leading-tight">
+              2 neue Bürger-Initiativen diese Woche
+            </h3>
+            <ul className="mt-4 space-y-2.5">
+              {newInitiatives.map((i) => (
+                <li key={i.id} className="flex items-start gap-3">
+                  <ArrowBigUp className="w-4 h-4 text-burgundy mt-0.5 shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[13.5px] leading-tight line-clamp-1">{i.title}</p>
+                    <p className="text-[11px] text-ink-faint mt-0.5">
+                      {i.upvotes.toLocaleString("de-CH")} Stimmen · {i.comments_count} Kommentare
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </Link>
+        </div>
+      </section>
+
+      {/* MARKT HOT DEALS ──────────────────────────────────────── */}
+      <section className="container-editorial pb-12">
+        <div className="flex items-baseline justify-between mb-6">
+          <div>
+            <p className="eyebrow mb-1">Markt · Lokale Anzeigen</p>
+            <h2 className="font-display text-3xl md:text-4xl">Hot Deals diese Woche</h2>
+          </div>
+          <Link href="/markt" className="text-[13px] font-medium text-burgundy hover:underline">
+            Alle Anzeigen →
+          </Link>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {marktHighlights.map((l) => (
+            <Link
+              key={l.id}
+              href="/markt"
+              className="block bg-card border border-line rounded-2xl card-shadow card-shadow-hover transition-shadow overflow-hidden"
+            >
+              {l.images?.[0] && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={l.images[0]} alt="" className="w-full h-36 object-cover" />
+              )}
+              <div className="p-4">
+                <span className="text-[10.5px] uppercase tracking-wider text-burgundy">
+                  {l.district}
+                </span>
+                <h3 className="font-display text-[17px] mt-1 leading-tight line-clamp-2">
+                  {l.title}
+                </h3>
+                {l.price && (
+                  <p className="text-[12.5px] font-medium text-burgundy mt-1.5">{l.price}</p>
+                )}
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
       {/* MODULE ───────────────────────────────────────────────── */}
       <section className="container-editorial pb-12">
         <div className="flex items-baseline justify-between mb-6">
-          <h2 className="font-display text-3xl md:text-4xl">Die fünf Module</h2>
+          <h2 className="font-display text-3xl md:text-4xl">Die acht Module</h2>
           <span className="eyebrow hidden md:inline">Klick dich rein</span>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
@@ -330,7 +524,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* PULSE BANNER ─────────────────────────────────────────── */}
+      {/* COMMUNITY BANNER ─────────────────────────────────────── */}
       <section className="container-editorial pb-12">
         <div
           className="relative rounded-3xl overflow-hidden bg-ink text-paper p-8 md:p-12 grid md:grid-cols-[1fr_auto] gap-6 items-center"
@@ -341,25 +535,30 @@ export default function HomePage() {
         >
           <div>
             <div className="flex items-center gap-2 mb-3">
-              <Crown className="w-4 h-4 text-brass" />
-              <span className="eyebrow text-paper-dim">Pulse Membership</span>
+              <Users className="w-4 h-4 text-brass" />
+              <span className="eyebrow text-paper-dim">Werde Teil der Community</span>
             </div>
             <h2 className="font-display text-3xl md:text-5xl leading-tight">
-              Triff Menschen, die etwas vorhaben.
+              Das digitale Wohnzimmer aller Zürcher.
             </h2>
             <p className="text-paper-dim text-[15px] mt-3 max-w-xl">
-              Founders' Tables, Salons, VIP-Previews. Kuratiert, klein, kein
-              Pitching. Ab CHF 89 / Monat.
+              <strong className="text-paper">10'247 Zürcher</strong> · <strong className="text-paper">{PULS_WEEK_STATS.posts.toLocaleString("de-CH")}</strong> Posts diese Woche · <strong className="text-paper">{PULS_WEEK_STATS.comments.toLocaleString("de-CH")}</strong> Kommentare
+            </p>
+            <p className="text-paper-dim/80 text-[13px] mt-2">
+              Aktuell 100% gratis — wir bauen die Zürcher Community auf.
             </p>
           </div>
           <Link
-            href="/pulse"
+            href="/puls"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-paper text-ink font-medium text-[14px] hover:bg-paper-dim transition-colors shrink-0"
           >
-            Mitglied werden <ArrowRight className="w-4 h-4" />
+            Anmelden — gratis <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </section>
+
+      {/* ONBOARDING TOUR — shown once on first visit */}
+      <OnboardingTour />
 
       {/* NEWSLETTER ───────────────────────────────────────────── */}
       <section className="container-editorial pb-20">

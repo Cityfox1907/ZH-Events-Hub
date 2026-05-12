@@ -120,7 +120,144 @@ export interface LiveEvent {
   trending?: boolean;
 }
 
-export type ModuleKey = "tonight" | "dine" | "experience" | "pulse" | "live";
+export type ModuleKey =
+  | "tonight"
+  | "dine"
+  | "experience"
+  | "pulse"
+  | "live"
+  | "puls"
+  | "markt"
+  | "stimmen";
+
+// ─────────────────────────────────────────────────────────────
+// PULS — Community-Feed (Phase 3)
+// ─────────────────────────────────────────────────────────────
+
+export type PulsPostType =
+  | "spot-tipp"
+  | "frage"
+  | "live-update"
+  | "erlebnis"
+  | "beobachtung"
+  | "einladung"
+  | "foto"
+  | "diskussion";
+
+export type VerificationBadge =
+  | "verified"
+  | "local-hero"
+  | "stadt-stimme"
+  | "team";
+
+export interface PulsComment {
+  id: string;
+  author: string;
+  district: string;
+  ago: string;
+  text: string;
+  upvotes: number;
+  badge?: VerificationBadge;
+  avatar: string;
+  replies?: PulsComment[];
+}
+
+export interface PulsPost {
+  id: string;
+  author: string;
+  district: string;
+  ago: string;
+  type: PulsPostType;
+  text: string;
+  tags: string[];
+  upvotes: number;
+  comments_count: number;
+  badge?: VerificationBadge;
+  avatar: string;
+  image?: string;
+  link?: { module: ModuleKey; id: string; label: string };
+  comments?: PulsComment[];
+  hot?: boolean;
+  top_week?: boolean;
+}
+
+// ─────────────────────────────────────────────────────────────
+// MARKT — Anzeigen (Phase 3)
+// ─────────────────────────────────────────────────────────────
+
+export type MarktCategory =
+  | "wohnen"
+  | "jobs"
+  | "moebel"
+  | "mitfahr"
+  | "haustier"
+  | "tickets"
+  | "freunde"
+  | "dienstleistungen"
+  | "verschenken"
+  | "lernen";
+
+export interface MarktListing {
+  id: string;
+  category: MarktCategory;
+  title: string;
+  description: string;
+  author: string;
+  avatar: string;
+  rating?: number;
+  rating_count?: number;
+  district: string;
+  ago: string;
+  expires: string;
+  price?: string;
+  images?: string[];
+  badge?: VerificationBadge;
+}
+
+// ─────────────────────────────────────────────────────────────
+// STIMMEN — Stadt-Demokratie (Phase 3)
+// ─────────────────────────────────────────────────────────────
+
+export interface DailyPollOption {
+  id: string;
+  label: string;
+  votes: number;
+  emoji?: string;
+}
+
+export interface DailyPoll {
+  id: string;
+  question: string;
+  date: string;
+  options: DailyPollOption[];
+}
+
+export interface InitiativeItem {
+  id: string;
+  type: "petition" | "debatte" | "initiative" | "diskussion";
+  title: string;
+  author: string;
+  avatar: string;
+  ago: string;
+  upvotes: number;
+  comments_count: number;
+  supporters?: number;
+  description: string;
+  pro?: string[];
+  contra?: string[];
+}
+
+// ─────────────────────────────────────────────────────────────
+// Community-Profile (Phase 3)
+// ─────────────────────────────────────────────────────────────
+
+export interface Achievement {
+  id: string;
+  label: string;
+  desc: string;
+  unlocked: boolean;
+  emoji: string;
+}
 
 export interface BookmarkRecord {
   module: ModuleKey;

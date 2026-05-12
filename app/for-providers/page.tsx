@@ -24,40 +24,21 @@ const STEPS = [
   },
 ];
 
-const TIERS = [
-  {
-    name: "Free",
-    price: "CHF 0",
-    period: "/ Monat",
-    perks: ["Listing", "5 Fotos", "Standard-Sichtbarkeit", "Anfragen über Plattform"],
-    cta: "Kostenlos starten",
-    highlight: false,
-  },
-  {
-    name: "Pro",
-    price: "CHF 149",
-    period: "/ Monat",
-    perks: ["30 Fotos", "Video-Hero", "Analytics-Dashboard", "Bessere Listing-Position"],
-    cta: "Pro starten",
-    highlight: false,
-  },
-  {
-    name: "Spotlight",
-    price: "CHF 399",
-    period: "/ Monat",
-    perks: ["Featured in Suchresultaten", "Top-Position im Quartier", "Newsletter-Plätze"],
-    cta: "Spotlight starten",
-    highlight: true,
-  },
-  {
-    name: "Top-Spotlight",
-    price: "CHF 990",
-    period: "/ Monat",
-    perks: ["Premium-Slot Home-Page", "Banner-Platzierung", "Persönlicher Account-Manager"],
-    cta: "Anfragen",
-    highlight: false,
-  },
-];
+const FREE_TIER = {
+  name: "Aktuell · 100% Gratis",
+  price: "CHF 0",
+  period: "",
+  perks: [
+    "Vollständiges Listing",
+    "Unbegrenzt Fotos",
+    "Maximale Sichtbarkeit",
+    "Anfragen über Plattform",
+    "Analytics-Dashboard",
+    "Alle Spotlight-Features",
+    "Premium-Features kommen später als Option",
+  ],
+  cta: "Kostenlos starten",
+};
 
 export default function ForProvidersPage() {
   const [onboardOpen, setOnboardOpen] = useState(false);
@@ -117,46 +98,37 @@ export default function ForProvidersPage() {
       <section id="pricing" className="container-editorial pb-16 scroll-mt-20">
         <h2 className="font-display text-3xl md:text-4xl mb-2">Pricing</h2>
         <p className="text-[14px] text-ink-muted mb-8">
-          Faire Stufen. Wechsel oder kündige jederzeit.
+          Aktuell gratis listen. Premium-Features kommen später als optionaler Layer.
         </p>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {TIERS.map((t) => (
-            <div
-              key={t.name}
-              className={`relative p-6 rounded-2xl border bg-card card-shadow ${
-                t.highlight ? "border-burgundy" : "border-line"
-              }`}
+        <div className="max-w-2xl">
+          <div className="relative p-8 rounded-2xl border border-burgundy bg-card card-shadow">
+            <span className="absolute top-0 right-6 -translate-y-1/2 px-3 py-1 rounded-full bg-burgundy text-paper text-[10px] font-medium uppercase tracking-wider">
+              Aktuell · Phase 1
+            </span>
+            <p className="eyebrow">{FREE_TIER.name}</p>
+            <p className="font-display text-5xl mt-2">
+              {FREE_TIER.price}
+              <span className="text-[14px] text-ink-muted font-body"> · Phase 1 (12 Monate)</span>
+            </p>
+            <p className="text-[13.5px] text-ink-muted mt-3 max-w-md">
+              Wir bauen die Zürcher Community auf. Solange Phase 1 läuft, ist alles
+              kostenlos — für User wie für dich als Anbieter.
+            </p>
+            <ul className="mt-5 grid sm:grid-cols-2 gap-2">
+              {FREE_TIER.perks.map((p) => (
+                <li key={p} className="flex items-start gap-2 text-[13px] text-ink-muted">
+                  <Check className="w-4 h-4 text-burgundy mt-0.5 shrink-0" />
+                  {p}
+                </li>
+              ))}
+            </ul>
+            <button
+              onClick={() => setOnboardOpen(true)}
+              className="mt-6 w-full py-3 rounded-lg text-[14px] font-medium bg-burgundy text-paper hover:bg-burgundy-dark"
             >
-              {t.highlight && (
-                <span className="absolute top-0 right-6 -translate-y-1/2 px-3 py-1 rounded-full bg-burgundy text-paper text-[10px] font-medium uppercase tracking-wider">
-                  Beliebt
-                </span>
-              )}
-              <p className="eyebrow">{t.name}</p>
-              <p className="font-display text-3xl mt-2">
-                {t.price}
-                <span className="text-[13px] text-ink-muted font-body">{t.period}</span>
-              </p>
-              <ul className="mt-4 space-y-2">
-                {t.perks.map((p) => (
-                  <li key={p} className="flex items-start gap-2 text-[13px] text-ink-muted">
-                    <Check className="w-4 h-4 text-burgundy mt-0.5 shrink-0" />
-                    {p}
-                  </li>
-                ))}
-              </ul>
-              <button
-                onClick={() => setOnboardOpen(true)}
-                className={`mt-5 w-full py-2.5 rounded-lg text-[13px] font-medium transition-colors ${
-                  t.highlight
-                    ? "bg-burgundy text-paper hover:bg-burgundy-dark"
-                    : "border border-line hover:border-burgundy hover:text-burgundy"
-                }`}
-              >
-                {t.cta}
-              </button>
-            </div>
-          ))}
+              {FREE_TIER.cta}
+            </button>
+          </div>
         </div>
       </section>
 
