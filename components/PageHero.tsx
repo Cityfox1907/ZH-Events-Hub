@@ -1,28 +1,24 @@
-interface Props {
+export function PageHero({
+  eyebrow,
+  title,
+  subtitle,
+  children,
+}: {
   eyebrow: string;
   title: string;
-  lede?: string;
+  subtitle?: string;
   children?: React.ReactNode;
-}
-
-export function PageHero({ eyebrow, title, lede, children }: Props) {
+}) {
   return (
-    <section className="container-editorial pt-8 md:pt-12 pb-8 md:pb-10">
-      <div className="flex items-baseline justify-between gap-6 mb-2">
-        <h1 className="font-display text-[36px] leading-[1] md:text-[56px] md:leading-[1] tracking-[-0.02em] text-ink font-light">
-          {title}
-        </h1>
-        <div className="hidden md:block text-[10px] uppercase tracking-[0.25em] text-ink-faint shrink-0">
-          {eyebrow}
-        </div>
-      </div>
-      <div className="md:hidden text-[10px] uppercase tracking-[0.25em] text-ink-faint mb-3">
-        {eyebrow}
-      </div>
-      {lede ? (
-        <p className="mt-2 text-[16px] leading-relaxed text-ink-muted max-w-xl">{lede}</p>
-      ) : null}
-      {children ? <div className="mt-6">{children}</div> : null}
+    <section className="container-editorial pt-10 pb-6 md:pt-14 md:pb-8">
+      <p className="eyebrow">{eyebrow}</p>
+      <h1 className="font-display text-4xl md:text-5xl mt-2 leading-[1.05]">
+        {title}
+      </h1>
+      {subtitle && (
+        <p className="text-ink-muted text-[16px] mt-3 max-w-2xl">{subtitle}</p>
+      )}
+      {children && <div className="mt-6">{children}</div>}
     </section>
   );
 }
