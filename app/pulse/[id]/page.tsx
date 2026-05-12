@@ -1,9 +1,13 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ChevronLeft, MapPin, Calendar, Users, Lock } from "lucide-react";
+import { ChevronLeft, MapPin, Calendar, Users, Lock, Briefcase } from "lucide-react";
 import { PULSE_EVENTS, getPulseEvent } from "@/lib/data";
 import { DisintermediationNote } from "@/components/DisintermediationNote";
 import { RsvpButton } from "@/components/RsvpButton";
+import { ShareButton } from "@/components/ShareModal";
+import { TrustBadges } from "@/components/TrustBadges";
+import { SimilarItems } from "@/components/SimilarItems";
+import { RecentlyViewedTracker } from "@/components/RecentlyViewedTracker";
 
 export function generateStaticParams() {
   return PULSE_EVENTS.map((e) => ({ id: e.id }));
@@ -18,8 +22,12 @@ export default async function PulseDetailPage({
   const ev = getPulseEvent(id);
   if (!ev) notFound();
 
+  const fillPct = Math.round((ev.current_rsvp / ev.max_attendees) * 100);
+
   return (
     <article className="container-editorial pt-6 pb-20">
+      <RecentlyViewedTracker module="pulse" id={ev.id} title={ev.title} cover={ev.cover_image} />
+
       <Link
         href="/pulse"
         className="inline-flex items-center gap-1 text-[13px] text-ink-muted hover:text-burgundy mb-6"
@@ -29,14 +37,14 @@ export default async function PulseDetailPage({
 
       <div className="grid lg:grid-cols-[1fr_360px] gap-8">
         <div>
-          <div className="relative rounded-2xl overflow-hidden aspect-[16/10] bg-paper-dim mb-4">
+          <div className="relative rounded-2xl overflow-hidden aspect-[16/10] bg-paper-dim mb-6">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={ev.cover_image}
               alt={ev.title}
               className="w-full h-full object-cover"
             />
-            <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-burgundy text-paper text-[11px] font-medium uppercase tracking-wider">
+            <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-burgundy text-paper text-[11px] font-medium uppercase tracking-wider">
               <Lock className="w-3 h-3" /> {ev.required_tier}-Members
             </span>
           </div>
@@ -54,8 +62,17 @@ export default async function PulseDetailPage({
               <MapPin className="w-4 h-4" /> {ev.venue}
             </span>
             <span className="inline-flex items-center gap-1.5">
-              <Users className="w-4 h-4" /> {ev.current_rsvp} / {ev.max_attendees}
+              <Users className="w-4 h-4" /> {ev.current_rsvp} / {ev.max_attendees} RSVP
             </span>
+            {ev.industry_mix && (
+              <span className="inline-flex items-center gap-1.5">
+                <Briefcase className="w-4 h-4" /> {ev.industry_mix}
+              </span>
+            )}
+          </div>
+
+          <div className="mt-6">
+            <TrustBadges since="2024" topRated />
           </div>
 
           <p className="mt-6 text-[16px] leading-relaxed text-ink-muted">
@@ -68,11 +85,36 @@ export default async function PulseDetailPage({
               "{ev.curator_notes}"
             </p>
           </div>
+
+          <div className="mt-6 p-5 bg-card border border-line rounded-xl">
+            <div className="flex items-center justify-between mb-2">
+              <p className="text-[13px] font-medium">Belegung</p>
+              <p className="text-[13px] text-ink-muted">
+                {ev.current_rsvp} / {ev.max_attendees}
+              </p>
+            </div>
+            <div className="h-2 bg-paper-dim rounded-full overflow-hidden">
+              <div
+                className="h-full bg-burgundy transition-all"
+                style={{ width: `${fillPct}%` }}
+              />
+            </div>
+            <p className="text-[12px] text-ink-faint mt-2">
+              {ev.max_attendees - ev.current_rsvp > 0
+                ? `Noch ${ev.max_attendees - ev.current_rsvp} Plätze frei`
+                : "Warteliste offen"}
+            </p>
+          </div>
+
+          <SimilarItems module="pulse" currentId={ev.id} title="Weitere Pulse-Events" />
         </div>
 
         <aside className="lg:sticky lg:top-24 lg:self-start space-y-4">
           <RsvpButton eventId={ev.id} eventTitle={ev.title} requiredTier={ev.required_tier} />
           <DisintermediationNote />
+          <div className="p-4 rounded-xl bg-card border border-line">
+            <ShareButton title={ev.title} />
+          </div>
         </aside>
       </div>
     </article>

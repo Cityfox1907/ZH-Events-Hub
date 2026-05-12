@@ -1,6 +1,6 @@
 "use client";
 
-import { Bookmark, BookmarkCheck } from "lucide-react";
+import { Heart } from "lucide-react";
 import { useEffect, useState } from "react";
 import { isBookmarked, onStorageChange, toggleBookmark } from "@/lib/storage";
 import type { ModuleKey } from "@/lib/types";
@@ -18,6 +18,7 @@ export function BookmarkButton({
   variant?: "icon" | "pill";
 }) {
   const [marked, setMarked] = useState(false);
+  const [pop, setPop] = useState(false);
   const { push } = useToast();
 
   useEffect(() => {
@@ -29,6 +30,8 @@ export function BookmarkButton({
     e.preventDefault();
     e.stopPropagation();
     const added = toggleBookmark({ module, id, title });
+    setPop(true);
+    setTimeout(() => setPop(false), 360);
     push(added ? "✓ Gespeichert (Demo)" : "Entfernt", "success");
   }
 
@@ -38,15 +41,15 @@ export function BookmarkButton({
         onClick={handle}
         className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border text-[13px] font-medium transition-colors ${
           marked
-            ? "bg-ink text-paper border-ink"
+            ? "bg-burgundy text-paper border-burgundy"
             : "border-line hover:border-burgundy hover:text-burgundy"
         }`}
       >
-        {marked ? (
-          <BookmarkCheck className="w-4 h-4" />
-        ) : (
-          <Bookmark className="w-4 h-4" />
-        )}
+        <Heart
+          className={`w-4 h-4 ${pop ? "zb-heart-pop" : ""} ${
+            marked ? "fill-paper" : ""
+          }`}
+        />
         {marked ? "Gespeichert" : "Speichern"}
       </button>
     );
@@ -55,18 +58,36 @@ export function BookmarkButton({
   return (
     <button
       onClick={handle}
-      aria-label={marked ? "Bookmark entfernen" : "Bookmarken"}
+      aria-label={marked ? "Favorit entfernen" : "Speichern"}
       className={`p-2 rounded-full backdrop-blur transition-colors ${
         marked
-          ? "bg-ink/85 text-paper"
+          ? "bg-burgundy text-paper"
           : "bg-paper/85 text-ink hover:bg-paper"
       }`}
     >
-      {marked ? (
-        <BookmarkCheck className="w-4 h-4" />
-      ) : (
-        <Bookmark className="w-4 h-4" />
-      )}
+      <Heart
+        className={`w-4 h-4 ${pop ? "zb-heart-pop" : ""} ${
+          marked ? "fill-paper" : ""
+        }`}
+      />
     </button>
   );
+}
+
+export function useFavoriteCount() {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    function read() {
+      if (typeof window === "undefined") return;
+      try {
+        const raw = window.localStorage.getItem("zt:bookmarks");
+        setCount(raw ? JSON.parse(raw).length : 0);
+      } catch {
+        setCount(0);
+      }
+    }
+    read();
+    return onStorageChange(read);
+  }, []);
+  return count;
 }

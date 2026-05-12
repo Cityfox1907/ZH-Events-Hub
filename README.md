@@ -2,22 +2,23 @@
 
 > Zürich, jetzt. — Klickbarer Prototyp für eine kuratierte Zürcher Premium-Plattform.
 
-Fünf Module unter einem Dach:
+Fünf Module unter einem Dach + Anbieter-Sicht:
 
 - **Tonight** — Was läuft heute / am Wochenende / diese Woche
 - **Dine** — Restaurant- & Bar-Reservierungen
 - **Experience** — Erlebnisse mit lokalen Hosts
 - **Pulse** — Premium-Networking & Community
 - **Live** — Pop-up & Premium-Events
+- **For Providers** — Anbieter-Landing + Mock-Dashboard
 
-## Status: Prototyp
+## Status: Phase-2-Prototyp
 
-Dies ist ein **klickbarer Prototyp**. Alle Aktionen sind Mock:
+Voller, lebendiger Prototyp — alles Mock, kein Backend.
 
 - Keine echten Buchungen, keine echten Reservierungen, keine Zahlungen
 - Toast-Feedback mit "(Demo)"-Markierung bei jeder Aktion
-- Mock-Auth, Bookmarks und Buchungen werden im `localStorage` gehalten
-- Demo-Einträge sind hardcoded in `lib/data.ts`
+- Mock-Auth, Bookmarks, Bookings, Recently-Viewed, Notifications-Read-State im `localStorage`
+- Demo-Einträge (≥6 pro Modul) hardcoded in `lib/data.ts`
 - Disintermediation visuell: keine Telefonnummern, alle Kontakte über Plattform-Formulare
 
 ## Quickstart
@@ -34,26 +35,44 @@ npm run dev
 - Next.js 15 · App Router · React 19
 - TypeScript strict
 - Tailwind CSS v4 (`@theme`-Direktive)
-- Persistence: `localStorage` (Bookmarks, Mock-Bookings, Mock-User)
+- Persistence: `localStorage`
 - Fonts: Fraunces (Display) + DM Sans (Body)
 - Icons: `lucide-react`
 
 ## Routes
 
 ```
-/                  Home — Hero, 5 Modul-Cards, Heute-Abend-Vorschau, Newsletter
-/tonight           Event-Liste mit Tabs (Heute / Wochenende / Woche) + Filter
-/tonight/[id]      Event-Detail mit Tickets-Mock
-/dine              Restaurants & Bars mit Date/Time/People-Picker
-/dine/[id]         Venue-Detail mit Reservierungs-Formular und Reviews
-/experience        Erlebnisse mit Filter
-/experience/[id]   Detail mit Booking-Kalender (3 Slots)
-/pulse             Membership-Pricing (Free / Premium / VIP) + Events
-/pulse/[id]        Pulse-Event mit RSVP (Tier-gesperrt)
-/live              Hero-Karussell + Liste
-/live/[id]         Detail mit Mock-Checkout-Step (Select → Details → Done)
-/profile           Tabs: Bookmarks, Buchungen, Membership, Einstellungen
+/                  Home — Hero-Slider, Live-Counter, Trending, Stadtteile, Recently-Viewed, Pulse-Banner, Newsletter
+/tonight           12 Events · Tabs (Heute / Wochenende / Woche) · funktionierende Filter mit Chips
+/tonight/[id]      Detail · Tabs (Übersicht / Lage / FAQ) · Trust-Badges · Share · Similar Items
+/dine              10 Venues · Date/Time/People-Picker · Filter · Skeleton Loading
+/dine/[id]         Detail · Tabs (Übersicht / Bewertungen / Lage / FAQ) · Galerie · Reviews
+/experience        8 Erlebnisse · Filter (Kategorie / Sprache / Dauer / Quartier)
+/experience/[id]   Detail · Booking-Kalender (3 Monate, Zeitfenster, +/- Personen) · Host-Bio
+/pulse             Membership-Pricing · 6 Pulse-Events
+/pulse/[id]        Detail · RSVP · Belegungs-Bar · Curator-Notes
+/live              Hero-Karussell (Auto-Rotate) · 8 Events · Filter
+/live/[id]         Detail · Multi-Step Checkout · Tickets-Sold-Bar
+/favorites         Alle gespeicherten Items, gruppiert nach Modul
+/profile           Tabs: Favoriten · Buchungen (Anstehend/Vergangen/Storniert) · Bewertungen · Membership · Einstellungen
+/for-providers     Anbieter-Landing · 4-Stufen-Pricing · Erfolgsstorys · Onboarding-Modal (3 Steps)
+/provider/dashboard Mock-KPIs · Inquiries-Liste · Spotlight-Upgrade-CTA
 ```
+
+## Phase-2-Highlights
+
+- **Lebendige Home**: Hero-Image-Slider, Live-Counter, Trending-Listen, Stadtteil-Explorer, Recently-Viewed-Karussell
+- **Funktionierende Filter** auf allen Modul-Listen (mit Chip-Anzeige, Reset, Counter)
+- **Bookmarks** mit Herz-Icon, Pop-Animation, Counter im Header
+- **Share-Modal** auf jeder Detail-Page (WhatsApp / E-Mail / Link kopieren)
+- **Notification-Center** im Header mit Demo-Notifications & Read-State
+- **Globale Suche** (⌘K) mit Trending-Suchen und Live-Resultaten
+- **Recently-Viewed** wird beim Detail-Besuch getrackt und auf Home angezeigt
+- **Loading-States** mit Skeleton-Cards
+- **Booking-Kalender** mit echtem 3-Monats-Picker, Zeitfenster, Sold-Out-Slots, +/- Personen
+- **Trust-Badges** (Verifiziert, Seit 2024, Top-Rated) auf Detail-Seiten
+- **Mini-Map** (SVG) mit Standort-Pin
+- **Provider-Sicht** mit Landing, Pricing-Tiers, Testimonials, Onboarding-Modal, Mock-Dashboard
 
 ## Sprache & Format
 

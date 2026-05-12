@@ -1,11 +1,19 @@
 "use client";
 
-import type { BookmarkRecord, MockBooking, MockUser, ModuleKey } from "./types";
+import type {
+  BookmarkRecord,
+  MockBooking,
+  MockUser,
+  ModuleKey,
+  RecentlyViewed,
+} from "./types";
 
 const KEYS = {
   user: "zt:user",
   bookmarks: "zt:bookmarks",
   bookings: "zt:bookings",
+  recent: "zt:recent",
+  notifSeen: "zt:notif-seen",
 } as const;
 
 const CHANGE_EVENT = "zt:storage-change";
@@ -45,6 +53,7 @@ function writeJSON(key: string, value: unknown) {
   }
 }
 
+// ── User ─────────────────────────────────────────────────────
 export function getUser(): MockUser | null {
   return readJSON<MockUser | null>(KEYS.user, null);
 }
@@ -71,6 +80,7 @@ export function setTier(tier: MockUser["tier"]) {
   writeJSON(KEYS.user, { ...user, tier });
 }
 
+// ── Bookmarks ────────────────────────────────────────────────
 export function getBookmarks(): BookmarkRecord[] {
   return readJSON<BookmarkRecord[]>(KEYS.bookmarks, []);
 }
@@ -91,14 +101,18 @@ export function toggleBookmark(record: Omit<BookmarkRecord, "savedAt">) {
   return !exists;
 }
 
+// ── Bookings ─────────────────────────────────────────────────
 export function getBookings(): MockBooking[] {
   return readJSON<MockBooking[]>(KEYS.bookings, []);
 }
 
-export function addBooking(booking: Omit<MockBooking, "id" | "createdAt">) {
+export function addBooking(
+  booking: Omit<MockBooking, "id" | "createdAt"> & { status?: MockBooking["status"] }
+) {
   const list = getBookings();
   const next: MockBooking = {
     ...booking,
+    status: booking.status ?? "upcoming",
     id: `b-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
     createdAt: new Date().toISOString(),
   };
@@ -106,6 +120,52 @@ export function addBooking(booking: Omit<MockBooking, "id" | "createdAt">) {
   return next;
 }
 
+export function updateBookingStatus(id: string, status: MockBooking["status"]) {
+  const list = getBookings();
+  writeJSON(
+    KEYS.bookings,
+    list.map((b) => (b.id === id ? { ...b, status } : b))
+  );
+}
+
 export function clearBookings() {
   writeJSON(KEYS.bookings, []);
+}
+
+export function seedDemoBookings(items: Omit<MockBooking, "id" | "createdAt">[]) {
+  const list = getBookings();
+  if (list.length > 0) return; // don't overwrite real ones
+  const seeded: MockBooking[] = items.map((it, i) => ({
+    ...it,
+    id: `seed-${i}`,
+    createdAt: new Date().toISOString(),
+  }));
+  writeJSON(KEYS.bookings, seeded);
+}
+
+// ── Recently Viewed ──────────────────────────────────────────
+export function getRecent(): RecentlyViewed[] {
+  return readJSON<RecentlyViewed[]>(KEYS.recent, []);
+}
+
+export function pushRecent(item: Omit<RecentlyViewed, "viewedAt">) {
+  const list = getRecent().filter(
+    (r) => !(r.module === item.module && r.id === item.id)
+  );
+  const next = [
+    { ...item, viewedAt: new Date().toISOString() },
+    ...list,
+  ].slice(0, 6);
+  writeJSON(KEYS.recent, next);
+}
+
+// ── Notifications (read-state only — content is static demo) ──
+export function getReadNotifIds(): string[] {
+  return readJSON<string[]>(KEYS.notifSeen, []);
+}
+
+export function markNotifsRead(ids: string[]) {
+  const seen = new Set(getReadNotifIds());
+  ids.forEach((i) => seen.add(i));
+  writeJSON(KEYS.notifSeen, Array.from(seen));
 }

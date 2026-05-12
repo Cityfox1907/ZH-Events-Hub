@@ -1,17 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { PageHero } from "@/components/PageHero";
 import { Card } from "@/components/Card";
-import { FilterBar } from "@/components/FilterBar";
+import { FilterBar, FilterChips, type FilterState } from "@/components/FilterBar";
 import { LIVE_EVENTS } from "@/lib/data";
 
 export default function LivePage() {
   const [carousel, setCarousel] = useState(0);
+  const [filters, setFilters] = useState<FilterState>({});
   const top = LIVE_EVENTS;
   const active = top[carousel];
+
+  useEffect(() => {
+    const t = setInterval(() => setCarousel((c) => (c + 1) % top.length), 6500);
+    return () => clearInterval(t);
+  }, [top.length]);
 
   function next() {
     setCarousel((c) => (c + 1) % top.length);
@@ -19,6 +25,28 @@ export default function LivePage() {
   function prev() {
     setCarousel((c) => (c - 1 + top.length) % top.length);
   }
+
+  const filtered = useMemo(() => {
+    return LIVE_EVENTS.filter((e) => {
+      if (filters.type) {
+        const map: Record<string, string> = {
+          "Candlelight": "Candlelight Concert",
+          "Pop-up Dinner": "Pop-up Dinner",
+          "Show": "Show",
+          "Immersive": "Immersive Show",
+        };
+        const want = map[filters.type] ?? filters.type;
+        if (e.type !== want) return false;
+      }
+      if (filters.price) {
+        if (filters.price === "bis CHF 50" && e.price_min > 50) return false;
+        if (filters.price === "CHF 50–150" && (e.price_min < 50 || e.price_min > 150)) return false;
+        if (filters.price === "CHF 150+" && e.price_min < 150) return false;
+      }
+      if (filters.vibe && !e.vibe_tags.includes(filters.vibe as never)) return false;
+      return true;
+    });
+  }, [filters]);
 
   return (
     <>
@@ -80,29 +108,32 @@ export default function LivePage() {
       <section className="container-editorial grid lg:grid-cols-[280px_1fr] gap-6 pb-20">
         <aside className="lg:sticky lg:top-24 lg:self-start">
           <FilterBar
+            active={filters}
+            onChange={setFilters}
+            onReset={() => setFilters({})}
             groups={[
               {
                 key: "type",
                 label: "Typ",
-                options: ["Candlelight", "Pop-up Dinner", "Show", "Festival"],
+                options: ["Candlelight", "Pop-up Dinner", "Show", "Immersive"],
               },
               {
                 key: "price",
                 label: "Preis",
                 options: ["bis CHF 50", "CHF 50–150", "CHF 150+"],
               },
-              { key: "date", label: "Datum", options: ["Diese Woche", "Diesen Monat", "Später"] },
-              { key: "vibe", label: "Vibe", options: ["Premium", "Date Night", "Magical"] },
+              { key: "vibe", label: "Vibe", options: ["Premium", "Date Night", "Magical", "Cultural", "Outdoor"] },
             ]}
           />
         </aside>
 
         <div>
+          <FilterChips active={filters} onRemove={(k) => setFilters((f) => ({ ...f, [k]: null }))} />
           <p className="text-[12px] text-ink-muted mb-4">
-            {LIVE_EVENTS.length} Live-Events
+            {filtered.length} Live-Events gefunden
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
-            {LIVE_EVENTS.map((e) => (
+            {filtered.map((e) => (
               <Card
                 key={e.id}
                 module="live"
@@ -114,7 +145,11 @@ export default function LivePage() {
                 meta={`${e.datetime} · ${e.venue}`}
                 price={e.price_range}
                 vibe_tags={e.vibe_tags}
+                trending={e.trending}
                 badge={e.tickets_available < 50 ? "Wenige übrig" : undefined}
+                ticketsLeft={e.tickets_available}
+                soldOut={e.tickets_available === 0}
+                showShare
               />
             ))}
           </div>
