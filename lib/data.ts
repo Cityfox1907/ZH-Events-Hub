@@ -14,6 +14,11 @@ import type {
   DailyPoll,
   InitiativeItem,
   Achievement,
+  EventItem,
+  EventCategory,
+  Bucket,
+  Place,
+  PlaceKind,
 } from "./types";
 
 const UNSPLASH = (id: string) =>
@@ -2341,3 +2346,512 @@ export function getMarktListing(id: string) {
 export function getInitiative(id: string) {
   return INITIATIVES.find((i) => i.id === id);
 }
+
+// ─────────────────────────────────────────────────────────────
+// PHASE 4 — ENTDECKEN (Events) + ORTE (Places)
+// ─────────────────────────────────────────────────────────────
+
+const TODAY_ISO = "2026-05-12T00:00:00+02:00";
+
+function inferBucket(iso: string): Bucket {
+  const today = new Date(TODAY_ISO).getTime();
+  const d = new Date(iso).getTime();
+  const days = (d - today) / 86_400_000;
+  if (days < 1) return "today";
+  const dow = new Date(iso).getDay();
+  if (days < 7 && (dow === 0 || dow === 5 || dow === 6)) return "weekend";
+  if (days < 7) return "week";
+  return "week";
+}
+
+const TONIGHT_CAT_MAP: Record<string, { cat: EventCategory; label: string }> = {
+  Konzert: { cat: "music", label: "Konzert" },
+  Klub: { cat: "party", label: "Klub & Nightlife" },
+  Ausstellung: { cat: "art", label: "Ausstellung" },
+  Theater: { cat: "theater", label: "Theater" },
+  Festival: { cat: "music", label: "Festival" },
+  Sport: { cat: "sport", label: "Sport" },
+  Workshop: { cat: "experience", label: "Workshop" },
+  Food: { cat: "dinner", label: "Food" },
+};
+
+const LIVE_CAT_MAP: Record<string, { cat: EventCategory; label: string }> = {
+  "Candlelight Concert": { cat: "music", label: "Candlelight Concert" },
+  "Pop-up Dinner": { cat: "dinner", label: "Pop-up Dinner" },
+  Show: { cat: "theater", label: "Show" },
+  "Immersive Show": { cat: "art", label: "Immersive Show" },
+};
+
+const EXP_CAT_MAP: Record<string, { cat: EventCategory; label: string }> = {
+  "Wein-Tasting": { cat: "dinner", label: "Wein-Tasting" },
+  Outdoor: { cat: "experience", label: "Outdoor-Erlebnis" },
+  Workshop: { cat: "experience", label: "Workshop" },
+  Tour: { cat: "experience", label: "Geführte Tour" },
+};
+
+const TONIGHT_AS_EVENTS: EventItem[] = TONIGHT_EVENTS.map((e) => {
+  const m = TONIGHT_CAT_MAP[e.category] ?? { cat: "music" as EventCategory, label: e.category };
+  return {
+    id: e.id,
+    source: "tonight",
+    title: e.title,
+    category: m.cat,
+    category_label: m.label,
+    datetime: e.datetime,
+    date_iso: e.date_iso,
+    bucket: e.bucket,
+    venue: e.venue,
+    district: e.district,
+    price: e.price,
+    price_band: e.price_band,
+    vibe_tags: e.vibe_tags,
+    cover_image: e.cover_image,
+    trending: e.trending,
+    views_24h: e.views_24h,
+    tickets_left: e.tickets_left,
+    added_at: e.added_at,
+  };
+});
+
+function priceBandFromMin(min: number): EventItem["price_band"] {
+  if (min === 0) return "free";
+  if (min < 30) return "low";
+  if (min < 80) return "mid";
+  return "high";
+}
+
+const LIVE_AS_EVENTS: EventItem[] = LIVE_EVENTS.map((e) => {
+  const m = LIVE_CAT_MAP[e.type] ?? { cat: "art" as EventCategory, label: e.type };
+  return {
+    id: e.id,
+    source: "live",
+    title: e.title,
+    category: m.cat,
+    category_label: m.label,
+    datetime: e.datetime,
+    date_iso: e.date_iso,
+    bucket: inferBucket(e.date_iso),
+    venue: e.venue,
+    district: e.district,
+    price: e.price_range,
+    price_band: priceBandFromMin(e.price_min),
+    vibe_tags: e.vibe_tags,
+    cover_image: e.cover_image,
+    trending: e.trending,
+    tickets_left: e.tickets_available,
+  };
+});
+
+const EXP_AS_EVENTS: EventItem[] = EXPERIENCES.map((e) => {
+  const m = EXP_CAT_MAP[e.category] ?? { cat: "experience" as EventCategory, label: e.category };
+  const firstSlot = e.slots[0];
+  const iso = firstSlot ? `${firstSlot.date}T${firstSlot.time}:00+02:00` : TODAY_ISO;
+  const dateLabel = firstSlot
+    ? `${new Date(iso).toLocaleDateString("de-CH", { day: "2-digit", month: "short" })}, ${firstSlot.time}`
+    : e.duration;
+  return {
+    id: e.id,
+    source: "experience",
+    title: e.title,
+    category: m.cat,
+    category_label: m.label,
+    datetime: `Ab ${dateLabel}`,
+    date_iso: iso,
+    bucket: inferBucket(iso),
+    venue: e.meeting_point,
+    district: e.district,
+    price: `CHF ${e.price_per_person} p.P.`,
+    price_band: priceBandFromMin(e.price_per_person),
+    vibe_tags: e.vibe_tags,
+    cover_image: e.cover_image,
+    languages: e.languages,
+    tickets_left: firstSlot?.spots_left,
+  };
+});
+
+export const EVENTS_ALL: EventItem[] = [
+  ...TONIGHT_AS_EVENTS,
+  ...LIVE_AS_EVENTS,
+  ...EXP_AS_EVENTS,
+].sort((a, b) => a.date_iso.localeCompare(b.date_iso));
+
+export function eventHref(e: EventItem): string {
+  return `/${e.source}/${e.id}`;
+}
+
+// ─────────────────────────────────────────────────────────────
+// ORTE — new categories (Bars, Badis, Aktivitäten, Museen)
+// ─────────────────────────────────────────────────────────────
+
+const PLACE_BARS: Place[] = [
+  {
+    id: "bar-old-crow",
+    kind: "bar",
+    source: "place",
+    name: "Old Crow",
+    subtype: "Cocktailbar",
+    district: "Kreis 1",
+    address: "Schwanengasse 4, 8001 Zürich",
+    price_range: "CHF CHF CHF",
+    description:
+      "Kleine Bar mit grosser Whisky-Auswahl und klassischen Cocktails. Dunkle Hölzer, gedämpftes Licht, ehrliche Drinks.",
+    vibe_tags: ["Date Night", "Hidden Gem", "Premium"],
+    rating: 4.7,
+    review_count: 213,
+    cover_image: UNSPLASH("photo-1514362545857-3bc16c4c7d1b"),
+    hours: "Di–Sa 17:00–02:00",
+    trending: true,
+  },
+  {
+    id: "bar-kronenhalle",
+    kind: "bar",
+    source: "place",
+    name: "Kronenhalle Bar",
+    subtype: "Hotel-Bar",
+    district: "Kreis 1",
+    address: "Rämistrasse 4, 8001 Zürich",
+    price_range: "CHF CHF CHF CHF",
+    description:
+      "Legendäre Bar mit Originalwerken von Picasso, Chagall und Miró an den Wänden. Klassische Cocktails, präzise serviert.",
+    vibe_tags: ["Premium", "Cultural", "Date Night"],
+    rating: 4.8,
+    review_count: 587,
+    cover_image: UNSPLASH("photo-1543007630-9710e4a00a20"),
+    hours: "Tägl. 16:00–01:30",
+  },
+  {
+    id: "bar-tales",
+    kind: "bar",
+    source: "place",
+    name: "Tales Bar",
+    subtype: "Speakeasy",
+    district: "Kreis 4",
+    address: "Selnaustrasse 5, 8001 Zürich",
+    price_range: "CHF CHF CHF",
+    description:
+      "Speakeasy hinter unscheinbarer Tür. Signature-Cocktails inspiriert von Geschichten und Mythen.",
+    vibe_tags: ["Hidden Gem", "Date Night", "Premium"],
+    rating: 4.6,
+    review_count: 178,
+    cover_image: UNSPLASH("photo-1551024601-bec78aea704b"),
+    hours: "Mi–Sa 19:00–02:00",
+  },
+  {
+    id: "bar-frau-gerold",
+    kind: "bar",
+    source: "place",
+    name: "Frau Gerolds Garten",
+    subtype: "Garten-Bar",
+    district: "Kreis 5",
+    address: "Geroldstrasse 23/23a, 8005 Zürich",
+    price_range: "CHF CHF",
+    description:
+      "Urban Garden mitten in Zürich-West. Bier, Wein, Spritz unter Lichterketten. Sommer pur.",
+    vibe_tags: ["Outdoor", "Casual", "Trending"],
+    rating: 4.5,
+    review_count: 921,
+    cover_image: UNSPLASH("photo-1505275350441-83dcda8eeef5"),
+    hours: "Mai–Sept. tägl. 11:30–24:00",
+    trending: true,
+  },
+  {
+    id: "bar-hive",
+    kind: "bar",
+    source: "place",
+    name: "Hive Club Bar",
+    subtype: "Club & Bar",
+    district: "Kreis 5",
+    address: "Geroldstrasse 5, 8005 Zürich",
+    price_range: "CHF CHF",
+    description:
+      "Vorglühen mit Blick auf den Floor. Internationale DJ-Gäste, junge Crowd, lange Nächte.",
+    vibe_tags: ["Casual", "Trending"],
+    rating: 4.3,
+    review_count: 412,
+    cover_image: UNSPLASH("photo-1572116469696-31de0f17cc34"),
+    hours: "Fr–Sa 23:00–05:00",
+  },
+];
+
+const PLACE_BADIS: Place[] = [
+  {
+    id: "badi-seebad-enge",
+    kind: "badi",
+    source: "place",
+    name: "Seebad Enge",
+    subtype: "Seebad",
+    district: "Kreis 2",
+    address: "Mythenquai 9, 8002 Zürich",
+    price_range: "CHF",
+    description:
+      "Historisches Seebad direkt am Zürichsee. Holzsteg, kleine Bar, Yoga am Morgen. Im Winter Sauna.",
+    vibe_tags: ["Outdoor", "Casual", "Cultural"],
+    rating: 4.8,
+    review_count: 1342,
+    cover_image: UNSPLASH("photo-1530549387789-4c1017266635"),
+    hours: "Mai–Sept. tägl. 09:00–21:00",
+    trending: true,
+  },
+  {
+    id: "badi-utoquai",
+    kind: "badi",
+    source: "place",
+    name: "Strandbad Utoquai",
+    subtype: "Seebad",
+    district: "Kreis 8",
+    address: "Utoquai 50, 8008 Zürich",
+    price_range: "CHF",
+    description:
+      "Hölzernes Jugendstil-Bad am Seeufer. Liegewiese, Sprungtürme, der Klassiker fürs Feierabend-Bad.",
+    vibe_tags: ["Outdoor", "Family", "Casual"],
+    rating: 4.7,
+    review_count: 987,
+    cover_image: UNSPLASH("photo-1551918120-9739cb430c6d"),
+    hours: "Mai–Sept. tägl. 09:00–20:00",
+  },
+  {
+    id: "badi-letzigraben",
+    kind: "badi",
+    source: "place",
+    name: "Freibad Letzigraben",
+    subtype: "Freibad",
+    district: "Kreis 9",
+    address: "Edelweissstrasse 5, 8048 Zürich",
+    price_range: "CHF",
+    description:
+      "Denkmalgeschütztes Freibad von Max Frisch. Olympia-Becken, 10-Meter-Turm, schattige Liegewiese.",
+    vibe_tags: ["Outdoor", "Family", "Cultural"],
+    rating: 4.6,
+    review_count: 765,
+    cover_image: UNSPLASH("photo-1576013551627-0cc20b96c2a7"),
+    hours: "Mai–Sept. tägl. 09:00–20:00",
+  },
+  {
+    id: "badi-oberer-letten",
+    kind: "badi",
+    source: "place",
+    name: "Flussbad Oberer Letten",
+    subtype: "Flussbad",
+    district: "Kreis 5",
+    address: "Lettensteg 10, 8037 Zürich",
+    price_range: "CHF",
+    description:
+      "Im Sommer der Treffpunkt der Stadt. Limmatschwimmen, Beachvolley, Foodtrucks am Steg.",
+    vibe_tags: ["Outdoor", "Trending", "Casual"],
+    rating: 4.7,
+    review_count: 1567,
+    cover_image: UNSPLASH("photo-1530549387789-4c1017266635"),
+    hours: "Mai–Sept. tägl. 09:00–20:00",
+    trending: true,
+  },
+];
+
+const PLACE_ACTIVITIES: Place[] = [
+  {
+    id: "activity-griffin-climbing",
+    kind: "activity",
+    source: "place",
+    name: "Griffin Climbing Gym",
+    subtype: "Boulderhalle",
+    district: "Kreis 4",
+    address: "Hohlstrasse 481, 8048 Zürich",
+    price_range: "CHF CHF",
+    description:
+      "Grösste Boulderhalle der Stadt. Routen für Einsteiger bis Pro, Café, Yoga-Bereich.",
+    vibe_tags: ["Indoor", "Casual", "Family"],
+    rating: 4.7,
+    review_count: 412,
+    cover_image: UNSPLASH("photo-1522163182402-834f871fd851"),
+    hours: "Mo–Fr 09:00–23:00 · Sa–So 09:00–22:00",
+  },
+  {
+    id: "activity-escape-zurich",
+    kind: "activity",
+    source: "place",
+    name: "Adventure Rooms Zürich",
+    subtype: "Escape Room",
+    district: "Kreis 5",
+    address: "Hohlstrasse 192, 8004 Zürich",
+    price_range: "CHF CHF CHF",
+    description:
+      "Sechs Themen-Räume von Krimi bis Sci-Fi. 60 Minuten zum Rätseln — Teams 2 bis 6 Personen.",
+    vibe_tags: ["Indoor", "Casual", "Family"],
+    rating: 4.8,
+    review_count: 287,
+    cover_image: UNSPLASH("photo-1551763272-fc8b8ffaa0fb"),
+    hours: "Di–So 10:00–23:00",
+  },
+  {
+    id: "activity-uetli-bike",
+    kind: "activity",
+    source: "place",
+    name: "Üetliberg Bike-Trails",
+    subtype: "Outdoor-Sport",
+    district: "Kreis 9",
+    address: "Bergstation Uetliberg, 8143 Zürich",
+    price_range: "CHF",
+    description:
+      "Drei Flow-Trails den Hausberg runter. E-Bike-Verleih an der Bergstation. Sonnenuntergang inklusive.",
+    vibe_tags: ["Outdoor", "Trending"],
+    rating: 4.6,
+    review_count: 198,
+    cover_image: UNSPLASH("photo-1532298229144-0ec0c57515c7"),
+    hours: "Mai–Okt. tägl.",
+    trending: true,
+  },
+  {
+    id: "activity-kayak-limmat",
+    kind: "activity",
+    source: "place",
+    name: "Limmat Kayak Tour",
+    subtype: "Wassersport",
+    district: "Kreis 1",
+    address: "Bahnhofquai 19, 8001 Zürich",
+    price_range: "CHF CHF",
+    description:
+      "Geführte Kayak-Tour durch die Altstadt und über den See. Auch für Anfänger geeignet.",
+    vibe_tags: ["Outdoor", "Casual", "Family"],
+    rating: 4.9,
+    review_count: 134,
+    cover_image: UNSPLASH("photo-1463693396721-8ca0cfa2b3b5"),
+    hours: "Mai–Sept. Mi–So 10:00–18:00",
+  },
+];
+
+const PLACE_MUSEUMS: Place[] = [
+  {
+    id: "museum-kunsthaus",
+    kind: "museum",
+    source: "place",
+    name: "Kunsthaus Zürich",
+    subtype: "Kunstmuseum",
+    district: "Kreis 1",
+    address: "Heimplatz 1, 8001 Zürich",
+    price_range: "CHF CHF",
+    description:
+      "Eine der bedeutendsten Sammlungen der Schweiz: Munch, Picasso, Giacometti. Spektakulärer Erweiterungsbau von Chipperfield.",
+    vibe_tags: ["Cultural", "Premium", "Indoor"],
+    rating: 4.7,
+    review_count: 2341,
+    cover_image: UNSPLASH("photo-1554907984-15263bfd63bd"),
+    hours: "Di–So 10:00–18:00 · Mi + Do bis 20:00",
+  },
+  {
+    id: "museum-landesmuseum",
+    kind: "museum",
+    source: "place",
+    name: "Landesmuseum Zürich",
+    subtype: "Geschichtsmuseum",
+    district: "Kreis 1",
+    address: "Museumstrasse 2, 8001 Zürich",
+    price_range: "CHF CHF",
+    description:
+      "Geschichte der Schweiz vom Mittelalter bis heute. Schlossartiger Bau, modernster Anbau, hervorragende Wechselausstellungen.",
+    vibe_tags: ["Cultural", "Family", "Indoor"],
+    rating: 4.6,
+    review_count: 1876,
+    cover_image: UNSPLASH("photo-1565060169187-2af4377b73d2"),
+    hours: "Di–So 10:00–17:00 · Do bis 19:00",
+  },
+  {
+    id: "museum-rietberg",
+    kind: "museum",
+    source: "place",
+    name: "Museum Rietberg",
+    subtype: "Aussereuropäische Kunst",
+    district: "Kreis 2",
+    address: "Gablerstrasse 15, 8002 Zürich",
+    price_range: "CHF CHF",
+    description:
+      "Kunst aus Afrika, Asien und Amerika in einer historischen Villa im Park. Stilles Juwel mit Café im Grünen.",
+    vibe_tags: ["Cultural", "Hidden Gem", "Indoor"],
+    rating: 4.7,
+    review_count: 612,
+    cover_image: UNSPLASH("photo-1503632235391-c30aa7ee3e89"),
+    hours: "Di–So 10:00–17:00 · Mi + Do bis 20:00",
+  },
+  {
+    id: "museum-fifa",
+    kind: "museum",
+    source: "place",
+    name: "FIFA Museum",
+    subtype: "Sportmuseum",
+    district: "Kreis 2",
+    address: "Seestrasse 27, 8002 Zürich",
+    price_range: "CHF CHF",
+    description:
+      "Multimediale Reise durch die Geschichte des Fussballs. Original-WM-Pokale, Trikots, interaktive Stationen.",
+    vibe_tags: ["Family", "Cultural", "Indoor"],
+    rating: 4.5,
+    review_count: 1023,
+    cover_image: UNSPLASH("photo-1551958219-acbc608c6377"),
+    hours: "Di–So 10:00–18:00",
+  },
+];
+
+function dineToPlace(v: DineVenue): Place {
+  const isBar =
+    v.cuisine === "Cocktails" ||
+    v.type.toLowerCase().includes("bar");
+  return {
+    id: v.id,
+    kind: isBar ? "bar" : "restaurant",
+    source: "dine",
+    name: v.name,
+    subtype: v.type,
+    district: v.district,
+    address: v.address,
+    price_range: v.price_range,
+    description: v.description,
+    vibe_tags: v.vibe_tags,
+    rating: v.rating,
+    review_count: v.review_count,
+    cover_image: v.cover_image,
+    hours: v.hours,
+    trending: v.trending,
+  };
+}
+
+export const PLACES_ALL: Place[] = [
+  ...DINE_VENUES.map(dineToPlace),
+  ...PLACE_BARS,
+  ...PLACE_BADIS,
+  ...PLACE_ACTIVITIES,
+  ...PLACE_MUSEUMS,
+];
+
+export function placeHref(p: Place): string {
+  return p.source === "dine" ? `/dine/${p.id}` : `/orte/${p.id}`;
+}
+
+// UI metadata — used by /entdecken and /orte pages.
+// Icons are referenced by name (Lucide); pages import the icon component directly.
+export const EVENT_CATEGORIES: {
+  key: EventCategory;
+  icon: string;
+  label: string;
+}[] = [
+  { key: "music", icon: "Music", label: "Konzerte & Musik" },
+  { key: "dinner", icon: "UtensilsCrossed", label: "Dinner & Pop-ups" },
+  { key: "art", icon: "Palette", label: "Kunst & Kultur" },
+  { key: "experience", icon: "Sparkles", label: "Erlebnisse & Workshops" },
+  { key: "party", icon: "PartyPopper", label: "Parties & Nightlife" },
+  { key: "networking", icon: "Handshake", label: "Networking & Talks" },
+  { key: "sport", icon: "Trophy", label: "Sport-Events" },
+  { key: "family", icon: "Users", label: "Familie & Kinder" },
+  { key: "market", icon: "ShoppingBag", label: "Märkte" },
+  { key: "theater", icon: "Drama", label: "Theater & Comedy" },
+];
+
+export const PLACE_KINDS: {
+  key: PlaceKind;
+  icon: string;
+  label: string;
+  plural: string;
+}[] = [
+  { key: "restaurant", icon: "UtensilsCrossed", label: "Restaurant", plural: "Restaurants" },
+  { key: "bar", icon: "Wine", label: "Bar", plural: "Bars" },
+  { key: "badi", icon: "Waves", label: "Badi", plural: "Badis" },
+  { key: "activity", icon: "Activity", label: "Aktivität", plural: "Aktivitäten" },
+  { key: "museum", icon: "Landmark", label: "Museum", plural: "Museen" },
+];

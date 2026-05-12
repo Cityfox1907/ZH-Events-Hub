@@ -54,11 +54,11 @@ export default function FavoritesPage() {
               Favoriten bleiben in deinem Browser.
             </p>
             <div className="flex flex-wrap gap-3 justify-center mt-6">
-              <Link href="/tonight" className="px-4 py-2 rounded-full bg-burgundy text-paper text-[13px] hover:bg-burgundy-dark">
-                Tonight entdecken
+              <Link href="/entdecken" className="px-4 py-2 rounded-full bg-burgundy text-paper text-[13px] hover:bg-burgundy-dark">
+                Events entdecken
               </Link>
-              <Link href="/dine" className="px-4 py-2 rounded-full border border-line text-[13px] hover:border-burgundy">
-                Restaurants ansehen
+              <Link href="/orte" className="px-4 py-2 rounded-full border border-line text-[13px] hover:border-burgundy">
+                Orte ansehen
               </Link>
             </div>
           </div>

@@ -14,12 +14,10 @@ import type { MockUser } from "@/lib/types";
 import { useToast } from "./Toast";
 
 const NAV = [
-  { href: "/tonight", label: "Tonight" },
-  { href: "/dine", label: "Dine" },
-  { href: "/experience", label: "Experience" },
-  { href: "/live", label: "Live" },
-  { href: "/puls", label: "Puls" },
+  { href: "/entdecken", label: "Entdecken" },
+  { href: "/orte", label: "Orte" },
   { href: "/markt", label: "Markt" },
+  { href: "/puls", label: "Puls" },
   { href: "/stimmen", label: "Stimmen" },
 ];
 

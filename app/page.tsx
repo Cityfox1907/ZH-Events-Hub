@@ -3,7 +3,6 @@ import {
   ArrowRight,
   CalendarHeart,
   UtensilsCrossed,
-  Compass,
   Sparkles,
   TrendingUp,
   Flame,
@@ -40,32 +39,18 @@ import { OnboardingTour } from "@/components/OnboardingTour";
 
 const MODULES = [
   {
-    href: "/tonight",
-    label: "Tonight",
-    title: "Heute & diese Woche",
-    desc: "Konzerte, Klubs, Kunst — was wirklich läuft.",
+    href: "/entdecken",
+    label: "Entdecken",
+    title: "Alle Events",
+    desc: "Konzerte, Pop-ups, Theater, Workshops, Märkte — was diese Woche passiert.",
     Icon: CalendarHeart,
   },
   {
-    href: "/dine",
-    label: "Dine",
-    title: "Restaurants & Bars",
-    desc: "Reservieren ohne Telefonjagd.",
+    href: "/orte",
+    label: "Orte",
+    title: "Restaurants, Bars, Badis, Museen",
+    desc: "Alle Orte, die immer da sind — Restaurants reservieren, Badis finden, Museen entdecken.",
     Icon: UtensilsCrossed,
-  },
-  {
-    href: "/experience",
-    label: "Experience",
-    title: "Lokale Erlebnisse",
-    desc: "Tasting, Workshops, geführte Touren.",
-    Icon: Compass,
-  },
-  {
-    href: "/live",
-    label: "Live",
-    title: "Pop-up & Premium",
-    desc: "Candlelight, Secret Suppers, Hochkaräter.",
-    Icon: Sparkles,
   },
   {
     href: "/puls",
@@ -206,7 +191,7 @@ export default function HomePage() {
             Heute Abend in Zürich
           </h2>
           <Link
-            href="/tonight"
+            href="/entdecken"
             className="text-[13px] font-medium text-burgundy hover:underline"
           >
             Alle ansehen →
@@ -499,8 +484,8 @@ export default function HomePage() {
           <h2 className="font-display text-3xl md:text-4xl">
             Heisse Tipps · diese Woche
           </h2>
-          <Link href="/tonight" className="text-[13px] font-medium text-burgundy hover:underline">
-            Mehr Tonight →
+          <Link href="/entdecken" className="text-[13px] font-medium text-burgundy hover:underline">
+            Mehr Events →
           </Link>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
