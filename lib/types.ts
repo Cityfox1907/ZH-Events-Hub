@@ -181,9 +181,88 @@ export interface EventItem {
 export type PlaceKind =
   | "restaurant"
   | "bar"
+  | "cafe"
   | "badi"
   | "activity"
-  | "museum";
+  | "museum"
+  | "nature"
+  | "market";
+
+// ─────────────────────────────────────────────────────────────
+// ENTDECKEN — unified facet model (Phase 5)
+// 3-axis navigation: WAS / WANN / STIL across events + places
+// ─────────────────────────────────────────────────────────────
+
+export type EntdeckenCategory =
+  | "food"
+  | "music"
+  | "art"
+  | "activity"
+  | "wellness"
+  | "culture"
+  | "courses"
+  | "nature"
+  | "family"
+  | "nightlife"
+  | "shopping"
+  | "sport";
+
+export type EntdeckenTime =
+  | "now-open"
+  | "tonight"
+  | "weekend"
+  | "this-week"
+  | "evergreen";
+
+export type StyleTag =
+  | "Date Night"
+  | "Mit Freunden"
+  | "Solo"
+  | "Familie"
+  | "Premium"
+  | "Günstig"
+  | "Touristen-Tipp"
+  | "Geheim-Tipp"
+  | "Indoor"
+  | "Outdoor";
+
+export type ListingKind = "event" | "place";
+
+export interface Listing {
+  id: string;
+  kind: ListingKind;
+  href: string;
+  title: string;
+  category: EntdeckenCategory;
+  category_label: string;
+  district: string;
+  cover_image: string;
+  // event fields
+  datetime?: string;
+  date_iso?: string;
+  bucket?: Bucket;
+  // place fields
+  hours?: string;
+  rating?: number;
+  // both
+  price?: string;
+  price_band: "free" | "low" | "mid" | "high";
+  style_tags: StyleTag[];
+  vibe_tags: Vibe[];
+  badges: ListingBadge[];
+  trending?: boolean;
+  views_24h?: number;
+  tickets_left?: number;
+  source_module: ModuleKey;
+  source_id: string;
+}
+
+export type ListingBadge =
+  | "trending"
+  | "secret"
+  | "tourist"
+  | "premium"
+  | "new";
 
 export interface Place {
   id: string;

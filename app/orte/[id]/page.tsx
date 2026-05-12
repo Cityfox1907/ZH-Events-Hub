@@ -10,9 +10,12 @@ import {
   Star,
   UtensilsCrossed,
   Wine,
+  Coffee,
   Waves,
   Activity,
   Landmark,
+  TreePine,
+  ShoppingBag,
 } from "lucide-react";
 import { BookmarkButton } from "@/components/BookmarkButton";
 import { ShareButton } from "@/components/ShareModal";
@@ -22,17 +25,23 @@ import type { PlaceKind } from "@/lib/types";
 const KIND_ICONS: Record<PlaceKind, typeof UtensilsCrossed> = {
   restaurant: UtensilsCrossed,
   bar: Wine,
+  cafe: Coffee,
   badi: Waves,
   activity: Activity,
   museum: Landmark,
+  nature: TreePine,
+  market: ShoppingBag,
 };
 
 const KIND_LABELS: Record<PlaceKind, string> = {
   restaurant: "Restaurant",
   bar: "Bar",
+  cafe: "Café",
   badi: "Badi",
   activity: "Aktivität",
   museum: "Museum",
+  nature: "Natur & Aussicht",
+  market: "Markt",
 };
 
 export default function OrtDetailPage() {
@@ -63,10 +72,10 @@ export default function OrtDetailPage() {
           <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-transparent" />
           <div className="container-editorial absolute inset-x-0 bottom-0 pb-8 md:pb-12 text-paper">
             <Link
-              href="/orte"
+              href="/entdecken"
               className="inline-flex items-center gap-1.5 text-[12px] uppercase tracking-wider text-paper-dim hover:text-paper mb-3"
             >
-              <ArrowLeft className="w-3.5 h-3.5" /> Alle Orte
+              <ArrowLeft className="w-3.5 h-3.5" /> Zurück zu Entdecken
             </Link>
             <div className="flex items-center gap-2 mb-2">
               <Icon className="w-4 h-4 text-brass" strokeWidth={1.5} />

@@ -11,7 +11,9 @@ import {
   Search,
   MapPin,
   Users,
+  Camera,
 } from "lucide-react";
+import { PulsSubNav } from "@/components/PulsSubNav";
 import {
   PULS_POSTS,
   PULS_DISTRICTS,
@@ -36,7 +38,7 @@ import { VerificationBadge } from "@/components/VerificationBadge";
 type Tab = "hot" | "neu" | "top-week" | "tipps";
 
 const TABS: { key: Tab; label: string; icon: React.ReactNode }[] = [
-  { key: "hot", label: "Hot 🔥", icon: <Flame className="w-3.5 h-3.5" /> },
+  { key: "hot", label: "Hot", icon: <Flame className="w-3.5 h-3.5" /> },
   { key: "neu", label: "Neu", icon: <Clock className="w-3.5 h-3.5" /> },
   { key: "top-week", label: "Top diese Woche", icon: <TrendingUp className="w-3.5 h-3.5" /> },
   { key: "tipps", label: "Beste Tipps", icon: <Star className="w-3.5 h-3.5" /> },
@@ -96,30 +98,33 @@ export default function PulsPage() {
 
   return (
     <>
+      <PulsSubNav />
+
       {/* HEADER ───────────────────────────────────────────── */}
-      <section className="container-editorial pt-10 pb-6">
+      <section className="container-editorial pt-8 pb-6">
         <div className="flex items-start justify-between gap-3 flex-wrap">
           <div>
             <p className="eyebrow">Puls · Community-Feed</p>
-            <h1 className="font-display text-4xl md:text-5xl mt-2 leading-tight">
+            <h1 className="font-display text-3xl md:text-4xl mt-2 leading-tight">
               Was passiert in Zürich, jetzt.
             </h1>
-            <p className="text-ink-muted text-[15px] mt-2 max-w-xl">
-              Reddit & Twitter zusammen — aber nur für Zürcher. Tipps, Fragen,
-              Live-Updates, Spontan-Treffen.
+            <p className="text-ink-muted text-[14px] mt-2 max-w-xl">
+              Tipps, Fragen, Live-Updates, Spontan-Treffen — alles aus der Stadt.
             </p>
           </div>
           <div className="flex items-center gap-2 text-[12px] text-ink-muted">
             <Users className="w-4 h-4 text-burgundy" />
-            <span className="tabular-nums"><strong className="text-ink">{PULS_ACTIVE_NOW.toLocaleString("de-CH")}</strong> online</span>
+            <span className="tabular-nums">
+              <strong className="text-ink">{PULS_ACTIVE_NOW.toLocaleString("de-CH")}</strong>{" "}
+              online
+            </span>
           </div>
         </div>
 
-        <div className="mt-4 p-3 rounded-xl bg-paper-dim border border-line text-[12.5px] text-ink-muted flex items-center gap-2">
-          <span>🎉</span>
-          <span>
-            ZurichTonight ist aktuell <strong className="text-ink">komplett kostenlos</strong> — wir bauen die Zürcher Community auf. Danke, dass du dabei bist!
-          </span>
+        <div className="mt-4 p-3 rounded-xl bg-paper-dim border border-line text-[12.5px] text-ink-muted">
+          ZurichTonight ist aktuell{" "}
+          <strong className="text-ink">komplett kostenlos</strong> — wir bauen die
+          Zürcher Community auf.
         </div>
       </section>
 
@@ -493,9 +498,10 @@ function PostComposer({ onClose }: { onClose: () => void }) {
         {/* Image (Mock) */}
         <button
           onClick={() => push("Bild-Upload kommt bald (Demo)")}
-          className="mt-3 w-full px-3 py-2 text-[12px] border border-dashed border-line rounded-lg text-ink-muted hover:border-burgundy hover:text-burgundy"
+          className="mt-3 w-full px-3 py-2 text-[12px] border border-dashed border-line rounded-lg text-ink-muted hover:border-burgundy hover:text-burgundy inline-flex items-center justify-center gap-1.5"
         >
-          📷 Bild hinzufügen (optional)
+          <Camera className="w-3.5 h-3.5" />
+          Bild hinzufügen (optional)
         </button>
 
         <button

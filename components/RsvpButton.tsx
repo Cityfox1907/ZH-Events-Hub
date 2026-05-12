@@ -68,10 +68,10 @@ export function RsvpButton({
             Dieses Event ist {requiredTier}-Mitgliedern vorbehalten.
           </div>
           <Link
-            href="/pulse"
+            href="/puls"
             className="block w-full py-3 rounded-lg bg-burgundy text-paper font-medium hover:bg-burgundy-dark transition-colors text-center"
           >
-            Membership ansehen
+            Zum Community-Feed
           </Link>
         </div>
       )}

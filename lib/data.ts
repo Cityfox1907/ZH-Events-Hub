@@ -19,6 +19,11 @@ import type {
   Bucket,
   Place,
   PlaceKind,
+  Listing,
+  ListingBadge,
+  EntdeckenCategory,
+  EntdeckenTime,
+  StyleTag,
 } from "./types";
 
 const UNSPLASH = (id: string) =>
@@ -2789,6 +2794,170 @@ const PLACE_MUSEUMS: Place[] = [
   },
 ];
 
+const PLACE_CAFES: Place[] = [
+  {
+    id: "cafe-acid",
+    kind: "cafe",
+    source: "place",
+    name: "Acid Coffee",
+    subtype: "Specialty Coffee",
+    district: "Kreis 4",
+    address: "Bertastrasse 16, 8003 Zürich",
+    price_range: "CHF CHF",
+    description:
+      "Specialty Coffee aus eigener Rösterei. Pour-Over, V60 und ein paar perfekte Croissants. Kleiner Innenhof.",
+    vibe_tags: ["Hidden Gem", "Casual", "Indoor"],
+    rating: 4.8,
+    review_count: 312,
+    cover_image: UNSPLASH("photo-1559925393-8be0ec4767c8"),
+    hours: "Mo–Fr 07:30–17:00 · Sa–So 09:00–17:00",
+  },
+  {
+    id: "cafe-henrici",
+    kind: "cafe",
+    source: "place",
+    name: "Café Henrici",
+    subtype: "Stadt-Café",
+    district: "Kreis 1",
+    address: "Niederdorfstrasse 1, 8001 Zürich",
+    price_range: "CHF CHF",
+    description:
+      "Klassisches Stadt-Café mit Aussicht auf den Lindenhof. Hausgemachte Kuchen, ehrlicher Kaffee, lange Frühstücke.",
+    vibe_tags: ["Casual", "Cultural", "Indoor"],
+    rating: 4.5,
+    review_count: 421,
+    cover_image: UNSPLASH("photo-1453614512568-c4024d13c247"),
+    hours: "Tägl. 08:00–22:00",
+  },
+];
+
+const PLACE_NATURE: Place[] = [
+  {
+    id: "nature-uetliberg",
+    kind: "nature",
+    source: "place",
+    name: "Üetliberg",
+    subtype: "Aussichtsberg",
+    district: "Kreis 9",
+    address: "Bergstation Uetliberg, 8143 Zürich",
+    price_range: "CHF",
+    description:
+      "Zürichs Hausberg mit Panorama-Aussicht über die ganze Stadt, den See und bei klarem Wetter bis in die Alpen.",
+    vibe_tags: ["Outdoor", "Cultural", "Family"],
+    rating: 4.8,
+    review_count: 3214,
+    cover_image: UNSPLASH("photo-1506665531195-3566af2b4dfa"),
+    hours: "Ganzjährig zugänglich",
+    trending: true,
+  },
+  {
+    id: "nature-lindenhof",
+    kind: "nature",
+    source: "place",
+    name: "Lindenhof",
+    subtype: "Aussichts-Platz",
+    district: "Kreis 1",
+    address: "Lindenhof, 8001 Zürich",
+    price_range: "CHF",
+    description:
+      "Stille Plattform mitten in der Altstadt mit Blick auf Limmat und ETH. Treffpunkt für Schachspieler und Sonnenuntergänge.",
+    vibe_tags: ["Outdoor", "Cultural", "Hidden Gem"],
+    rating: 4.7,
+    review_count: 1842,
+    cover_image: UNSPLASH("photo-1573152958734-1922c188fba3"),
+    hours: "Ganzjährig zugänglich",
+  },
+  {
+    id: "nature-werdinsel",
+    kind: "nature",
+    source: "place",
+    name: "Werdinsel",
+    subtype: "Fluss-Insel",
+    district: "Kreis 9",
+    address: "Werdinsel, 8048 Zürich",
+    price_range: "CHF",
+    description:
+      "Naturbelassene Insel in der Limmat — Badeplatz, Grillstellen, Nudisten-Wiese und endlose Sommerabende.",
+    vibe_tags: ["Outdoor", "Casual", "Hidden Gem"],
+    rating: 4.6,
+    review_count: 743,
+    cover_image: UNSPLASH("photo-1500382017468-9049fed747ef"),
+    hours: "Ganzjährig zugänglich",
+  },
+  {
+    id: "nature-zueriberg",
+    kind: "nature",
+    source: "place",
+    name: "Zürichberg",
+    subtype: "Stadtwald",
+    district: "Kreis 7",
+    address: "Zürichbergstrasse, 8044 Zürich",
+    price_range: "CHF",
+    description:
+      "Stadtwald mit Wanderwegen, FIFA-Stein, Wildpark und der besten Aussicht auf den See vom Norden.",
+    vibe_tags: ["Outdoor", "Family", "Casual"],
+    rating: 4.7,
+    review_count: 891,
+    cover_image: UNSPLASH("photo-1448375240586-882707db888b"),
+    hours: "Ganzjährig zugänglich",
+  },
+];
+
+const PLACE_MARKETS: Place[] = [
+  {
+    id: "market-buerkliplatz",
+    kind: "market",
+    source: "place",
+    name: "Wochenmarkt Bürkliplatz",
+    subtype: "Wochenmarkt",
+    district: "Kreis 1",
+    address: "Bürkliplatz, 8001 Zürich",
+    price_range: "CHF CHF",
+    description:
+      "Der Klassiker. Regionale Bauern, Käse, Blumen, Honig, frisches Brot. Treffpunkt für Foodies jeden Dienstag und Freitag.",
+    vibe_tags: ["Outdoor", "Cultural", "Family"],
+    rating: 4.7,
+    review_count: 1234,
+    cover_image: UNSPLASH("photo-1488459716781-31db52582fe9"),
+    hours: "Di + Fr 06:00–11:00",
+  },
+  {
+    id: "market-viadukt",
+    kind: "market",
+    source: "place",
+    name: "Markthalle im Viadukt",
+    subtype: "Markthalle",
+    district: "Kreis 5",
+    address: "Limmatstrasse 231, 8005 Zürich",
+    price_range: "CHF CHF",
+    description:
+      "Dauerhafte Markthalle unter den Bögen — Käse, Fleisch, Wein, Gemüse, dazu Bistros und Bar. Sieben Tage offen.",
+    vibe_tags: ["Indoor", "Premium", "Casual"],
+    rating: 4.6,
+    review_count: 987,
+    cover_image: UNSPLASH("photo-1542838132-92c53300491e"),
+    hours: "Mo–Sa 09:00–20:00 · So 10:00–18:00",
+    trending: true,
+  },
+  {
+    id: "market-engros",
+    kind: "market",
+    source: "place",
+    name: "Engrosmarkt",
+    subtype: "Grossmarkt",
+    district: "Kreis 4",
+    address: "Aargauerstrasse 1, 8048 Zürich",
+    price_range: "CHF",
+    description:
+      "Der Zürcher Grossmarkt — Frühaufsteher kaufen hier Fisch, Gemüse und Blumen direkt ab Lieferwagen.",
+    vibe_tags: ["Indoor", "Hidden Gem"],
+    rating: 4.3,
+    review_count: 234,
+    cover_image: UNSPLASH("photo-1573246123716-6b1782bfc499"),
+    hours: "Mo–Sa 04:00–10:00",
+  },
+];
+
 function dineToPlace(v: DineVenue): Place {
   const isBar =
     v.cuisine === "Cocktails" ||
@@ -2815,9 +2984,12 @@ function dineToPlace(v: DineVenue): Place {
 export const PLACES_ALL: Place[] = [
   ...DINE_VENUES.map(dineToPlace),
   ...PLACE_BARS,
+  ...PLACE_CAFES,
   ...PLACE_BADIS,
   ...PLACE_ACTIVITIES,
   ...PLACE_MUSEUMS,
+  ...PLACE_NATURE,
+  ...PLACE_MARKETS,
 ];
 
 export function placeHref(p: Place): string {
@@ -2851,7 +3023,278 @@ export const PLACE_KINDS: {
 }[] = [
   { key: "restaurant", icon: "UtensilsCrossed", label: "Restaurant", plural: "Restaurants" },
   { key: "bar", icon: "Wine", label: "Bar", plural: "Bars" },
+  { key: "cafe", icon: "Coffee", label: "Café", plural: "Cafés" },
   { key: "badi", icon: "Waves", label: "Badi", plural: "Badis" },
   { key: "activity", icon: "Activity", label: "Aktivität", plural: "Aktivitäten" },
   { key: "museum", icon: "Landmark", label: "Museum", plural: "Museen" },
+  { key: "nature", icon: "TreePine", label: "Natur", plural: "Natur & Aussicht" },
+  { key: "market", icon: "ShoppingBag", label: "Markt", plural: "Märkte" },
+];
+
+// ─────────────────────────────────────────────────────────────
+// PHASE 5 — ENTDECKEN: unified facet navigation
+// 3-axis: WAS (category) / WANN (time) / STIL (style)
+// ─────────────────────────────────────────────────────────────
+
+export const ENTDECKEN_CATEGORIES: {
+  key: EntdeckenCategory;
+  icon: string;
+  label: string;
+}[] = [
+  { key: "food", icon: "UtensilsCrossed", label: "Essen & Trinken" },
+  { key: "music", icon: "Music", label: "Musik & Konzerte" },
+  { key: "art", icon: "Palette", label: "Kunst & Ausstellungen" },
+  { key: "activity", icon: "Activity", label: "Aktivitäten & Spielen" },
+  { key: "wellness", icon: "Waves", label: "Wellness & Wasser" },
+  { key: "culture", icon: "Landmark", label: "Kultur & Museen" },
+  { key: "courses", icon: "GraduationCap", label: "Kurse & Workshops" },
+  { key: "nature", icon: "TreePine", label: "Natur & Aussicht" },
+  { key: "family", icon: "Baby", label: "Familie & Kinder" },
+  { key: "nightlife", icon: "PartyPopper", label: "Nightlife & Parties" },
+  { key: "shopping", icon: "ShoppingBag", label: "Märkte & Shopping" },
+  { key: "sport", icon: "Trophy", label: "Sport-Events" },
+];
+
+export const ENTDECKEN_TIMES: { key: EntdeckenTime; label: string }[] = [
+  { key: "now-open", label: "Jetzt geöffnet" },
+  { key: "tonight", label: "Heute Abend" },
+  { key: "weekend", label: "Wochenende" },
+  { key: "this-week", label: "Diese Woche" },
+  { key: "evergreen", label: "Dauerhaft" },
+];
+
+export const ENTDECKEN_STYLES: StyleTag[] = [
+  "Date Night",
+  "Mit Freunden",
+  "Solo",
+  "Familie",
+  "Premium",
+  "Günstig",
+  "Touristen-Tipp",
+  "Geheim-Tipp",
+  "Indoor",
+  "Outdoor",
+];
+
+// Map EventCategory + Place.kind → EntdeckenCategory
+const EVENT_TO_FACET: Record<EventCategory, EntdeckenCategory> = {
+  music: "music",
+  dinner: "food",
+  art: "art",
+  experience: "courses",
+  party: "nightlife",
+  networking: "culture",
+  sport: "sport",
+  family: "family",
+  market: "shopping",
+  theater: "art",
+};
+
+const PLACE_TO_FACET: Record<PlaceKind, EntdeckenCategory> = {
+  restaurant: "food",
+  bar: "nightlife",
+  cafe: "food",
+  badi: "wellness",
+  activity: "activity",
+  museum: "culture",
+  nature: "nature",
+  market: "shopping",
+};
+
+// Derive Style tags from a place/event's vibe tags + heuristics.
+function deriveStyleTags(opts: {
+  vibes: string[];
+  price_band: "free" | "low" | "mid" | "high";
+  trending?: boolean;
+  rating?: number;
+  district?: string;
+  reviewCount?: number;
+}): StyleTag[] {
+  const out = new Set<StyleTag>();
+  for (const v of opts.vibes) {
+    if (v === "Date Night") out.add("Date Night");
+    if (v === "Premium" || v === "Fine Dining") out.add("Premium");
+    if (v === "Family") out.add("Familie");
+    if (v === "Casual") out.add("Mit Freunden");
+    if (v === "Hidden Gem") out.add("Geheim-Tipp");
+    if (v === "Indoor") out.add("Indoor");
+    if (v === "Outdoor") out.add("Outdoor");
+    if (v === "Cultural") out.add("Solo");
+  }
+  if (opts.price_band === "free" || opts.price_band === "low") out.add("Günstig");
+  if (opts.price_band === "high") out.add("Premium");
+  if ((opts.reviewCount ?? 0) > 800 || (opts.rating ?? 0) >= 4.7) out.add("Touristen-Tipp");
+  if (opts.trending && !out.has("Geheim-Tipp")) out.add("Mit Freunden");
+  return Array.from(out);
+}
+
+function deriveBadges(opts: {
+  trending?: boolean;
+  vibes: string[];
+  price_band: "free" | "low" | "mid" | "high";
+  rating?: number;
+  reviewCount?: number;
+  addedAt?: string;
+}): ListingBadge[] {
+  const out: ListingBadge[] = [];
+  if (opts.trending) out.push("trending");
+  if (opts.vibes.includes("Hidden Gem")) out.push("secret");
+  if (opts.vibes.includes("Premium") || opts.price_band === "high") out.push("premium");
+  if ((opts.reviewCount ?? 0) > 800 || (opts.rating ?? 0) >= 4.7) out.push("tourist");
+  if (opts.addedAt) out.push("new");
+  return out;
+}
+
+const EVENT_AS_LISTING: Listing[] = EVENTS_ALL.map((e) => {
+  const styles = deriveStyleTags({
+    vibes: e.vibe_tags,
+    price_band: e.price_band,
+    trending: e.trending,
+  });
+  const badges = deriveBadges({
+    trending: e.trending,
+    vibes: e.vibe_tags,
+    price_band: e.price_band,
+    addedAt: e.added_at,
+  });
+  return {
+    id: `event-${e.source}-${e.id}`,
+    kind: "event",
+    href: eventHref(e),
+    title: e.title,
+    category: EVENT_TO_FACET[e.category],
+    category_label: e.category_label,
+    district: e.district,
+    cover_image: e.cover_image,
+    datetime: e.datetime,
+    date_iso: e.date_iso,
+    bucket: e.bucket,
+    price: e.price,
+    price_band: e.price_band,
+    style_tags: styles,
+    vibe_tags: e.vibe_tags,
+    badges,
+    trending: e.trending,
+    views_24h: e.views_24h,
+    tickets_left: e.tickets_left,
+    source_module: e.source,
+    source_id: e.id,
+  };
+});
+
+function placeBand(p: Place): "free" | "low" | "mid" | "high" {
+  const n = (p.price_range.match(/CHF/g) ?? []).length;
+  if (n <= 1) return "low";
+  if (n === 2) return "mid";
+  return "high";
+}
+
+const PLACE_AS_LISTING: Listing[] = PLACES_ALL.map((p) => {
+  const band = placeBand(p);
+  const styles = deriveStyleTags({
+    vibes: p.vibe_tags,
+    price_band: band,
+    trending: p.trending,
+    rating: p.rating,
+    reviewCount: p.review_count,
+  });
+  const badges = deriveBadges({
+    trending: p.trending,
+    vibes: p.vibe_tags,
+    price_band: band,
+    rating: p.rating,
+    reviewCount: p.review_count,
+  });
+  return {
+    id: `place-${p.source}-${p.id}`,
+    kind: "place",
+    href: placeHref(p),
+    title: p.name,
+    category: PLACE_TO_FACET[p.kind],
+    category_label: p.subtype,
+    district: p.district,
+    cover_image: p.cover_image,
+    hours: p.hours,
+    rating: p.rating,
+    price: p.price_range,
+    price_band: band,
+    style_tags: styles,
+    vibe_tags: p.vibe_tags,
+    badges,
+    trending: p.trending,
+    source_module: p.source === "dine" ? "dine" : "orte",
+    source_id: p.id,
+  };
+});
+
+export const LISTINGS_ALL: Listing[] = [
+  ...EVENT_AS_LISTING,
+  ...PLACE_AS_LISTING,
+];
+
+// Heuristic: a place is "open now" if its hours contain "Tägl." or covers today.
+// For prototype demo we simply mark non-seasonal venues open during Mo-Fr daytime.
+const HOUR_OPEN_KEYWORDS = ["Tägl", "tägl", "Mo–Sa", "Mo–Fr", "Di–So", "Di–Sa", "Mi–Sa"];
+function placeOpenNow(hours: string | undefined): boolean {
+  if (!hours) return false;
+  if (hours.includes("Mai–Sept")) {
+    const m = new Date().getMonth();
+    if (m < 4 || m > 8) return false;
+  }
+  return HOUR_OPEN_KEYWORDS.some((k) => hours.includes(k));
+}
+
+export function listingMatchesTime(l: Listing, t: EntdeckenTime): boolean {
+  if (t === "evergreen") return l.kind === "place";
+  if (l.kind === "event") {
+    if (t === "tonight") return l.bucket === "today";
+    if (t === "weekend") return l.bucket === "weekend";
+    if (t === "this-week") return l.bucket === "today" || l.bucket === "weekend" || l.bucket === "week";
+    if (t === "now-open") return l.bucket === "today";
+    return false;
+  }
+  // place
+  if (t === "now-open") return placeOpenNow(l.hours);
+  // places generally match this-week / weekend by being always-open
+  return t === "this-week" || t === "weekend";
+}
+
+export const ENTDECKEN_LIVE_COUNTS = {
+  events: EVENT_AS_LISTING.length,
+  places: PLACE_AS_LISTING.length,
+  onlineNow: 1247,
+};
+
+// District spotlight (rotates weekly — for demo we hardcode "Kreis 5")
+export const DISTRICT_SPOTLIGHT = {
+  district: "Kreis 5",
+  blurb:
+    "Vom Viadukt bis zum Letten — der kreativste Kreis Zürichs diese Woche im Fokus.",
+};
+
+// Curated theme bundles
+export const CURATED_THEMES: {
+  key: string;
+  title: string;
+  desc: string;
+  filters: { category?: EntdeckenCategory; time?: EntdeckenTime; style?: StyleTag };
+}[] = [
+  {
+    key: "tonight-friends",
+    title: "Heute Abend mit Freunden",
+    desc: "Bars, Konzerte, Pop-ups — was diese Nacht los ist.",
+    filters: { time: "tonight", style: "Mit Freunden" },
+  },
+  {
+    key: "sunday-brunch",
+    title: "Sonntags-Brunch",
+    desc: "Lange Tische, viel Zeit, viel Kaffee.",
+    filters: { category: "food" },
+  },
+  {
+    key: "rain-indoor",
+    title: "Regenwetter heute",
+    desc: "Museen, Markthallen, Spas — alles unter Dach.",
+    filters: { style: "Indoor" },
+  },
 ];
