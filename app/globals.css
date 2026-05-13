@@ -223,6 +223,29 @@
 
 html { scroll-behavior: smooth; }
 
+/* Year-view cinematic Ken-Burns + cross-fade for Phase 6 */
+@keyframes zb-kenburns {
+  0%   { transform: scale(1) translate(0, 0); }
+  100% { transform: scale(1.12) translate(-2%, -1%); }
+}
+
+.zb-kenburns {
+  animation: zb-kenburns 24s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes zb-fade-cross {
+  0%, 18% { opacity: 1; }
+  25%, 95% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.zb-fade-cross {
+  animation: zb-fade-cross 24s linear infinite;
+}
+
+.scrollbar-thin::-webkit-scrollbar { height: 4px; }
+
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;

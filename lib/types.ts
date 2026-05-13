@@ -482,6 +482,56 @@ export interface ProviderInquiry {
   status: "Neu" | "Beantwortet" | "Konvertiert";
 }
 
+// ─────────────────────────────────────────────────────────────
+// KALENDER — Zürich-Kalender (Phase 6)
+// 33 Zürcher Klassiker + saisonale Anlässe übers Jahr
+// ─────────────────────────────────────────────────────────────
+
+export type KalenderCategory =
+  | "music"
+  | "festival_tradition"
+  | "sport"
+  | "culture"
+  | "theater"
+  | "nightlife"
+  | "family"
+  | "market"
+  | "film"
+  | "art";
+
+export type KalenderImportance = "mega" | "standard";
+export type KalenderSeason = "fruehling" | "sommer" | "herbst" | "winter";
+
+export interface KalenderEvent {
+  id: string;
+  slug: string;
+  title: string;
+  category: KalenderCategory;
+  category_label: string;
+  /** ISO yyyy-mm-dd start date */
+  dateStart: string;
+  /** ISO yyyy-mm-dd end date — same as start if single-day */
+  dateEnd: string;
+  /** HH:MM 24h time, optional */
+  timeStart?: string;
+  importance: KalenderImportance;
+  isClassic: boolean;
+  season: KalenderSeason;
+  heroImage: string;
+  galleryImages: string[];
+  shortDescription: string;
+  longDescription?: string;
+  location: string;
+  district: string;
+  transit?: string;
+  priceInfo: string;
+  priceBand: "free" | "low" | "mid" | "high";
+  tradition?: string;
+  vibe_tags: Vibe[];
+  communityQuotes?: { author: string; district: string; text: string }[];
+  tips?: string[];
+}
+
 export interface MyReview {
   id: string;
   module: ModuleKey;
