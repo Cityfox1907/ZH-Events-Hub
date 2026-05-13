@@ -7,7 +7,7 @@ export function HeroSlider() {
   const [idx, setIdx] = useState(0);
 
   useEffect(() => {
-    const t = setInterval(() => setIdx((i) => (i + 1) % HERO_IMAGES.length), 5500);
+    const t = setInterval(() => setIdx((i) => (i + 1) % HERO_IMAGES.length), 6000);
     return () => clearInterval(t);
   }, []);
 
@@ -20,12 +20,12 @@ export function HeroSlider() {
           src={src}
           alt=""
           aria-hidden="true"
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[1400ms] ease-in-out ${
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[1600ms] ease-in-out ${
             i === idx ? "opacity-100" : "opacity-0"
           }`}
         />
       ))}
-      <div className="absolute inset-0 bg-gradient-to-b from-paper/55 via-paper/70 to-paper" />
+      <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/45 to-ink/20" />
     </div>
   );
 }

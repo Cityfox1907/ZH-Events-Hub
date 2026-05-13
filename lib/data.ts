@@ -1107,9 +1107,16 @@ export const DISTRICTS: DistrictInfo[] = [
 // ─────────────────────────────────────────────────────────────
 
 export const HERO_IMAGES = [
-  UNSPLASH("photo-1538332576228-eb5b4c4de6f5"),
-  UNSPLASH("photo-1558981403-c5f9899a28bc"),
-  UNSPLASH("photo-1530122037265-a5f1f91d3b99"),
+  // Limmat / sunset
+  "https://images.unsplash.com/photo-1527668752968-14dc70a27c95?auto=format&fit=crop&w=1920&q=70",
+  // Üetliberg view
+  "https://images.unsplash.com/photo-1538332576228-eb5b4c4de6f5?auto=format&fit=crop&w=1920&q=70",
+  // Old-town / night
+  "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1920&q=70",
+  // Tram / Bahnhofstrasse
+  "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=1920&q=70",
+  // Seebad / Sommer
+  "https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?auto=format&fit=crop&w=1920&q=70",
 ];
 
 // ─────────────────────────────────────────────────────────────
