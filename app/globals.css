@@ -263,3 +263,178 @@ html { scroll-behavior: smooth; }
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* ─────────────────────────────────────────────────────────────
+   PINNWAND — Korkbrett, Polaroid, Pinnnadel (Phase 4)
+   ───────────────────────────────────────────────────────────── */
+
+.pinnwand-board {
+  position: relative;
+  border-radius: 16px;
+  background-color: #f4ece0;
+  background-image:
+    radial-gradient(rgba(120, 84, 50, 0.18) 1px, transparent 1.5px),
+    radial-gradient(rgba(150, 110, 70, 0.10) 1px, transparent 1px),
+    linear-gradient(135deg, rgba(165, 122, 78, 0.10), rgba(120, 84, 50, 0.06));
+  background-size: 14px 14px, 7px 7px, 100% 100%;
+  background-position: 0 0, 3px 5px, 0 0;
+  box-shadow:
+    inset 0 2px 8px rgba(60, 40, 20, 0.10),
+    inset 0 -1px 4px rgba(60, 40, 20, 0.06),
+    0 0 0 1px rgba(120, 84, 50, 0.12);
+}
+
+.pinnwand-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px 18px;
+  align-items: start;
+}
+
+@media (min-width: 768px) {
+  .pinnwand-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px 24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .pinnwand-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Mobile: horizontales Karussell mit Scroll-Snap */
+@media (max-width: 640px) {
+  .pinnwand-grid {
+    display: flex;
+    grid-template-columns: none;
+    overflow-x: auto;
+    overflow-y: visible;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 16px;
+    padding: 8px 4px 20px;
+    margin: 0 -8px;
+    scrollbar-width: none;
+  }
+  .pinnwand-grid::-webkit-scrollbar { display: none; }
+  .pinnwand-grid > * {
+    flex: 0 0 auto;
+    width: 66vw;
+    max-width: 280px;
+    scroll-snap-align: start;
+  }
+}
+
+.polaroid {
+  display: block;
+  transform: rotate(var(--polaroid-rot, 0deg));
+  transition: transform 250ms cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform;
+}
+
+.polaroid-card {
+  position: relative;
+  background: #ffffff;
+  padding: 10px 10px 0;
+  border-radius: 3px;
+  box-shadow: var(--polaroid-shadow, 0 8px 24px rgba(0, 0, 0, 0.12));
+  transition: box-shadow 250ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@media (min-width: 768px) {
+  .polaroid-card { padding: 12px 12px 0; }
+}
+
+.polaroid-photo {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: var(--color-paper-dim);
+}
+
+.polaroid-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.polaroid-caption {
+  padding: 10px 6px 14px;
+}
+
+@media (min-width: 768px) {
+  .polaroid-caption { padding: 12px 8px 18px; }
+}
+
+/* Pinnnadel */
+.polaroid-pin {
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 30% 30%,
+    #ffffff 0%,
+    #d99a3b 25%,
+    rgba(60, 40, 30, 0.92) 70%
+  );
+  box-shadow:
+    0 2px 3px rgba(0, 0, 0, 0.25),
+    inset -1px -1px 2px rgba(0, 0, 0, 0.2);
+  z-index: 3;
+  pointer-events: none;
+  transition: transform 250ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@media (max-width: 640px) {
+  .polaroid-pin { width: 8px; height: 8px; top: -4px; }
+}
+
+/* Hover-Effekt nur auf Desktop (pointer:fine) */
+@media (hover: hover) and (pointer: fine) {
+  .polaroid:hover {
+    transform: rotate(0deg) scale(1.03);
+    z-index: 5;
+  }
+  .polaroid:hover .polaroid-card {
+    box-shadow:
+      0 14px 36px rgba(10, 23, 51, 0.18),
+      0 4px 10px rgba(10, 23, 51, 0.08);
+  }
+  .polaroid:hover .polaroid-pin {
+    transform: translateX(-50%) translateY(-2px) scale(1.1);
+  }
+}
+
+/* Monetarisierungs-Karte: weisses Brett ohne Polaroid-Rahmen */
+.polaroid--empty {
+  transform: rotate(0deg);
+}
+
+.polaroid-card--empty {
+  padding: 0;
+  background: #ffffff;
+  border: 1px dashed var(--color-line-strong);
+  border-radius: 6px;
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Mini-Polaroid für Dashboard */
+.polaroid--mini .polaroid-card {
+  padding: 8px 8px 0;
+}
+.polaroid-photo--mini {
+  aspect-ratio: 4 / 3;
+}
+.polaroid-caption--mini {
+  padding: 8px 4px 12px;
+}
