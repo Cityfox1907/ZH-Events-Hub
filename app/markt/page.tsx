@@ -7,6 +7,7 @@ import { MarktSubNav } from "@/components/MarktSubNav";
 import { MarktMap } from "@/components/MarktMap";
 import { MarktItemCard } from "@/components/MarktItemCard";
 import { IdentityPyramidLegend } from "@/components/IdentityBadge";
+import { PinnwandSection } from "@/components/PinnwandSection";
 import {
   MARKT_ITEMS,
   MARKT_VERTICALS,
@@ -109,6 +110,9 @@ export default function MarktPage() {
           </div>
         </div>
       </section>
+
+      {/* ── QUARTIER-PINNWAND (Hero) ──────────────────── */}
+      <PinnwandSection />
 
       {/* ── ANTI-DISINTERMEDIATION NOTE ───────────────── */}
       <section className="container-editorial pb-6">

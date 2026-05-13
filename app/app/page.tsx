@@ -24,6 +24,11 @@ import { useCurrentProfile, useViewMode } from "@/lib/viewMode";
 import { AIConciergeTeaser } from "@/components/AIConciergeTeaser";
 import { PulseMap } from "@/components/PulseMap";
 import { CrossModuleLinks } from "@/components/CrossModuleLinks";
+import { MiniPolaroid } from "@/components/PolaroidCard";
+import { PINNWAND_AUSHAENGE } from "@/data/pinnwand";
+
+const PINNWAND_BY_ID = (id: string) =>
+  PINNWAND_AUSHAENGE.find((a) => a.id === id)!;
 
 function timeGreeting(profile: string) {
   const h = new Date().getHours();
@@ -764,6 +769,28 @@ function FikoDashboard({ isDashboard }: { isDashboard: boolean }) {
             </Link>
           ))}
         </div>
+
+        {/* Pinnwand-Streiflicht: 2 Polaroids aus Kreis 11 / Anbieter */}
+        <div className="mt-8 pt-6 border-t border-line">
+          <div className="flex items-baseline justify-between mb-4">
+            <div>
+              <p className="eyebrow">Pinnwand · Oerlikon</p>
+              <h3 className="font-display text-xl mt-1">
+                Frische Aushänge aus deinem Quartier
+              </h3>
+            </div>
+            <Link
+              href="/markt/pinnwand"
+              className="text-[12.5px] font-medium text-burgundy hover:underline"
+            >
+              Pinnwand →
+            </Link>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-5 md:gap-6 py-3">
+            <MiniPolaroid aushang={PINNWAND_BY_ID("p8")} />
+            <MiniPolaroid aushang={PINNWAND_BY_ID("p1")} />
+          </div>
+        </div>
       </section>
 
       <BookmarkFooter profile={profile} />
@@ -986,6 +1013,28 @@ function SarahDashboard({ isDashboard }: { isDashboard: boolean }) {
               <p className="text-[12px] text-ink-faint mt-2">{m.meta}</p>
             </Link>
           ))}
+        </div>
+
+        {/* Pinnwand-Streiflicht for Sarah: Stammtisch Italienisch + Run-Crew */}
+        <div className="mt-8 pt-6 border-t border-line">
+          <div className="flex items-baseline justify-between mb-4">
+            <div>
+              <p className="eyebrow">Bulletin board · For newcomers</p>
+              <h3 className="font-display text-xl mt-1">
+                Real groups, low barrier
+              </h3>
+            </div>
+            <Link
+              href="/markt/pinnwand"
+              className="text-[12.5px] font-medium text-burgundy hover:underline"
+            >
+              Bulletin →
+            </Link>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-5 md:gap-6 py-3">
+            <MiniPolaroid aushang={PINNWAND_BY_ID("p7")} />
+            <MiniPolaroid aushang={PINNWAND_BY_ID("p6")} />
+          </div>
         </div>
       </section>
 
