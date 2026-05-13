@@ -3,23 +3,21 @@ import { Instagram, Linkedin, Send } from "lucide-react";
 
 const COLS: { title: string; links: { label: string; href: string }[] }[] = [
   {
-    title: "Für Entdecker",
+    title: "Plattform",
     links: [
       { label: "Entdecken", href: "/entdecken" },
-      { label: "Puls · Feed", href: "/puls" },
-      { label: "Stadt-Stimmen", href: "/puls/stimmen" },
-      { label: "Puls · Live", href: "/puls/live" },
+      { label: "Puls", href: "/puls" },
       { label: "Markt", href: "/markt" },
-      { label: "Profil", href: "/profile" },
+      { label: "Stadt-Dialog", href: "/stadt-dialog" },
+      { label: "Newsletter", href: "/#newsletter" },
     ],
   },
   {
-    title: "Für Anbieter",
+    title: "Anbieter",
     links: [
       { label: "Anbieter werden", href: "/for-providers" },
       { label: "Pricing", href: "/for-providers#pricing" },
       { label: "Anbieter-Dashboard", href: "/provider/dashboard" },
-      { label: "Erfolgsstorys", href: "/for-providers#stories" },
     ],
   },
   {
@@ -48,8 +46,8 @@ export function Footer() {
           <div>
             <span className="font-display text-2xl">ZurichTonight</span>
             <p className="text-[13px] text-ink-muted mt-3 max-w-xs">
-              Die kuratierte Plattform für Zürich. Was läuft, wo essen, was
-              erleben, wen treffen.
+              Das digitale Wohnzimmer aller Zürcher — Entdecken, Vernetzen,
+              Erleben.
             </p>
             <div className="flex gap-2 mt-5">
               {SOCIALS.map(({ Icon, label, href }) => (
@@ -87,7 +85,7 @@ export function Footer() {
         <hr className="hairline my-8" />
 
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 text-[12px] text-ink-faint">
-          <span>© 2026 ZurichTonight — Demo-Prototyp. Keine echten Buchungen.</span>
+          <span>© 2026 ZurichTonight — Visions-Prototyp.</span>
           <span>Mit Liebe gemacht in Zürich.</span>
         </div>
       </div>
