@@ -8,16 +8,14 @@ import {
   MessageSquare,
   ShoppingBag,
   UserCircle2,
-  LogOut,
   Home,
+  Sparkles,
 } from "lucide-react";
 import { AuthModal } from "./AuthModal";
 import { GlobalSearchTrigger } from "./GlobalSearch";
 import { NotificationBell } from "./NotificationBell";
-import { LiveCounter } from "./LiveCounter";
-import { getUser, logout, onStorageChange } from "@/lib/storage";
-import type { MockUser } from "@/lib/types";
-import { useToast } from "./Toast";
+import { ViewSwitcher } from "./ViewSwitcher";
+import { useViewMode, useCurrentProfile } from "@/lib/viewMode";
 
 const NAV = [
   { href: "/entdecken", label: "Entdecken", Icon: Compass },
@@ -28,28 +26,24 @@ const NAV = [
 export function Header() {
   const pathname = usePathname();
   const [authOpen, setAuthOpen] = useState(false);
-  const [user, setUser] = useState<MockUser | null>(null);
-  const [profileMenu, setProfileMenu] = useState(false);
-  const { push } = useToast();
-
-  useEffect(() => {
-    setUser(getUser());
-    return onStorageChange(() => setUser(getUser()));
-  }, []);
-
-  useEffect(() => {
-    setProfileMenu(false);
-  }, [pathname]);
+  const { state } = useViewMode();
+  const profile = useCurrentProfile();
+  const isDashboard = state.mode === "dashboard";
 
   function isActive(href: string) {
     return pathname === href || pathname.startsWith(href + "/");
   }
 
+  const profileHref = isDashboard ? "/app" : "/profile";
+
   return (
     <>
       <header className="sticky top-0 z-40 bg-paper/85 backdrop-blur border-b border-line">
         <div className="container-editorial flex items-center gap-3 py-3">
-          <Link href="/" className="flex items-center gap-2 shrink-0">
+          <Link
+            href={isDashboard ? "/app" : "/"}
+            className="flex items-center gap-2 shrink-0"
+          >
             <span className="font-display text-[22px] tracking-tight">
               ZurichTonight
             </span>
@@ -73,7 +67,6 @@ export function Header() {
           </nav>
 
           <div className="hidden xl:flex items-center ml-auto gap-3">
-            <LiveCounter className="text-[12px] text-ink-muted" />
             <GlobalSearchTrigger variant="input" />
           </div>
 
@@ -82,50 +75,22 @@ export function Header() {
               <GlobalSearchTrigger variant="icon" />
             </div>
 
-            <NotificationBell />
+            {isDashboard && <NotificationBell />}
 
-            {user ? (
-              <div className="relative">
-                <button
-                  onClick={() => setProfileMenu((v) => !v)}
-                  className="flex items-center gap-2 px-3 py-2 rounded-full border border-line hover:border-burgundy transition-colors"
-                  aria-label="Profil"
-                >
-                  <UserCircle2 className="w-5 h-5 text-burgundy" />
-                  <span className="text-[13px] hidden md:inline">{user.name}</span>
-                </button>
-                {profileMenu && (
-                  <div className="absolute right-0 top-full mt-2 w-48 bg-card border border-line rounded-lg card-shadow py-1 z-50">
-                    <Link
-                      href="/profile"
-                      className="block px-4 py-2 text-[13px] hover:bg-paper-dim"
-                    >
-                      Profil
-                    </Link>
-                    <Link
-                      href="/favorites"
-                      className="block px-4 py-2 text-[13px] hover:bg-paper-dim"
-                    >
-                      Bookmarks
-                    </Link>
-                    <Link
-                      href="/provider/dashboard"
-                      className="block px-4 py-2 text-[13px] hover:bg-paper-dim"
-                    >
-                      Provider-Dashboard
-                    </Link>
-                    <button
-                      onClick={() => {
-                        logout();
-                        push("Abgemeldet (Demo)", "success");
-                      }}
-                      className="w-full text-left px-4 py-2 text-[13px] hover:bg-paper-dim flex items-center gap-2"
-                    >
-                      <LogOut className="w-4 h-4" /> Abmelden
-                    </button>
-                  </div>
-                )}
-              </div>
+            {isDashboard ? (
+              <Link
+                href="/app"
+                className="flex items-center gap-2 px-3 py-2 rounded-full border border-line hover:border-burgundy transition-colors"
+                aria-label="Mein Züri"
+              >
+                <Sparkles
+                  className="w-4 h-4 text-burgundy"
+                  strokeWidth={1.8}
+                />
+                <span className="text-[13px] hidden md:inline">
+                  {profile.name}
+                </span>
+              </Link>
             ) : (
               <>
                 <button
@@ -143,14 +108,20 @@ export function Header() {
                 </Link>
               </>
             )}
+
+            <ViewSwitcher />
           </div>
         </div>
       </header>
 
-      {/* MOBILE BOTTOM NAV — sticky at bottom on small screens */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-paper/95 backdrop-blur border-t border-line">
         <ul className="grid grid-cols-5">
-          <BottomItem href="/" label="Home" Icon={Home} active={pathname === "/"} />
+          <BottomItem
+            href={isDashboard ? "/app" : "/"}
+            label={isDashboard ? "Züri" : "Home"}
+            Icon={isDashboard ? Sparkles : Home}
+            active={pathname === "/" || pathname === "/app"}
+          />
           <BottomItem
             href="/entdecken"
             label="Entdecken"
@@ -170,10 +141,10 @@ export function Header() {
             active={isActive("/markt")}
           />
           <BottomItem
-            href="/profile"
+            href={profileHref}
             label="Profil"
             Icon={UserCircle2}
-            active={isActive("/profile")}
+            active={isActive("/profile") || isActive("/app")}
           />
         </ul>
       </nav>

@@ -3,6 +3,8 @@ import { Fraunces, DM_Sans } from "next/font/google";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ToastProvider } from "@/components/Toast";
+import { ViewModeProvider } from "@/components/ViewModeProvider";
+import { DemoBanner } from "@/components/DemoBanner";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -20,9 +22,9 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "ZurichTonight · Zürich, jetzt.",
+  title: "ZurichTonight · Das digitale Wohnzimmer aller Zürcher",
   description:
-    "Kuratierte Plattform für Zürich — Tonight, Dine, Experience, Pulse, Live. Demo-Prototyp.",
+    "Das digitale Wohnzimmer aller Zürcher — Entdecken, Vernetzen, Erleben.",
   metadataBase: new URL("https://zurichtonight.example.ch"),
 };
 
@@ -30,11 +32,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="de-CH" className={`${fraunces.variable} ${dmSans.variable}`}>
       <body className="bg-paper text-ink antialiased min-h-screen flex flex-col">
-        <ToastProvider>
-          <Header />
-          <main className="flex-1 pb-16 md:pb-0">{children}</main>
-          <Footer />
-        </ToastProvider>
+        <ViewModeProvider>
+          <ToastProvider>
+            <DemoBanner />
+            <Header />
+            <main className="flex-1 pb-16 md:pb-0">{children}</main>
+            <Footer />
+          </ToastProvider>
+        </ViewModeProvider>
       </body>
     </html>
   );

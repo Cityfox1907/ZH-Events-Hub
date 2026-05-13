@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { MessageCircle, Megaphone, Radio } from "lucide-react";
+import { MessageCircle, MessagesSquare, Radio } from "lucide-react";
 
 const TABS = [
   { href: "/puls", label: "Feed", Icon: MessageCircle, match: ["/puls", "/puls/feed"] },
-  { href: "/puls/stimmen", label: "Stadt-Stimmen", Icon: Megaphone, match: ["/puls/stimmen"] },
+  { href: "/puls/chat", label: "Chat", Icon: MessagesSquare, match: ["/puls/chat"] },
   { href: "/puls/live", label: "Live", Icon: Radio, match: ["/puls/live"] },
 ];
 
