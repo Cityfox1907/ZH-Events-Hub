@@ -2,9 +2,8 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, List, Map as MapIcon, ShieldCheck, Sparkles, ExternalLink } from "lucide-react";
+import { ArrowRight, ShieldCheck, Sparkles, ExternalLink } from "lucide-react";
 import { MarktSubNav } from "@/components/MarktSubNav";
-import { MarktMap } from "@/components/MarktMap";
 import { MarktItemCard } from "@/components/MarktItemCard";
 import { IdentityPyramidLegend } from "@/components/IdentityBadge";
 import { PinnwandSection } from "@/components/PinnwandSection";
@@ -25,7 +24,6 @@ export default function MarktPage() {
   const [intent, setIntent] = useState<MarktIntent>("brauche");
   const [district, setDistrict] = useState<string>("Mein Quartier + Velo-Distanz");
   const [time, setTime] = useState<(typeof TIME_FILTERS)[number]["key"]>("heute");
-  const [view, setView] = useState<"karte" | "liste">("karte");
 
   const filtered = useMemo(() => {
     let list = MARKT_ITEMS.slice();
@@ -125,7 +123,7 @@ export default function MarktPage() {
         </div>
       </section>
 
-      {/* ── MAP / LIST HERO ───────────────────────────── */}
+      {/* ── LIST ──────────────────────────────────────── */}
       <section className="container-editorial pb-10">
         <div className="flex items-center justify-between mb-3">
           <h2 className="font-display text-2xl leading-tight">
@@ -134,46 +132,20 @@ export default function MarktPage() {
               ({filtered.length})
             </span>
           </h2>
-          <div className="inline-flex bg-card border border-line rounded-full p-1">
-            <button
-              onClick={() => setView("karte")}
-              className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-[12px] font-medium ${
-                view === "karte"
-                  ? "bg-ink text-paper"
-                  : "text-ink-muted hover:text-ink"
-              }`}
-            >
-              <MapIcon className="w-3.5 h-3.5" /> Karte
-            </button>
-            <button
-              onClick={() => setView("liste")}
-              className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-[12px] font-medium ${
-                view === "liste"
-                  ? "bg-ink text-paper"
-                  : "text-ink-muted hover:text-ink"
-              }`}
-            >
-              <List className="w-3.5 h-3.5" /> Liste
-            </button>
-          </div>
         </div>
 
-        {view === "karte" ? (
-          <MarktMap items={filtered} district={district} />
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filtered.length === 0 ? (
-              <div className="md:col-span-2 lg:col-span-3 p-10 text-center bg-card border border-line rounded-2xl">
-                <p className="font-display text-xl">Nichts passendes</p>
-                <p className="text-[13px] text-ink-muted mt-2">
-                  Probier ein anderes Quartier oder schau in einer Vertikale unten nach.
-                </p>
-              </div>
-            ) : (
-              filtered.map((item) => <MarktItemCard key={item.id} item={item} />)
-            )}
-          </div>
-        )}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {filtered.length === 0 ? (
+            <div className="md:col-span-2 lg:col-span-3 p-10 text-center bg-card border border-line rounded-2xl">
+              <p className="font-display text-xl">Nichts passendes</p>
+              <p className="text-[13px] text-ink-muted mt-2">
+                Probier ein anderes Quartier oder schau in einer Vertikale unten nach.
+              </p>
+            </div>
+          ) : (
+            filtered.map((item) => <MarktItemCard key={item.id} item={item} />)
+          )}
+        </div>
       </section>
 
       {/* ── 5 VERTIKALEN-SEKTIONEN ──────────────────── */}
