@@ -562,7 +562,7 @@ function WeekView({ events }: { events: KalenderEvent[] }) {
               className="relative p-8 md:p-12"
               style={{
                 background:
-                  "linear-gradient(135deg, rgba(28,25,23,0.85) 0%, rgba(124,31,31,0.4) 70%, transparent 100%)",
+                  "linear-gradient(135deg, rgba(10,23,51,0.85) 0%, rgba(15,77,168,0.45) 70%, transparent 100%)",
               }}
             >
               <p className="eyebrow text-paper-dim">Wochenend-Highlight</p>
@@ -1094,7 +1094,7 @@ function FeaturedCard({ event }: { event: KalenderEvent }) {
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(180deg, rgba(28,25,23,0.25) 0%, rgba(28,25,23,0.1) 40%, rgba(28,25,23,0.85) 100%)",
+            "linear-gradient(180deg, rgba(10,23,51,0.25) 0%, rgba(10,23,51,0.1) 40%, rgba(10,23,51,0.85) 100%)",
         }}
       />
       <div className="relative p-7 md:p-10 h-full flex flex-col justify-end min-h-[400px] md:min-h-[480px]">
@@ -1154,7 +1154,7 @@ function MegaCard({ event }: { event: KalenderEvent }) {
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(180deg, rgba(28,25,23,0.2) 0%, rgba(28,25,23,0.05) 35%, rgba(28,25,23,0.9) 100%)",
+            "linear-gradient(180deg, rgba(10,23,51,0.2) 0%, rgba(10,23,51,0.05) 35%, rgba(10,23,51,0.9) 100%)",
         }}
       />
       <div className="relative p-7 md:p-12 h-full flex flex-col justify-end min-h-[500px] md:min-h-[600px]">

@@ -1,24 +1,28 @@
 @import "tailwindcss";
 
 @theme {
-  --color-paper: #f7f2ea;
-  --color-paper-dim: #efe7d8;
-  --color-card: #fdfaf3;
-  --color-ink: #1c1917;
-  --color-ink-muted: #57534e;
-  --color-ink-faint: #a8a29e;
-  --color-line: #e7ddc9;
-  --color-line-strong: #d4c4a8;
-  --color-burgundy: #7c1f1f;
-  --color-burgundy-dark: #5a1414;
-  --color-brass: #b8893d;
+  /* Zürich palette — flag blue + white, cool urban neutrals */
+  --color-paper: #f6f8fb;
+  --color-paper-dim: #e9eff8;
+  --color-card: #ffffff;
+  --color-ink: #0a1733;
+  --color-ink-muted: #475673;
+  --color-ink-faint: #94a0b8;
+  --color-line: #e2e8f1;
+  --color-line-strong: #c5d0e2;
+  /* "burgundy" var is repurposed as the Zürich-blue primary accent
+     so every existing `bg-burgundy` / `text-burgundy` class repaints. */
+  --color-burgundy: #0f4da8;
+  --color-burgundy-dark: #093a82;
+  /* "brass" var is repurposed as a secondary steel-blue accent */
+  --color-brass: #5b7db0;
 
   --font-display: var(--font-fraunces), "Georgia", serif;
   --font-body: var(--font-dm-sans), "Helvetica", sans-serif;
 
-  --shadow-card: 0 1px 2px rgba(28, 25, 23, 0.04), 0 0 0 1px rgba(28, 25, 23, 0.04);
-  --shadow-card-hover: 0 4px 16px rgba(28, 25, 23, 0.08), 0 0 0 1px rgba(28, 25, 23, 0.06);
-  --shadow-modal: 0 20px 50px rgba(28, 25, 23, 0.15), 0 0 0 1px rgba(28, 25, 23, 0.08);
+  --shadow-card: 0 1px 2px rgba(10, 23, 51, 0.05), 0 0 0 1px rgba(10, 23, 51, 0.05);
+  --shadow-card-hover: 0 6px 20px rgba(15, 77, 168, 0.10), 0 0 0 1px rgba(15, 77, 168, 0.08);
+  --shadow-modal: 0 24px 60px rgba(10, 23, 51, 0.18), 0 0 0 1px rgba(10, 23, 51, 0.08);
 
   --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -52,7 +56,7 @@
     inset: 0;
     pointer-events: none;
     z-index: 9999;
-    opacity: 0.025;
+    opacity: 0.018;
     mix-blend-mode: multiply;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     background-size: 256px;
@@ -72,7 +76,7 @@
 
   ::selection {
     background: var(--color-burgundy);
-    color: #fdfaf3;
+    color: #ffffff;
   }
 
   *:focus-visible {

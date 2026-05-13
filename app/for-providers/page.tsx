@@ -166,7 +166,7 @@ export default function ForProvidersPage() {
           className="rounded-3xl p-8 md:p-12 text-paper grid md:grid-cols-[1fr_auto] gap-6 items-center"
           style={{
             backgroundImage:
-              "linear-gradient(135deg, #5a1414 0%, #7c1f1f 60%, #b8893d 100%)",
+              "linear-gradient(135deg, #093a82 0%, #0f4da8 55%, #5b7db0 100%)",
           }}
         >
           <div>
