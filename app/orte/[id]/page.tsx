@@ -21,6 +21,7 @@ import { BookmarkButton } from "@/components/BookmarkButton";
 import { ShareButton } from "@/components/ShareModal";
 import { PLACES_ALL } from "@/lib/data";
 import type { PlaceKind } from "@/lib/types";
+import { PlaceCrossModule } from "@/components/PlaceCrossModule";
 
 const KIND_ICONS: Record<PlaceKind, typeof UtensilsCrossed> = {
   restaurant: UtensilsCrossed,
@@ -135,7 +136,7 @@ export default function OrtDetailPage() {
           </div>
         </div>
 
-        <aside className="lg:sticky lg:top-24 lg:self-start">
+        <aside className="lg:sticky lg:top-24 lg:self-start space-y-4">
           <div className="bg-card border border-line rounded-2xl p-5 card-shadow">
             <p className="eyebrow mb-3">Aktionen</p>
             <div className="flex flex-wrap gap-2">
@@ -150,6 +151,7 @@ export default function OrtDetailPage() {
               Reservation oder Eintritt direkt vor Ort — wir leiten nicht weiter.
             </p>
           </div>
+          <PlaceCrossModule district={place.district} />
         </aside>
       </section>
     </>

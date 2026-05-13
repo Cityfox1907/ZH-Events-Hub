@@ -11,6 +11,7 @@ import { LocationMap } from "@/components/LocationMap";
 import { SimilarItems } from "@/components/SimilarItems";
 import { Tabs } from "@/components/Tabs";
 import { RecentlyViewedTracker } from "@/components/RecentlyViewedTracker";
+import { EventCrossModule } from "@/components/EventCrossModule";
 
 export function generateStaticParams() {
   return TONIGHT_EVENTS.map((e) => ({ id: e.id }));
@@ -168,6 +169,8 @@ export default async function TonightDetailPage({
               </div>
             </div>
           </div>
+
+          <EventCrossModule eventId={event.id} />
 
           <DisintermediationNote />
         </aside>

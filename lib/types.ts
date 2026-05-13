@@ -302,6 +302,117 @@ export type VerificationBadge =
   | "stadt-stimme"
   | "team";
 
+// ─────────────────────────────────────────────────────────────
+// IDENTITY-PYRAMID (Phase 3)
+// 4 Stufen, visuell durch farbige Häkchen unterschieden
+// ─────────────────────────────────────────────────────────────
+
+export type IdentityTier =
+  | "wohnsitz" // 🟢 Wohnsitz-verifiziert (höchste Stufe)
+  | "member"   // 🔵 Member-verifiziert (Email + Telefon)
+  | "standard" // 🟡 Nur Email
+  | "anonym";  // ⚪ Anonym (nur in Verschenken & Beichtstuhl)
+
+// ─────────────────────────────────────────────────────────────
+// MARKT — neue 5 Vertikalen (Phase 3)
+// ─────────────────────────────────────────────────────────────
+
+export type MarktVertical =
+  | "tickets"        // Ticket-Tausch & Last-Minute
+  | "mitfahr"        // Spontan-Mitfahr
+  | "nachbarschaft"  // Nachbarschaftshilfe
+  | "verschenken"    // Verschenken & Kostenlos
+  | "dienstleister"; // Lokale Dienstleister
+
+export type MarktIntent = "brauche" | "biete";
+
+export interface MarktItem {
+  id: string;
+  vertical: MarktVertical;
+  intent: MarktIntent;
+  title: string;
+  description: string;
+  author: string;
+  avatar: string;
+  identity: IdentityTier;
+  district: string;
+  ago: string;
+  expires?: string;
+  price?: string;
+  image?: string;
+  lat?: number;
+  lng?: number;
+  rating?: number;
+  rating_count?: number;
+  // Cross-Module-Verknüpfungen
+  linkedEvent?: { id: string; slug: string; title: string };
+  linkedEventNote?: string; // z.B. "Heimfahrt nach Klang & Kerzenschein"
+  // Mitfahr-spezifisch
+  route?: { from: string; to: string; departure: string; seats: number };
+  // Ticket-spezifisch
+  ticketDetails?: { eventTitle: string; eventDate: string; sector?: string; quantity: number };
+}
+
+// ─────────────────────────────────────────────────────────────
+// PULS — Drei-Schichten-Modell (Phase 3 Umbau)
+// ─────────────────────────────────────────────────────────────
+
+export type PulsSourceKind =
+  | "zvv"
+  | "sbb"
+  | "vbz"
+  | "meteo"
+  | "stadt"
+  | "polizei"
+  | "erz"
+  | "stadtrat"
+  | "local-hero";
+
+export interface PulsVerifiedUpdate {
+  id: string;
+  source: string;       // Anzeige-Name, z.B. "ZVV", "@TramFahrerinSophie"
+  sourceKind: PulsSourceKind;
+  district?: string;
+  text: string;
+  ago: string;
+  identity: IdentityTier;
+}
+
+export type QuartierPostType =
+  | "frage"
+  | "empfehlung"
+  | "beobachtung"
+  | "treffen"
+  | "sorge"
+  | "hilfe-angebot";
+
+export interface QuartierPost {
+  id: string;
+  author: string;
+  avatar: string;
+  district: string;
+  ago: string;
+  type: QuartierPostType;
+  text: string;
+  image?: string;
+  identity: IdentityTier;
+  reactions: number;       // generic reactions / answers counter
+  reactionLabel: "Antworten" | "Reaktionen" | "Kommentare" | "Anmeldungen";
+}
+
+export interface CityThread {
+  id: string;
+  title: string;
+  hook: string;            // Aufhänger / Lead, 3-4 Zeilen
+  reactions: number;
+  comments: number;
+  image?: string;
+  topComments: { author: string; text: string; identity: IdentityTier }[];
+  verifiedSource?: { name: string; role: string };
+  cross?: { module: ModuleKey; id?: string; label: string };
+  category: string;        // z.B. "Stadtentwicklung", "Verkehr"
+}
+
 export interface PulsComment {
   id: string;
   author: string;

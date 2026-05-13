@@ -138,19 +138,22 @@ const FIKO_STADT_DIALOG = [
 
 const FIKO_MARKT = [
   {
-    cat: "WG · Oerlikon",
-    title: "WG-Zimmer Oerlikon — CHF 1'350",
-    meta: "ab Juni · 25 m²",
+    cat: "🤝 Nachbarschaft · Kreis 11",
+    title: "Wer geht heute Abend einkaufen? Brot bitte!",
+    meta: "🟢 Verifizierter Nachbar · in 30 Min",
+    href: "/markt/nachbarschaft",
   },
   {
-    cat: "Verschenken · Kreis 11",
-    title: "Vitra-Sofa gratis",
-    meta: "Abholung am Wochenende",
+    cat: "🚗 Mitfahr · Oerlikon",
+    title: "Morgen 6:00 Oerlikon → Bern HB",
+    meta: "🟢 3 Plätze · CHF 25",
+    href: "/markt/mitfahr",
   },
   {
-    cat: "Dienstleistung · Oerlikon",
-    title: "Yoga-Privatstunden",
-    meta: "CHF 90/h · bei dir",
+    cat: "🎟 Ticket-Tausch · zu deinem Bookmark",
+    title: "2× Klang & Kerzenschein heute 20 Uhr",
+    meta: "🟢 CHF 70/Paar oder Tausch — du hast Event gebookmarkt",
+    href: "/markt/tickets",
   },
 ];
 
@@ -165,28 +168,22 @@ const FIKO_VERIFIED = [
   },
   {
     source: "Stadt Zürich",
-    text: "Wochenmarkt Oerlikon Donnerstag verlegt auf Samstag",
+    text: "Wochenmarkt Oerlikon morgen verlegt nach Hofwiesenstrasse",
   },
 ];
 
 const FIKO_POSTS = [
   {
-    handle: "@AnnaUrbanist",
-    badge: "Architektin",
-    district: "Kreis 4",
-    text: "Globus-Gebäude leer seit Monaten — Infos?",
+    handle: "@PapaJoeOrk",
+    badge: "🟢 Nachbar Kreis 11",
+    district: "Kreis 11",
+    text: "Spielplatz Bremgartner hat neuen Wasserspiel-Bereich — Kinder lieben es.",
   },
   {
-    handle: "@VeloPolitikerin",
-    badge: "Stadtrat",
-    district: "Kreis 1",
-    text: "Neue Velo-Schnellstrasse Hardbrücke–Stauffacher beschlossen.",
-  },
-  {
-    handle: "@PapaJoeBern",
-    badge: "Local-Hero",
-    district: "Kreis 7",
-    text: "Spielplatz Burgwies renoviert — Wasserspiel ist da.",
+    handle: "@VeloPendlerOerl",
+    badge: "🟢 Nachbar",
+    district: "Kreis 11",
+    text: "Velo-Klau gestern Nacht bei Bahnhof Oerlikon — passt auf, Bilder im Anhang.",
   },
 ];
 
@@ -750,7 +747,7 @@ function FikoDashboard({ isDashboard }: { isDashboard: boolean }) {
           {FIKO_MARKT.map((m) => (
             <Link
               key={m.title}
-              href="/markt"
+              href={m.href}
               className="block bg-card border border-line rounded-2xl card-shadow card-shadow-hover transition-shadow p-5"
             >
               <div className="flex items-center gap-2">
@@ -932,28 +929,117 @@ function SarahDashboard({ isDashboard }: { isDashboard: boolean }) {
         </div>
       </section>
 
-      <section className="container-editorial pb-16">
-        <div className="bg-card border border-line rounded-2xl p-6 md:p-8 flex flex-col md:flex-row gap-4 items-start">
-          <Globe2
-            className="w-6 h-6 text-burgundy shrink-0 mt-1"
-            strokeWidth={1.6}
-          />
-          <div className="flex-1">
-            <p className="eyebrow">Expat-Marktplatz</p>
-            <h3 className="font-display text-2xl mt-1 leading-tight">
-              Run-Club, Tandems, WG-Tipps — kuratiert für dich
-            </h3>
-            <p className="text-[13px] text-ink-muted mt-2">
-              Drei Inserate, die genau für dich passen — Italienisch-Tandem,
-              Run-Club Üetliberg, Brunch-Crew Kreis 5.
+      <section className="container-editorial pb-12">
+        <div className="flex items-baseline justify-between mb-4">
+          <div>
+            <p className="eyebrow">Markt · Für dich kuratiert</p>
+            <h2 className="font-display text-2xl md:text-3xl mt-1">
+              Italienisch-Tandem, Run-Club, Mitfahr
+            </h2>
+            <p className="text-[13px] text-ink-faint mt-1">
+              Hand-picked for newcomers — meet locals, share rides, swap languages.
             </p>
           </div>
           <Link
             href="/markt"
-            className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-burgundy text-white text-[13px] font-medium hover:bg-burgundy-dark"
+            className="text-[13px] font-medium text-burgundy hover:underline shrink-0"
           >
-            Markt ansehen <ArrowRight className="w-3.5 h-3.5" />
+            Zum Markt →
           </Link>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
+          {[
+            {
+              cat: "🛠 Dienstleister · Kreis 5",
+              title: "Italienisch-Tandem — Muttersprache Italienisch",
+              meta: "🟢 Wohnsitz-verifiziert · Tausch Deutsch ↔ Italienisch",
+              href: "/markt/dienstleister",
+            },
+            {
+              cat: "🤝 Nachbarschaft · K5/K11",
+              title: "Run-Crew Donnerstag 18:30 — English friendly",
+              meta: "🟢 Local-led · Üetliberg loop",
+              href: "/markt/nachbarschaft",
+            },
+            {
+              cat: "🚗 Mitfahr · Freitag",
+              title: "Freitag 18:00 ZH → Lugano",
+              meta: "🔵 4 Plätze · CHF 35 · weekend trip",
+              href: "/markt/mitfahr",
+            },
+          ].map((m) => (
+            <Link
+              key={m.title}
+              href={m.href}
+              className="block bg-card border border-line rounded-2xl card-shadow card-shadow-hover transition-shadow p-5"
+            >
+              <div className="flex items-center gap-2">
+                <Globe2
+                  className="w-4 h-4 text-burgundy"
+                  strokeWidth={1.8}
+                />
+                <p className="eyebrow">{m.cat}</p>
+              </div>
+              <h3 className="font-display text-lg mt-3 leading-tight">
+                {m.title}
+              </h3>
+              <p className="text-[12px] text-ink-faint mt-2">{m.meta}</p>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="container-editorial pb-16">
+        <div className="flex items-baseline justify-between mb-4">
+          <div>
+            <p className="eyebrow">Puls · Stadt-Threads</p>
+            <h2 className="font-display text-2xl md:text-3xl mt-1">
+              Discover Zürich talking points
+            </h2>
+            <p className="text-[13px] text-ink-faint mt-1">
+              You're new — start with what the city is debating, not with neighbour gossip.
+            </p>
+          </div>
+          <Link
+            href="/puls/stadt"
+            className="text-[13px] font-medium text-burgundy hover:underline shrink-0"
+          >
+            All threads →
+          </Link>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
+          {[
+            {
+              cat: "🗣 Gastro & Trends",
+              title: "Asiatische Restaurant-Welle im Kreis 5",
+              meta: "178 Reaktionen · 94 Kommentare",
+              href: "/puls/stadt",
+            },
+            {
+              cat: "🗣 Wohnen",
+              title: "Mieten in Zürich 2026: was wirkt noch?",
+              meta: "198 · 124 Kommentare",
+              href: "/puls/stadt",
+            },
+            {
+              cat: "🗣 Saison",
+              title: "Streetparade 2026 — wann startet ihr?",
+              meta: "89 · 56 Kommentare",
+              href: "/puls/stadt",
+            },
+          ].map((m) => (
+            <Link
+              key={m.title}
+              href={m.href}
+              className="block bg-card border border-line rounded-2xl card-shadow card-shadow-hover transition-shadow p-5"
+            >
+              <p className="eyebrow">{m.cat}</p>
+              <h3 className="font-display text-lg mt-3 leading-tight">
+                {m.title}
+              </h3>
+              <p className="text-[12px] text-ink-faint mt-2">{m.meta}</p>
+            </Link>
+          ))}
         </div>
       </section>
     </>
@@ -1106,6 +1192,42 @@ function TomDashboard({ isDashboard }: { isDashboard: boolean }) {
             </article>
           ))}
         </div>
+      </section>
+
+      <section className="container-editorial pb-12">
+        <div className="flex items-baseline justify-between mb-4">
+          <div>
+            <p className="eyebrow">Verifiziert · Tourist Mode</p>
+            <h2 className="font-display text-2xl md:text-3xl mt-1">
+              Stadt-Updates für heute
+            </h2>
+            <p className="text-[13px] text-ink-faint mt-1">
+              Nur offizielle Quellen — kein Quartier-Geschwätz für 4 Tage Trip.
+            </p>
+          </div>
+          <Link
+            href="/puls/live"
+            className="text-[13px] font-medium text-burgundy hover:underline shrink-0"
+          >
+            Alle Updates →
+          </Link>
+        </div>
+        <ul className="bg-card border border-line rounded-2xl card-shadow divide-y divide-line overflow-hidden">
+          {[
+            { source: "ZVV", text: "Tram 4/15 normal — vom Storchen aus alles erreichbar" },
+            { source: "MeteoSchweiz", text: "11° leichter Regen heute, morgen sonnig 18°" },
+            { source: "Stadt Zürich", text: "Bahnhofstrasse Höhe Globus heute eng — via Sihlstrasse" },
+            { source: "SBB", text: "Zürich HB Gleis 7 heute Abend gesperrt — Bern auf Gleis 9" },
+          ].map((u, i) => (
+            <li key={i} className="px-5 py-3 flex items-start gap-3">
+              <span className="shrink-0 px-2 py-0.5 rounded-full bg-burgundy/10 text-burgundy text-[10px] font-medium uppercase tracking-wider">
+                {u.source}
+              </span>
+              <p className="text-[13px] flex-1">{u.text}</p>
+              <span className="text-[10px] text-ink-faint shrink-0">🟢 verifiziert</span>
+            </li>
+          ))}
+        </ul>
       </section>
 
       <section className="container-editorial pb-16">
