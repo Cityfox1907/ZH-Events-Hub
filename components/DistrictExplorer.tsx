@@ -16,7 +16,7 @@ export function DistrictExplorer() {
         return (
           <Link
             key={d.key}
-            href={`/entdecken?district=${encodeURIComponent(d.key)}`}
+            href={`/entdecken/orte?stadtteil=${encodeURIComponent(d.key)}`}
             className="group relative rounded-2xl overflow-hidden bg-card border border-line aspect-[4/3] card-shadow card-shadow-hover transition-shadow"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}

@@ -30,19 +30,19 @@ import { OnboardingTour } from "@/components/OnboardingTour";
 
 const SMART_CARDS = [
   {
-    href: "/entdecken?zeit=tonight",
+    href: "/entdecken/kalender?view=today",
     title: "Heute Abend",
     desc: "Konzerte, Pop-ups, Vernissagen, Parties — was diese Nacht läuft.",
     Icon: Calendar,
   },
   {
-    href: "/entdecken?stil=Date+Night",
+    href: "/entdecken/orte?stil=Date+Night",
     title: "Date Night",
     desc: "Premium-Tische, Candlelight-Konzerte, intime Bars für zwei.",
     Icon: Heart,
   },
   {
-    href: "/entdecken?stil=Familie",
+    href: "/entdecken/orte?stil=Familie",
     title: "Mit der Familie",
     desc: "Badis, Museen, Aktivitäten, Märkte — kinderfreundlich.",
     Icon: Baby,
@@ -355,7 +355,7 @@ export default function HomePage() {
             </h2>
           </div>
           <Link
-            href={`/entdecken?stadtteil=${encodeURIComponent(DISTRICT_SPOTLIGHT.district)}`}
+            href={`/entdecken/orte?stadtteil=${encodeURIComponent(DISTRICT_SPOTLIGHT.district)}`}
             className="text-[13px] font-medium text-burgundy hover:underline"
           >
             Alle Orte →
