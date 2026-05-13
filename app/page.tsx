@@ -491,7 +491,7 @@ export default function HomePage() {
           className="relative rounded-3xl overflow-hidden bg-ink text-paper p-8 md:p-12 grid md:grid-cols-[1fr_auto] gap-6 items-center"
           style={{
             backgroundImage:
-              "linear-gradient(135deg, #1c1917 0%, #5a1414 60%, #7c1f1f 100%)",
+              "linear-gradient(135deg, #0a1733 0%, #093a82 55%, #0f4da8 100%)",
           }}
         >
           <div>

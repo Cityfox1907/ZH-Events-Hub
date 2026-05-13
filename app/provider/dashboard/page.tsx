@@ -92,7 +92,7 @@ export default function ProviderDashboardPage() {
             className="rounded-2xl p-6 text-paper"
             style={{
               backgroundImage:
-                "linear-gradient(135deg, #1c1917 0%, #5a1414 60%, #b8893d 100%)",
+                "linear-gradient(135deg, #0a1733 0%, #093a82 55%, #5b7db0 100%)",
             }}
           >
             <p className="eyebrow text-paper-dim">Spotlight-Stufe</p>
