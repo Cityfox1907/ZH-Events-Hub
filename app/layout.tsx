@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Fraunces, DM_Sans } from "next/font/google";
 import { AppChrome } from "@/components/AppChrome";
 import { ToastProvider } from "@/components/Toast";
-import { ViewModeProvider } from "@/components/ViewModeProvider";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -30,11 +29,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="de-CH" className={`${fraunces.variable} ${dmSans.variable}`}>
       <body className="bg-paper text-ink antialiased min-h-screen flex flex-col">
-        <ViewModeProvider>
-          <ToastProvider>
-            <AppChrome>{children}</AppChrome>
-          </ToastProvider>
-        </ViewModeProvider>
+        {/* Gespeichertes Theme vor dem ersten Paint anwenden (kein Flackern) */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{if(localStorage.getItem("zt:theme")==="dim")document.documentElement.setAttribute("data-theme","dim")}catch(e){}`,
+          }}
+        />
+        <ToastProvider>
+          <AppChrome>{children}</AppChrome>
+        </ToastProvider>
       </body>
     </html>
   );

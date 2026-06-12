@@ -8,15 +8,16 @@ import {
   MessageSquare,
   ShoppingBag,
   UserCircle2,
-  Sparkles,
+  Layers,
+  Users,
 } from "lucide-react";
 import { AuthModal } from "./AuthModal";
 import { GlobalSearchTrigger } from "./GlobalSearch";
-import { NotificationBell } from "./NotificationBell";
-import { ViewSwitcher } from "./ViewSwitcher";
-import { useViewMode, useCurrentProfile } from "@/lib/viewMode";
+import { ThemeToggle } from "./ThemeToggle";
 
 const NAV = [
+  { href: "/hub", label: "Hub", Icon: Layers },
+  { href: "/communities", label: "Communities", Icon: Users },
   { href: "/entdecken", label: "Entdecken", Icon: Compass },
   { href: "/puls", label: "Puls", Icon: MessageSquare },
   { href: "/markt", label: "Markt", Icon: ShoppingBag },
@@ -25,9 +26,6 @@ const NAV = [
 export function Header() {
   const pathname = usePathname();
   const [authOpen, setAuthOpen] = useState(false);
-  const { state } = useViewMode();
-  const profile = useCurrentProfile();
-  const isDashboard = state.mode === "dashboard";
 
   function isActive(href: string) {
     return pathname === href || pathname.startsWith(href + "/");
@@ -37,10 +35,7 @@ export function Header() {
     <>
       <header className="sticky top-0 z-40 bg-paper/85 backdrop-blur border-b border-line">
         <div className="container-editorial flex items-center gap-3 py-3">
-          <Link
-            href={isDashboard ? "/app" : "/"}
-            className="flex items-center gap-2 shrink-0"
-          >
+          <Link href="/" className="flex items-center gap-2 shrink-0">
             <span className="font-display text-[22px] tracking-tight">
               ZurichTonight
             </span>
@@ -72,41 +67,21 @@ export function Header() {
               <GlobalSearchTrigger variant="icon" />
             </div>
 
-            {isDashboard && <NotificationBell />}
+            <ThemeToggle />
 
-            {isDashboard ? (
-              <Link
-                href="/app"
-                className="flex items-center gap-2 px-3 py-2 rounded-full border border-line hover:border-burgundy transition-colors"
-                aria-label="Mein Züri"
-              >
-                <Sparkles
-                  className="w-4 h-4 text-burgundy"
-                  strokeWidth={1.8}
-                />
-                <span className="text-[13px] hidden md:inline">
-                  {profile.name}
-                </span>
-              </Link>
-            ) : (
-              <>
-                <button
-                  onClick={() => setAuthOpen(true)}
-                  className="hidden sm:inline-flex px-4 py-2 text-[13px] font-medium rounded-full border border-line hover:border-burgundy hover:text-burgundy transition-colors"
-                >
-                  Anmelden
-                </button>
-                <Link
-                  href="/profile"
-                  className="sm:hidden p-2 rounded-full border border-line hover:border-burgundy"
-                  aria-label="Profil"
-                >
-                  <UserCircle2 className="w-4 h-4" />
-                </Link>
-              </>
-            )}
-
-            <ViewSwitcher />
+            <button
+              onClick={() => setAuthOpen(true)}
+              className="hidden sm:inline-flex px-4 py-2 text-[13px] font-medium rounded-full border border-line hover:border-burgundy hover:text-burgundy transition-colors"
+            >
+              Anmelden
+            </button>
+            <Link
+              href="/profile"
+              className="sm:hidden p-2 rounded-full border border-line hover:border-burgundy"
+              aria-label="Profil"
+            >
+              <UserCircle2 className="w-4 h-4" />
+            </Link>
           </div>
         </div>
       </header>

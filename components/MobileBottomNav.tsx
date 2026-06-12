@@ -5,32 +5,34 @@ import { usePathname } from "next/navigation";
 import {
   Compass,
   MessageSquare,
-  ShoppingBag,
   UserCircle2,
   Home,
-  Sparkles,
+  Layers,
+  Users,
 } from "lucide-react";
-import { useViewMode } from "@/lib/viewMode";
 
 export function MobileBottomNav() {
   const pathname = usePathname();
-  const { state } = useViewMode();
-  const isDashboard = state.mode === "dashboard";
 
   function isActive(href: string) {
     return pathname === href || pathname.startsWith(href + "/");
   }
 
-  const profileHref = isDashboard ? "/app" : "/profile";
-
   return (
     <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-paper/95 backdrop-blur border-t border-line">
-      <ul className="grid grid-cols-5">
+      <ul className="grid grid-cols-6">
+        <BottomItem href="/" label="Home" Icon={Home} active={pathname === "/"} />
         <BottomItem
-          href={isDashboard ? "/app" : "/"}
-          label={isDashboard ? "Züri" : "Home"}
-          Icon={isDashboard ? Sparkles : Home}
-          active={pathname === "/" || pathname === "/app"}
+          href="/hub"
+          label="Hub"
+          Icon={Layers}
+          active={isActive("/hub")}
+        />
+        <BottomItem
+          href="/communities"
+          label="Communities"
+          Icon={Users}
+          active={isActive("/communities")}
         />
         <BottomItem
           href="/entdecken"
@@ -45,16 +47,10 @@ export function MobileBottomNav() {
           active={isActive("/puls")}
         />
         <BottomItem
-          href="/markt"
-          label="Markt"
-          Icon={ShoppingBag}
-          active={isActive("/markt")}
-        />
-        <BottomItem
-          href={profileHref}
+          href="/profile"
           label="Profil"
           Icon={UserCircle2}
-          active={isActive("/profile") || isActive("/app")}
+          active={isActive("/profile")}
         />
       </ul>
     </nav>
@@ -76,12 +72,12 @@ function BottomItem({
     <li>
       <Link
         href={href}
-        className={`flex flex-col items-center justify-center gap-0.5 py-2 text-[10px] font-medium transition-colors ${
+        className={`flex flex-col items-center justify-center gap-0.5 py-2 text-[9.5px] font-medium transition-colors ${
           active ? "text-burgundy" : "text-ink-muted"
         }`}
       >
         <Icon className="w-5 h-5" strokeWidth={active ? 2 : 1.5} />
-        <span>{label}</span>
+        <span className="truncate max-w-full px-0.5">{label}</span>
       </Link>
     </li>
   );

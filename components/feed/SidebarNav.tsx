@@ -4,6 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   Home,
+  Layers,
+  Users,
   Compass,
   MessageSquare,
   ShoppingBag,
@@ -15,9 +17,12 @@ import {
   Feather,
 } from "lucide-react";
 import { FEED_ME } from "@/lib/feed";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const NAV = [
   { href: "/", label: "Startseite", Icon: Home },
+  { href: "/hub", label: "Hub", Icon: Layers },
+  { href: "/communities", label: "Communities", Icon: Users },
   { href: "/entdecken", label: "Entdecken", Icon: Compass },
   { href: "/puls", label: "Puls", Icon: MessageSquare },
   { href: "/markt", label: "Markt", Icon: ShoppingBag },
@@ -86,6 +91,9 @@ export function SidebarNav() {
           <span className="hidden xl:inline">Posten</span>
         </button>
       </nav>
+
+      {/* Hell/Gedimmt-Umschalter */}
+      <ThemeToggle variant="row" />
 
       {/* Profil-Chip */}
       <button className="flex items-center gap-3 p-2.5 mb-2 rounded-full hover:bg-paper-dim transition-colors w-fit xl:w-full text-left">
