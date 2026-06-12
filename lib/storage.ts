@@ -15,8 +15,6 @@ const KEYS = {
   recent: "zt:recent",
   notifSeen: "zt:notif-seen",
   // Phase 3
-  pulsVotes: "zt:puls-votes",
-  pulsBookmarks: "zt:puls-bookmarks",
   pulsPosts: "zt:puls-userposts",
   marktListings: "zt:markt-userlistings",
   pollVotes: "zt:poll-votes",
@@ -180,36 +178,7 @@ export function markNotifsRead(ids: string[]) {
   writeJSON(KEYS.notifSeen, Array.from(seen));
 }
 
-// ── PULS: Votes & Bookmarks ──────────────────────────────────
-export interface PulsVoteState {
-  [postId: string]: 1 | -1 | 0;
-}
-
-export function getPulsVotes(): PulsVoteState {
-  return readJSON<PulsVoteState>(KEYS.pulsVotes, {});
-}
-
-export function setPulsVote(postId: string, value: 1 | -1 | 0) {
-  const v = getPulsVotes();
-  if (value === 0) delete v[postId];
-  else v[postId] = value;
-  writeJSON(KEYS.pulsVotes, v);
-}
-
-export function getPulsBookmarks(): string[] {
-  return readJSON<string[]>(KEYS.pulsBookmarks, []);
-}
-
-export function togglePulsBookmark(postId: string) {
-  const list = getPulsBookmarks();
-  const next = list.includes(postId)
-    ? list.filter((id) => id !== postId)
-    : [...list, postId];
-  writeJSON(KEYS.pulsBookmarks, next);
-  return !list.includes(postId);
-}
-
-// ── PULS: user-posted (Local) ────────────────────────────────
+// ── FEED: user-posted (Local) ────────────────────────────────
 export interface UserPulsPost {
   id: string;
   type: string;

@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import {
   Compass,
-  MessageSquare,
   ShoppingBag,
   UserCircle2,
   Layers,
@@ -19,7 +18,6 @@ const NAV = [
   { href: "/hub", label: "Hub", Icon: Layers },
   { href: "/communities", label: "Communities", Icon: Users },
   { href: "/entdecken", label: "Entdecken", Icon: Compass },
-  { href: "/puls", label: "Puls", Icon: MessageSquare },
   { href: "/markt", label: "Markt", Icon: ShoppingBag },
 ];
 

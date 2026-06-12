@@ -9,7 +9,6 @@ const MODULE_LABEL: Record<string, string> = {
   tonight: "Tonight",
   dine: "Dine",
   experience: "Experience",
-  pulse: "Pulse",
   live: "Live",
 };
 

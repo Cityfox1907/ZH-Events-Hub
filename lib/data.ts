@@ -2,7 +2,6 @@ import type {
   TonightEvent,
   DineVenue,
   Experience,
-  PulseEvent,
   LiveEvent,
   DistrictInfo,
   NotificationItem,
@@ -782,116 +781,6 @@ export const EXPERIENCES: Experience[] = [
 ];
 
 // ─────────────────────────────────────────────────────────────
-// PULSE — 6 Events
-// ─────────────────────────────────────────────────────────────
-
-export const PULSE_EVENTS: PulseEvent[] = [
-  {
-    id: "founders-table",
-    title: "Founders' Table — 12 Unternehmer-Dinner",
-    type: "Networking-Dinner",
-    datetime: "4. Juni 2026, 19:00",
-    date_iso: "2026-06-04T19:00:00+02:00",
-    venue: "Private Location",
-    district: "Kreis 8",
-    max_attendees: 12,
-    current_rsvp: 9,
-    description:
-      "Kuratiert: 12 Unternehmer aus Tech, Finance und Design teilen ein Dinner und ehrliche Gespräche über Wachstum, Fehler und Strategie. Keine Pitches.",
-    curator_notes:
-      "Sorgfältig zusammengesetzt: 4 Tech-Gründer, 3 Finance, 2 Designer, 3 Unternehmer aus traditionellen Industrien.",
-    industry_mix: "Tech · Finance · Design · Manufacturing",
-    required_tier: "Premium",
-    cover_image: UNSPLASH("photo-1414235077428-338989a2e8c0"),
-  },
-  {
-    id: "women-tech-breakfast",
-    title: "Women in Tech Breakfast — Café Henrici",
-    type: "Networking-Frühstück",
-    datetime: "11. Juni 2026, 08:00",
-    date_iso: "2026-06-11T08:00:00+02:00",
-    venue: "Café Henrici",
-    district: "Kreis 1",
-    max_attendees: 16,
-    current_rsvp: 12,
-    description:
-      "Frauen aus Tech und Tech-nahen Berufen treffen sich zum Frühstück. Eine Speakerin, viel Zeit für Gespräche.",
-    curator_notes: "Speakerin diesen Monat: Yvonne Bettkober, ehemals AWS DACH.",
-    industry_mix: "Tech · Engineering · Product",
-    required_tier: "Premium",
-    cover_image: UNSPLASH("photo-1517248135467-4c7edcad34c4"),
-  },
-  {
-    id: "fintech-insider",
-    title: "Fintech-Insider-Roundtable mit ex-UBS-VP",
-    type: "Industry Meetup",
-    datetime: "18. Juni 2026, 18:30",
-    date_iso: "2026-06-18T18:30:00+02:00",
-    venue: "Private Lounge, Paradeplatz",
-    district: "Kreis 1",
-    max_attendees: 14,
-    current_rsvp: 11,
-    description:
-      "Geschlossener Kreis: Fintech-Gründer, Banker, Investoren. Ein Speaker, dann offene Runde.",
-    curator_notes: "Speaker diesen Monat: ex-VP Wealth Management, UBS.",
-    industry_mix: "Fintech · Banking · Venture",
-    required_tier: "VIP",
-    cover_image: UNSPLASH("photo-1556761175-5973dc0f32e7"),
-  },
-  {
-    id: "mastermind-2026",
-    title: "Mastermind Group — Skalierung in 2026",
-    type: "Mastermind",
-    datetime: "Wöchentlich, Do 17:00",
-    date_iso: "2026-06-25T17:00:00+02:00",
-    venue: "Hybrid · Office Kreis 4",
-    district: "Kreis 4",
-    max_attendees: 8,
-    current_rsvp: 7,
-    description:
-      "Geschlossene 8er-Gruppe, die sich jede Woche trifft, Probleme reviewt, Accountability lebt.",
-    curator_notes: "Aufnahme nur über Empfehlung. Commitment: 6 Monate.",
-    industry_mix: "Founders ARR > 1M",
-    required_tier: "VIP",
-    cover_image: UNSPLASH("photo-1531058020387-3be344556be6"),
-  },
-  {
-    id: "champagner-tasting",
-    title: "Private Champagner-Tasting für Members",
-    type: "Kuratiertes Tasting",
-    datetime: "20. Juni 2026, 20:00",
-    date_iso: "2026-06-20T20:00:00+02:00",
-    venue: "Private Bibliothek",
-    district: "Kreis 6",
-    max_attendees: 16,
-    current_rsvp: 11,
-    description:
-      "Sechs Häuser, drei Jahrgänge, eine Sommelière. Anschliessend Käse-Pairing.",
-    curator_notes: "Geleitet von Salome Kohler, MS-Kandidatin.",
-    industry_mix: "Mixed",
-    required_tier: "Premium",
-    cover_image: UNSPLASH("photo-1481627834876-b7833e8f5570"),
-  },
-  {
-    id: "afterwork-zuerichsee",
-    title: "After-Work Drinks am Zürichsee",
-    type: "Casual Member-Event",
-    datetime: "27. Juni 2026, 18:30",
-    date_iso: "2026-06-27T18:30:00+02:00",
-    venue: "Steg Mythenquai",
-    district: "Kreis 2",
-    max_attendees: 30,
-    current_rsvp: 19,
-    description:
-      "Lockerer Treff am See für alle Member. Kein Speaker, kein Format — einfach treffen.",
-    curator_notes: "Premium und VIP. Casual Dresscode.",
-    industry_mix: "All",
-    required_tier: "Premium",
-    cover_image: UNSPLASH("photo-1517248135467-4c7edcad34c4"),
-  },
-];
-
-// ─────────────────────────────────────────────────────────────
 // LIVE — 8 Premium-Erlebnisse
 // ─────────────────────────────────────────────────────────────
 
@@ -1126,17 +1015,17 @@ export const HERO_IMAGES = [
 export const NOTIFICATIONS: NotificationItem[] = [
   {
     id: "n1",
-    title: "PULS",
-    text: "Sara hat auf deinen Post 'Bester Coiffeur für Locken?' geantwortet.",
-    href: "/puls",
+    title: "ENTDECKEN",
+    text: "Sara hat auf deinen Beitrag zum Züri Fäscht geantwortet.",
+    href: "/entdecken/zueri-faescht",
     ago: "Vor 12 min",
     unread: true,
   },
   {
     id: "n2",
-    title: "STIMMEN",
+    title: "STADT-DIALOG",
     text: "Neue Initiative: '24h-Tram am Wochenende' — 2'347 Stimmen schon.",
-    href: "/stimmen",
+    href: "/stadt-dialog",
     ago: "Vor 1h",
     unread: true,
   },
@@ -1158,9 +1047,9 @@ export const NOTIFICATIONS: NotificationItem[] = [
   },
   {
     id: "n5",
-    title: "PULS",
-    text: "Dein Post 'Sonnenuntergang Üetliberg' hat 50+ Upvotes erreicht.",
-    href: "/puls",
+    title: "ENTDECKEN",
+    text: "Dein Event 'Grillplausch am Katzensee' hat 5 neue Kommentare.",
+    href: "/entdecken",
     ago: "Vor 5h",
   },
   {
@@ -1316,9 +1205,6 @@ export function getDineVenue(id: string) {
 export function getExperience(id: string) {
   return EXPERIENCES.find((e) => e.id === id);
 }
-export function getPulseEvent(id: string) {
-  return PULSE_EVENTS.find((e) => e.id === id);
-}
 export function getLiveEvent(id: string) {
   return LIVE_EVENTS.find((e) => e.id === id);
 }
@@ -1346,10 +1232,6 @@ export function searchAll(query: string) {
   for (const e of EXPERIENCES) {
     if (e.title.toLowerCase().includes(q) || e.category.toLowerCase().includes(q))
       results.push({ module: "Experience", id: e.id, title: e.title, href: `/experience/${e.id}` });
-  }
-  for (const e of PULSE_EVENTS) {
-    if (e.title.toLowerCase().includes(q))
-      results.push({ module: "Pulse", id: e.id, title: e.title, href: `/pulse/${e.id}` });
   }
   for (const e of LIVE_EVENTS) {
     if (e.title.toLowerCase().includes(q) || e.type.toLowerCase().includes(q))

@@ -39,7 +39,7 @@ function TrendsCard() {
       {FEED_TRENDS.map((t) => (
         <Link
           key={t.tag}
-          href={`/puls?tag=${t.tag}`}
+          href="/entdecken"
           className="block px-4 py-2.5 hover:bg-paper-dim transition-colors"
         >
           <div className="flex items-start justify-between gap-2">
@@ -59,7 +59,7 @@ function TrendsCard() {
         </Link>
       ))}
       <Link
-        href="/puls"
+        href="/entdecken"
         className="block px-4 py-3 text-[14px] text-burgundy hover:bg-paper-dim transition-colors"
       >
         Mehr anzeigen
@@ -119,7 +119,7 @@ function FollowCard() {
         );
       })}
       <Link
-        href="/puls"
+        href="/communities"
         className="block px-4 py-3 text-[14px] text-burgundy hover:bg-paper-dim transition-colors"
       >
         Mehr anzeigen

@@ -80,7 +80,7 @@ export function MarktItemCard({ item, variant = "default" }: Props) {
 
         {item.linkedEvent && (
           <Link
-            href={`/entdecken/kalender?slug=${item.linkedEvent.slug}`}
+            href="/entdecken"
             className="mt-2 inline-flex items-center gap-1 text-[11.5px] font-medium text-burgundy hover:gap-2 transition-all w-max"
           >
             → Event-Details ansehen

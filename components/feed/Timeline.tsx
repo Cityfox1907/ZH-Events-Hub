@@ -84,9 +84,10 @@ export function Timeline() {
       </div>
 
       <div className="px-4 py-8 text-center text-[13px] text-ink-faint border-b border-line">
-        Du bist auf dem aktuellen Stand — mehr Posts findest du im{" "}
-        <Link href="/puls" className="text-burgundy hover:underline">
-          Puls
+        Du bist auf dem aktuellen Stand — Stadtfeste und Events findest du
+        unter{" "}
+        <Link href="/entdecken" className="text-burgundy hover:underline">
+          Entdecken
         </Link>
         .
       </div>

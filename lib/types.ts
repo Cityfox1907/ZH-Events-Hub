@@ -83,23 +83,6 @@ export interface Experience {
 
 export type PulseTier = "Free" | "Premium" | "VIP";
 
-export interface PulseEvent {
-  id: string;
-  title: string;
-  type: string;
-  datetime: string;
-  date_iso: string;
-  venue: string;
-  district: string;
-  max_attendees: number;
-  current_rsvp: number;
-  description: string;
-  curator_notes: string;
-  industry_mix?: string;
-  required_tier: PulseTier;
-  cover_image: string;
-}
-
 export interface LiveEvent {
   id: string;
   title: string;
@@ -124,9 +107,7 @@ export type ModuleKey =
   | "tonight"
   | "dine"
   | "experience"
-  | "pulse"
   | "live"
-  | "puls"
   | "markt"
   | "stimmen"
   | "entdecken"
@@ -351,63 +332,8 @@ export interface MarktItem {
 }
 
 // ─────────────────────────────────────────────────────────────
-// PULS — Drei-Schichten-Modell (Phase 3 Umbau)
+// PULS-POSTS — Datenbasis für den Startseiten-Feed
 // ─────────────────────────────────────────────────────────────
-
-export type PulsSourceKind =
-  | "zvv"
-  | "sbb"
-  | "vbz"
-  | "stadt"
-  | "polizei"
-  | "erz"
-  | "stadtrat"
-  | "local-hero";
-
-export interface PulsVerifiedUpdate {
-  id: string;
-  source: string;       // Anzeige-Name, z.B. "ZVV", "@TramFahrerinSophie"
-  sourceKind: PulsSourceKind;
-  district?: string;
-  text: string;
-  ago: string;
-  identity: IdentityTier;
-}
-
-export type QuartierPostType =
-  | "frage"
-  | "empfehlung"
-  | "beobachtung"
-  | "treffen"
-  | "sorge"
-  | "hilfe-angebot";
-
-export interface QuartierPost {
-  id: string;
-  author: string;
-  avatar: string;
-  district: string;
-  ago: string;
-  type: QuartierPostType;
-  text: string;
-  image?: string;
-  identity: IdentityTier;
-  reactions: number;       // generic reactions / answers counter
-  reactionLabel: "Antworten" | "Reaktionen" | "Kommentare" | "Anmeldungen";
-}
-
-export interface CityThread {
-  id: string;
-  title: string;
-  hook: string;            // Aufhänger / Lead, 3-4 Zeilen
-  reactions: number;
-  comments: number;
-  image?: string;
-  topComments: { author: string; text: string; identity: IdentityTier }[];
-  verifiedSource?: { name: string; role: string };
-  cross?: { module: ModuleKey; id?: string; label: string };
-  category: string;        // z.B. "Stadtentwicklung", "Verkehr"
-}
 
 export interface PulsComment {
   id: string;
@@ -586,56 +512,6 @@ export interface ProviderInquiry {
   message: string;
   receivedAt: string;
   status: "Neu" | "Beantwortet" | "Konvertiert";
-}
-
-// ─────────────────────────────────────────────────────────────
-// KALENDER — Zürich-Kalender (Phase 6)
-// 33 Zürcher Klassiker + saisonale Anlässe übers Jahr
-// ─────────────────────────────────────────────────────────────
-
-export type KalenderCategory =
-  | "music"
-  | "festival_tradition"
-  | "sport"
-  | "culture"
-  | "theater"
-  | "nightlife"
-  | "family"
-  | "market"
-  | "film"
-  | "art";
-
-export type KalenderImportance = "mega" | "standard";
-export type KalenderSeason = "fruehling" | "sommer" | "herbst" | "winter";
-
-export interface KalenderEvent {
-  id: string;
-  slug: string;
-  title: string;
-  category: KalenderCategory;
-  category_label: string;
-  /** ISO yyyy-mm-dd start date */
-  dateStart: string;
-  /** ISO yyyy-mm-dd end date — same as start if single-day */
-  dateEnd: string;
-  /** HH:MM 24h time, optional */
-  timeStart?: string;
-  importance: KalenderImportance;
-  isClassic: boolean;
-  season: KalenderSeason;
-  heroImage: string;
-  galleryImages: string[];
-  shortDescription: string;
-  longDescription?: string;
-  location: string;
-  district: string;
-  transit?: string;
-  priceInfo: string;
-  priceBand: "free" | "low" | "mid" | "high";
-  tradition?: string;
-  vibe_tags: Vibe[];
-  communityQuotes?: { author: string; district: string; text: string }[];
-  tips?: string[];
 }
 
 export interface MyReview {

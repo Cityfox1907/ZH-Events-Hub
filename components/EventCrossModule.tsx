@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Ticket, MessagesSquare, ArrowRight } from "lucide-react";
-import { ticketsForEvent, threadsForEvent } from "@/lib/phase3-data";
+import { Ticket, ArrowRight } from "lucide-react";
+import { ticketsForEvent } from "@/lib/phase3-data";
 
 interface Props {
   eventId: string;
@@ -10,7 +10,6 @@ interface Props {
 
 export function EventCrossModule({ eventId }: Props) {
   const tickets = ticketsForEvent(eventId);
-  const threads = threadsForEvent(eventId);
 
   const cards: { Icon: typeof Ticket; label: string; count: number; href: string; tone: string }[] = [];
 
@@ -21,15 +20,6 @@ export function EventCrossModule({ eventId }: Props) {
       count: tickets.length,
       href: "/markt/tickets",
       tone: "bg-rose-50 border-rose-200 text-rose-900",
-    });
-  }
-  if (threads.length > 0) {
-    cards.push({
-      Icon: MessagesSquare,
-      label: "Diskussionen dazu im Puls",
-      count: threads.length,
-      href: "/puls/stadt",
-      tone: "bg-amber-50 border-amber-200 text-amber-900",
     });
   }
 

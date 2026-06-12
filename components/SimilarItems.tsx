@@ -3,7 +3,6 @@ import {
   TONIGHT_EVENTS,
   DINE_VENUES,
   EXPERIENCES,
-  PULSE_EVENTS,
   LIVE_EVENTS,
 } from "@/lib/data";
 import type { ModuleKey } from "@/lib/types";
@@ -48,16 +47,6 @@ function pickItems(module: ModuleKey, currentId: string): Item[] {
           meta: `${e.duration} · ab CHF ${e.price_per_person}`,
           href: `/experience/${e.id}`,
         }));
-    case "pulse":
-      return PULSE_EVENTS.filter((e) => e.id !== currentId)
-        .slice(0, 4)
-        .map((e) => ({
-          id: e.id,
-          title: e.title,
-          cover: e.cover_image,
-          meta: `${e.datetime} · ${e.required_tier}`,
-          href: `/pulse/${e.id}`,
-        }));
     case "live":
       return LIVE_EVENTS.filter((e) => e.id !== currentId)
         .slice(0, 4)
@@ -68,7 +57,6 @@ function pickItems(module: ModuleKey, currentId: string): Item[] {
           meta: `${e.datetime} · ${e.price_range}`,
           href: `/live/${e.id}`,
         }));
-    case "puls":
     case "markt":
     case "stimmen":
     case "entdecken":
