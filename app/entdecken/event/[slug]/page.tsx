@@ -388,14 +388,6 @@ function CrossModuleSection({ event }: { event: NonNullable<ReturnType<typeof fi
       href: "/puls",
       Icon: Users,
     },
-    {
-      key: "mitfahr",
-      label: "Mitfahrer suchen Anschluss",
-      cta: "Mitfahr-Markt",
-      count: event.cross.mitfahr,
-      href: "/markt?vertical=mitfahr",
-      Icon: ArrowRight,
-    },
   ].filter((x) => x.count > 0);
 
   if (items.length === 0) return null;

@@ -142,6 +142,18 @@
     .container-editorial { padding-left: 32px; padding-right: 32px; }
   }
 
+  /* Feed-Layout der Startseite (X-Style, drei Spalten) */
+  .container-feed {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1290px;
+  }
+
+  @media (min-width: 768px) {
+    .container-feed { padding-left: 12px; padding-right: 12px; }
+  }
+
   .card-shadow { box-shadow: var(--shadow-card); }
   .card-shadow-hover:hover { box-shadow: var(--shadow-card-hover); }
 

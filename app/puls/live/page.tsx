@@ -12,7 +12,6 @@ const SOURCE_FILTERS: { key: PulsSourceKind | "alle"; label: string }[] = [
   { key: "zvv", label: "ZVV" },
   { key: "sbb", label: "SBB" },
   { key: "vbz", label: "VBZ" },
-  { key: "meteo", label: "MeteoSchweiz" },
   { key: "stadt", label: "Stadt" },
   { key: "polizei", label: "Polizei" },
   { key: "erz", label: "ERZ" },
@@ -38,7 +37,7 @@ export default function PulsLivePage() {
           Was die Stadt offiziell sagt.
         </h1>
         <p className="text-ink-muted text-[14.5px] mt-2 max-w-xl">
-          Nur verifizierte Quellen: ZVV, MeteoSchweiz, Stadt Zürich, Polizei,
+          Nur verifizierte Quellen: ZVV, SBB, Stadt Zürich, Polizei,
           ERZ, plus Local Heroes (Tramfahrer*innen, Velokurier*innen,
           Bademeister*innen).
         </p>

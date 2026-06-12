@@ -138,7 +138,7 @@ export interface EventX {
     rollstuhl?: boolean;
     kinderwagen?: boolean;
   };
-  cross: { tickets: number; bars: number; posts: number; mitfahr: number };
+  cross: { tickets: number; bars: number; posts: number };
   /** keys of horizontal rows this event belongs to */
   reihen?: string[];
   /** countdown countdown to ISO date (used for hero) */
@@ -175,7 +175,7 @@ export const EVENTS: EventX[] = [
     anbieter: { name: "Zurich Pride Festival", verifikation: "wohnsitz" },
     klassiker: true,
     flags: { gratis: true, kinderfreundlich: true, barDanach: true, rollstuhl: true },
-    cross: { tickets: 24, bars: 87, posts: 142, mitfahr: 18 },
+    cross: { tickets: 24, bars: 87, posts: 142 },
     heroOrder: 1,
   },
   {
@@ -199,7 +199,7 @@ export const EVENTS: EventX[] = [
     anbieter: { name: "Caliente! Festival", verifikation: "wohnsitz" },
     klassiker: true,
     flags: { gratis: true, kinderfreundlich: true, barDanach: true },
-    cross: { tickets: 8, bars: 42, posts: 56, mitfahr: 12 },
+    cross: { tickets: 8, bars: 42, posts: 56 },
     heroOrder: 2,
   },
   {
@@ -223,7 +223,7 @@ export const EVENTS: EventX[] = [
     anbieter: { name: "Verein Streetparade", verifikation: "wohnsitz" },
     klassiker: true,
     flags: { gratis: true, barDanach: true },
-    cross: { tickets: 14, bars: 156, posts: 312, mitfahr: 87 },
+    cross: { tickets: 14, bars: 156, posts: 312 },
     heroOrder: 3,
   },
   {
@@ -247,7 +247,7 @@ export const EVENTS: EventX[] = [
     anbieter: { name: "Knabenschiessen-Komitee", verifikation: "wohnsitz" },
     klassiker: true,
     flags: { gratis: true, kinderfreundlich: true, kinderwagen: true },
-    cross: { tickets: 0, bars: 18, posts: 78, mitfahr: 6 },
+    cross: { tickets: 0, bars: 18, posts: 78 },
     heroOrder: 4,
   },
   {
@@ -271,7 +271,7 @@ export const EVENTS: EventX[] = [
     anbieter: { name: "Zurich Film Festival", verifikation: "wohnsitz" },
     klassiker: true,
     flags: { indoor: true, reservation: true, dateNight: true, rollstuhl: true },
-    cross: { tickets: 312, bars: 64, posts: 218, mitfahr: 34 },
+    cross: { tickets: 312, bars: 64, posts: 218 },
     heroOrder: 5,
   },
   {
@@ -295,7 +295,7 @@ export const EVENTS: EventX[] = [
     anbieter: { name: "Wienachtsdorf AG", verifikation: "wohnsitz" },
     klassiker: true,
     flags: { gratis: true, kinderfreundlich: true, kinderwagen: true, dateNight: true },
-    cross: { tickets: 0, bars: 92, posts: 134, mitfahr: 8 },
+    cross: { tickets: 0, bars: 92, posts: 134 },
     heroOrder: 6,
   },
 
@@ -324,7 +324,7 @@ export const EVENTS: EventX[] = [
       groesse: "large",
     },
     flags: { indoor: true, reservation: true, dateNight: true, rollstuhl: true },
-    cross: { tickets: 4, bars: 12, posts: 42, mitfahr: 6 },
+    cross: { tickets: 4, bars: 12, posts: 42 },
     reihen: ["heute-abend", "konzerte", "date-night"],
   },
   {
@@ -351,7 +351,7 @@ export const EVENTS: EventX[] = [
       groesse: "medium",
     },
     flags: { indoor: true, reservation: true, dateNight: true },
-    cross: { tickets: 0, bars: 6, posts: 18, mitfahr: 0 },
+    cross: { tickets: 0, bars: 6, posts: 18 },
     reihen: ["premium-weekend"],
   },
   {
@@ -378,7 +378,7 @@ export const EVENTS: EventX[] = [
       groesse: "medium",
     },
     flags: { spontan: true, dateNight: true, kinderfreundlich: true },
-    cross: { tickets: 0, bars: 28, posts: 64, mitfahr: 0 },
+    cross: { tickets: 0, bars: 28, posts: 64 },
     reihen: ["heute-abend"],
   },
   {
@@ -405,7 +405,7 @@ export const EVENTS: EventX[] = [
       groesse: "small",
     },
     flags: { gratis: true, indoor: true, dateNight: true, rollstuhl: true },
-    cross: { tickets: 0, bars: 14, posts: 22, mitfahr: 4 },
+    cross: { tickets: 0, bars: 14, posts: 22 },
     reihen: ["heute-abend"],
   },
   {
@@ -432,7 +432,7 @@ export const EVENTS: EventX[] = [
       groesse: "small",
     },
     flags: { reservation: true, barDanach: true, rollstuhl: true },
-    cross: { tickets: 18, bars: 34, posts: 92, mitfahr: 24 },
+    cross: { tickets: 18, bars: 34, posts: 92 },
     reihen: ["heute-abend"],
   },
   {
@@ -459,7 +459,7 @@ export const EVENTS: EventX[] = [
       groesse: "small",
     },
     flags: { gratis: true, kinderfreundlich: true, kinderwagen: true, mitHund: true },
-    cross: { tickets: 0, bars: 18, posts: 12, mitfahr: 0 },
+    cross: { tickets: 0, bars: 18, posts: 12 },
     reihen: ["familien", "kostenlos"],
   },
 
@@ -483,7 +483,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1545987796-200677ee1011"), IMG("1547595628-c61a29f496f0"), IMG("1485518882345-15568b007407")],
     anbieter: { name: "Maag Halle", verifikation: "wohnsitz" },
     flags: { indoor: true, reservation: true, kinderfreundlich: true, dateNight: true, rollstuhl: true },
-    cross: { tickets: 12, bars: 18, posts: 38, mitfahr: 4 },
+    cross: { tickets: 12, bars: 18, posts: 38 },
     reihen: ["heute-abend", "stadtteil-kreis5"],
   },
   {
@@ -504,7 +504,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1514525253161-7a46d19cd819"), IMG("1465847899084-d164df4dedc6"), IMG("1459749411175-04bf5292ceea")],
     anbieter: { name: "Moods Jazz Club", verifikation: "wohnsitz" },
     flags: { indoor: true, reservation: true, barDanach: true, dateNight: true },
-    cross: { tickets: 8, bars: 12, posts: 24, mitfahr: 4 },
+    cross: { tickets: 8, bars: 12, posts: 24 },
     reihen: ["heute-abend", "konzerte", "date-night", "stadtteil-kreis5"],
   },
   {
@@ -525,7 +525,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1465847899084-d164df4dedc6"), IMG("1514525253161-7a46d19cd819"), IMG("1459749411175-04bf5292ceea")],
     anbieter: { name: "Tonhalle-Gesellschaft", verifikation: "wohnsitz" },
     flags: { indoor: true, reservation: true, dateNight: true, rollstuhl: true },
-    cross: { tickets: 6, bars: 8, posts: 14, mitfahr: 2 },
+    cross: { tickets: 6, bars: 8, posts: 14 },
     reihen: ["heute-abend", "konzerte", "geheim"],
   },
   {
@@ -546,7 +546,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1571266028243-d220c6a32ae1"), IMG("1503095396549-807759245b35"), IMG("1485518882345-15568b007407")],
     anbieter: { name: "Kaufleuten Klub", verifikation: "wohnsitz" },
     flags: { indoor: true, barDanach: true, spontan: true },
-    cross: { tickets: 12, bars: 8, posts: 18, mitfahr: 4 },
+    cross: { tickets: 12, bars: 8, posts: 18 },
     reihen: ["heute-abend"],
   },
   {
@@ -567,7 +567,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1452587925148-ce544e77e70d"), IMG("1545987796-200677ee1011"), IMG("1485518882345-15568b007407")],
     anbieter: { name: "Photobastei", verifikation: "wohnsitz" },
     flags: { gratis: true, indoor: true, spontan: true, dateNight: true },
-    cross: { tickets: 0, bars: 4, posts: 8, mitfahr: 0 },
+    cross: { tickets: 0, bars: 4, posts: 8 },
     reihen: ["heute-abend", "kostenlos", "stadtteil-kreis5"],
   },
 
@@ -590,7 +590,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1503095396549-807759245b35"), IMG("1493225457124-a3eb161ffa5f"), IMG("1465847899084-d164df4dedc6")],
     anbieter: { name: "Opernhaus Zürich", verifikation: "wohnsitz" },
     flags: { indoor: true, reservation: true, dateNight: true, rollstuhl: true },
-    cross: { tickets: 18, bars: 24, posts: 42, mitfahr: 8 },
+    cross: { tickets: 18, bars: 24, posts: 42 },
     reihen: ["premium-weekend", "date-night"],
   },
   {
@@ -611,7 +611,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1504674900247-0877df9cc836"), IMG("1525755662778-989d0524087e"), IMG("1551218808-94e220e084d2")],
     anbieter: { name: "Hotel Storchen", verifikation: "wohnsitz" },
     flags: { indoor: true, reservation: true, dateNight: true, kinderfreundlich: true },
-    cross: { tickets: 0, bars: 6, posts: 18, mitfahr: 2 },
+    cross: { tickets: 0, bars: 6, posts: 18 },
     reihen: ["premium-weekend"],
   },
   {
@@ -632,7 +632,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1571266028243-d220c6a32ae1"), IMG("1514525253161-7a46d19cd819"), IMG("1465847899084-d164df4dedc6")],
     anbieter: { name: "Old Crow", verifikation: "wohnsitz" },
     flags: { indoor: true, reservation: true, barDanach: true, dateNight: true },
-    cross: { tickets: 4, bars: 6, posts: 12, mitfahr: 2 },
+    cross: { tickets: 4, bars: 6, posts: 12 },
     reihen: ["premium-weekend", "geheim", "date-night"],
   },
   {
@@ -653,7 +653,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1510812431401-41d2bd2722f3"), IMG("1547595628-c61a29f496f0"), IMG("1551218808-94e220e084d2")],
     anbieter: { name: "Maag Halle", verifikation: "wohnsitz" },
     flags: { indoor: true, reservation: true, dateNight: true },
-    cross: { tickets: 6, bars: 12, posts: 18, mitfahr: 4 },
+    cross: { tickets: 6, bars: 12, posts: 18 },
     reihen: ["premium-weekend"],
   },
   {
@@ -674,7 +674,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1504674900247-0877df9cc836"), IMG("1525755662778-989d0524087e"), IMG("1465014925804-7b9ede221f7e")],
     anbieter: { name: "Confiserie Sprüngli", verifikation: "wohnsitz" },
     flags: { indoor: true, reservation: true, kinderfreundlich: true, dateNight: true },
-    cross: { tickets: 0, bars: 4, posts: 12, mitfahr: 0 },
+    cross: { tickets: 0, bars: 4, posts: 12 },
     reihen: ["premium-weekend"],
   },
   {
@@ -695,7 +695,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1551958219-acbc608c6377"), IMG("1517466787929-bc90951d0974"), IMG("1571019613454-1cb2f99b2d8b")],
     anbieter: { name: "Dolder Grand", verifikation: "wohnsitz" },
     flags: { reservation: true, dateNight: true, kinderfreundlich: true },
-    cross: { tickets: 12, bars: 6, posts: 8, mitfahr: 8 },
+    cross: { tickets: 12, bars: 6, posts: 8 },
     reihen: ["premium-weekend"],
   },
   {
@@ -716,7 +716,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1510812431401-41d2bd2722f3"), IMG("1547595628-c61a29f496f0"), IMG("1504674900247-0877df9cc836")],
     anbieter: { name: "Maison Manesse", verifikation: "wohnsitz" },
     flags: { indoor: true, reservation: true, dateNight: true },
-    cross: { tickets: 0, bars: 4, posts: 14, mitfahr: 2 },
+    cross: { tickets: 0, bars: 4, posts: 14 },
     reihen: ["premium-weekend", "date-night"],
   },
 
@@ -740,7 +740,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1493225457124-a3eb161ffa5f"), IMG("1429962714451-bb934ecdc4ec"), IMG("1571266028243-d220c6a32ae1")],
     anbieter: { name: "Helvetic Festival", verifikation: "wohnsitz" },
     flags: { reservation: true, barDanach: true, dateNight: true },
-    cross: { tickets: 24, bars: 18, posts: 38, mitfahr: 12 },
+    cross: { tickets: 24, bars: 18, posts: 38 },
     reihen: ["konzerte"],
   },
   {
@@ -761,7 +761,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1465847899084-d164df4dedc6"), IMG("1514525253161-7a46d19cd819"), IMG("1503095396549-807759245b35")],
     anbieter: { name: "Tonhalle-Gesellschaft", verifikation: "wohnsitz" },
     flags: { indoor: true, reservation: true, dateNight: true, rollstuhl: true },
-    cross: { tickets: 24, bars: 8, posts: 18, mitfahr: 6 },
+    cross: { tickets: 24, bars: 8, posts: 18 },
     reihen: ["konzerte", "premium-weekend"],
   },
   {
@@ -782,7 +782,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1571266028243-d220c6a32ae1"), IMG("1429962714451-bb934ecdc4ec"), IMG("1493225457124-a3eb161ffa5f")],
     anbieter: { name: "Bogen F Kollektiv", verifikation: "member" },
     flags: { indoor: true, barDanach: true, spontan: true },
-    cross: { tickets: 8, bars: 12, posts: 24, mitfahr: 6 },
+    cross: { tickets: 8, bars: 12, posts: 24 },
     reihen: ["konzerte", "geheim"],
   },
   {
@@ -804,7 +804,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1493225457124-a3eb161ffa5f"), IMG("1502082553048-f009c37129b9"), IMG("1518709268805-4e9042af2176")],
     anbieter: { name: "Stadt Zürich Kulturförderung", verifikation: "wohnsitz" },
     flags: { gratis: true, kinderfreundlich: true, mitHund: true, kinderwagen: true, spontan: true },
-    cross: { tickets: 0, bars: 28, posts: 42, mitfahr: 12 },
+    cross: { tickets: 0, bars: 28, posts: 42 },
     reihen: ["konzerte", "familien", "kostenlos"],
   },
 
@@ -827,7 +827,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1502082553048-f009c37129b9"), IMG("1565514020179-026b92b84bb6"), IMG("1488459716781-31db52582fe9")],
     anbieter: { name: "Stadt Zürich Grün", verifikation: "wohnsitz" },
     flags: { gratis: true, kinderfreundlich: true, kinderwagen: true, rollstuhl: true, mitHund: true },
-    cross: { tickets: 0, bars: 4, posts: 18, mitfahr: 0 },
+    cross: { tickets: 0, bars: 4, posts: 18 },
     reihen: ["familien", "kostenlos"],
   },
   {
@@ -848,7 +848,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1487958449943-2429e8be8625"), IMG("1565514020179-026b92b84bb6"), IMG("1485518882345-15568b007407")],
     anbieter: { name: "Zoo Zürich", verifikation: "wohnsitz" },
     flags: { reservation: true, kinderfreundlich: true, kinderwagen: true, rollstuhl: true },
-    cross: { tickets: 28, bars: 4, posts: 24, mitfahr: 6 },
+    cross: { tickets: 28, bars: 4, posts: 24 },
     reihen: ["familien"],
   },
   {
@@ -869,7 +869,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1517466787929-bc90951d0974"), IMG("1551958219-acbc608c6377"), IMG("1571019613454-1cb2f99b2d8b")],
     anbieter: { name: "FIFA Museum", verifikation: "wohnsitz" },
     flags: { indoor: true, reservation: true, kinderfreundlich: true, kinderwagen: true, rollstuhl: true },
-    cross: { tickets: 12, bars: 4, posts: 8, mitfahr: 2 },
+    cross: { tickets: 12, bars: 4, posts: 8 },
     reihen: ["familien"],
   },
   {
@@ -890,7 +890,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1503095396549-807759245b35"), IMG("1542204165-65bf26472b9b"), IMG("1485518882345-15568b007407")],
     anbieter: { name: "Theater Stok", verifikation: "wohnsitz" },
     flags: { indoor: true, reservation: true, kinderfreundlich: true, kinderwagen: true },
-    cross: { tickets: 18, bars: 4, posts: 6, mitfahr: 0 },
+    cross: { tickets: 18, bars: 4, posts: 6 },
     reihen: ["familien"],
   },
   {
@@ -911,7 +911,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1565514020179-026b92b84bb6"), IMG("1502082553048-f009c37129b9"), IMG("1488459716781-31db52582fe9")],
     anbieter: { name: "VBZ", verifikation: "wohnsitz" },
     flags: { reservation: true, kinderfreundlich: true, kinderwagen: true, rollstuhl: true },
-    cross: { tickets: 4, bars: 4, posts: 8, mitfahr: 0 },
+    cross: { tickets: 4, bars: 4, posts: 8 },
     reihen: ["familien"],
   },
   {
@@ -932,7 +932,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1504674900247-0877df9cc836"), IMG("1525755662778-989d0524087e"), IMG("1488459716781-31db52582fe9")],
     anbieter: { name: "Frau Gerold", verifikation: "wohnsitz" },
     flags: { reservation: true, kinderfreundlich: true, kinderwagen: true, mitHund: true, spontan: true },
-    cross: { tickets: 0, bars: 12, posts: 28, mitfahr: 0 },
+    cross: { tickets: 0, bars: 12, posts: 28 },
     reihen: ["familien", "stadtteil-kreis5"],
   },
   {
@@ -953,7 +953,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1514525253161-7a46d19cd819"), IMG("1465847899084-d164df4dedc6"), IMG("1503095396549-807759245b35")],
     anbieter: { name: "Tonhalle-Gesellschaft", verifikation: "wohnsitz" },
     flags: { indoor: true, reservation: true, kinderfreundlich: true, kinderwagen: true, rollstuhl: true },
-    cross: { tickets: 14, bars: 4, posts: 6, mitfahr: 2 },
+    cross: { tickets: 14, bars: 4, posts: 6 },
     reihen: ["familien", "konzerte"],
   },
 
@@ -976,7 +976,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1504674900247-0877df9cc836"), IMG("1551218808-94e220e084d2"), IMG("1525755662778-989d0524087e")],
     anbieter: { name: "IGNIV by A. Caminada", verifikation: "wohnsitz" },
     flags: { indoor: true, reservation: true, dateNight: true, rollstuhl: true },
-    cross: { tickets: 0, bars: 8, posts: 24, mitfahr: 4 },
+    cross: { tickets: 0, bars: 8, posts: 24 },
     reihen: ["date-night", "premium-weekend"],
   },
   {
@@ -997,7 +997,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1502082553048-f009c37129b9"), IMG("1559564484-e48eda6daa1f"), IMG("1518709268805-4e9042af2176")],
     anbieter: { name: "Zürichsee Schifffahrt", verifikation: "wohnsitz" },
     flags: { reservation: true, dateNight: true },
-    cross: { tickets: 8, bars: 18, posts: 14, mitfahr: 0 },
+    cross: { tickets: 8, bars: 18, posts: 14 },
     reihen: ["date-night"],
   },
   {
@@ -1018,7 +1018,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1545987796-200677ee1011"), IMG("1452587925148-ce544e77e70d"), IMG("1485518882345-15568b007407")],
     anbieter: { name: "Kunsthaus Zürich", verifikation: "wohnsitz" },
     flags: { indoor: true, reservation: true, dateNight: true, rollstuhl: true },
-    cross: { tickets: 12, bars: 8, posts: 14, mitfahr: 2 },
+    cross: { tickets: 12, bars: 8, posts: 14 },
     reihen: ["date-night", "geheim"],
   },
   {
@@ -1039,7 +1039,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1502082553048-f009c37129b9"), IMG("1518709268805-4e9042af2176"), IMG("1481833761820-0509d3217039")],
     anbieter: { name: "Clouds AG", verifikation: "wohnsitz" },
     flags: { gratis: true, reservation: true, dateNight: true, rollstuhl: true },
-    cross: { tickets: 0, bars: 12, posts: 22, mitfahr: 4 },
+    cross: { tickets: 0, bars: 12, posts: 22 },
     reihen: ["date-night", "stadtteil-kreis5"],
   },
   {
@@ -1061,7 +1061,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1509316975850-ff9c5deb0cd9"), IMG("1517604931442-7e0c8ed2963c"), IMG("1485846234645-a62644f84728")],
     anbieter: { name: "Open Air Kino Zürich", verifikation: "wohnsitz" },
     flags: { reservation: true, dateNight: true },
-    cross: { tickets: 14, bars: 4, posts: 28, mitfahr: 6 },
+    cross: { tickets: 14, bars: 4, posts: 28 },
     reihen: ["date-night"],
   },
   {
@@ -1082,7 +1082,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1510812431401-41d2bd2722f3"), IMG("1547595628-c61a29f496f0"), IMG("1504674900247-0877df9cc836")],
     anbieter: { name: "Cesare", verifikation: "wohnsitz" },
     flags: { indoor: true, reservation: true, dateNight: true },
-    cross: { tickets: 0, bars: 8, posts: 12, mitfahr: 2 },
+    cross: { tickets: 0, bars: 8, posts: 12 },
     reihen: ["date-night"],
   },
 
@@ -1105,7 +1105,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1571266028243-d220c6a32ae1"), IMG("1465847899084-d164df4dedc6"), IMG("1514525253161-7a46d19cd819")],
     anbieter: { name: "Old Crow", verifikation: "wohnsitz" },
     flags: { indoor: true, barDanach: true },
-    cross: { tickets: 0, bars: 8, posts: 14, mitfahr: 0 },
+    cross: { tickets: 0, bars: 8, posts: 14 },
     reihen: ["geheim"],
   },
   {
@@ -1126,7 +1126,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1503095396549-807759245b35"), IMG("1542204165-65bf26472b9b"), IMG("1465847899084-d164df4dedc6")],
     anbieter: { name: "Opernhaus Zürich", verifikation: "wohnsitz" },
     flags: { indoor: true, reservation: true, kinderfreundlich: true, rollstuhl: true },
-    cross: { tickets: 0, bars: 4, posts: 8, mitfahr: 0 },
+    cross: { tickets: 0, bars: 4, posts: 8 },
     reihen: ["geheim"],
   },
   {
@@ -1147,7 +1147,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1545987796-200677ee1011"), IMG("1452587925148-ce544e77e70d"), IMG("1485518882345-15568b007407")],
     anbieter: { name: "Anna Berger", verifikation: "member" },
     flags: { indoor: true, reservation: true, dateNight: true },
-    cross: { tickets: 0, bars: 6, posts: 4, mitfahr: 0 },
+    cross: { tickets: 0, bars: 6, posts: 4 },
     reihen: ["geheim", "date-night"],
   },
   {
@@ -1168,7 +1168,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1488459716781-31db52582fe9"), IMG("1510812431401-41d2bd2722f3"), IMG("1547595628-c61a29f496f0")],
     anbieter: { name: "Käserei Frei", verifikation: "wohnsitz" },
     flags: { reservation: true, kinderfreundlich: true },
-    cross: { tickets: 0, bars: 0, posts: 6, mitfahr: 4 },
+    cross: { tickets: 0, bars: 0, posts: 6 },
     reihen: ["geheim"],
   },
   {
@@ -1189,7 +1189,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1487958449943-2429e8be8625"), IMG("1452587925148-ce544e77e70d"), IMG("1485518882345-15568b007407")],
     anbieter: { name: "Zürcher Mineralienfreunde", verifikation: "member" },
     flags: { gratis: true, indoor: true, spontan: true },
-    cross: { tickets: 0, bars: 2, posts: 4, mitfahr: 2 },
+    cross: { tickets: 0, bars: 2, posts: 4 },
     reihen: ["geheim", "kostenlos"],
   },
   {
@@ -1210,7 +1210,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1465847899084-d164df4dedc6"), IMG("1514525253161-7a46d19cd819"), IMG("1503095396549-807759245b35")],
     anbieter: { name: "Concert in Living Rooms", verifikation: "member" },
     flags: { indoor: true, reservation: true, dateNight: true },
-    cross: { tickets: 0, bars: 4, posts: 8, mitfahr: 2 },
+    cross: { tickets: 0, bars: 4, posts: 8 },
     reihen: ["geheim", "konzerte", "date-night"],
   },
   {
@@ -1232,7 +1232,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1571266028243-d220c6a32ae1"), IMG("1465847899084-d164df4dedc6"), IMG("1514525253161-7a46d19cd819")],
     anbieter: { name: "[Anonym]", verifikation: "member" },
     flags: { indoor: true, barDanach: true, spontan: true },
-    cross: { tickets: 0, bars: 4, posts: 12, mitfahr: 0 },
+    cross: { tickets: 0, bars: 4, posts: 12 },
     reihen: ["geheim"],
   },
 
@@ -1255,7 +1255,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1565060169187-5284a3956fde"), IMG("1452587925148-ce544e77e70d"), IMG("1545987796-200677ee1011")],
     anbieter: { name: "Stadt Zürich Kultur", verifikation: "wohnsitz" },
     flags: { reservation: true, kinderfreundlich: true, dateNight: true, rollstuhl: true },
-    cross: { tickets: 48, bars: 24, posts: 86, mitfahr: 18 },
+    cross: { tickets: 48, bars: 24, posts: 86 },
     reihen: ["kostenlos"],
   },
   {
@@ -1277,7 +1277,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1502082553048-f009c37129b9"), IMG("1518709268805-4e9042af2176"), IMG("1481833761820-0509d3217039")],
     anbieter: { name: "Stadt Zürich", verifikation: "wohnsitz" },
     flags: { gratis: true, spontan: true, dateNight: true, kinderfreundlich: true, mitHund: true, rollstuhl: true },
-    cross: { tickets: 0, bars: 28, posts: 124, mitfahr: 0 },
+    cross: { tickets: 0, bars: 28, posts: 124 },
     reihen: ["kostenlos", "date-night"],
   },
   {
@@ -1298,7 +1298,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1551958219-acbc608c6377"), IMG("1517466787929-bc90951d0974"), IMG("1571019613454-1cb2f99b2d8b")],
     anbieter: { name: "Stadt Zürich", verifikation: "wohnsitz" },
     flags: { gratis: true, spontan: true, kinderfreundlich: true, mitHund: true, rollstuhl: true },
-    cross: { tickets: 0, bars: 22, posts: 48, mitfahr: 0 },
+    cross: { tickets: 0, bars: 22, posts: 48 },
     reihen: ["kostenlos"],
   },
   {
@@ -1320,7 +1320,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1502082553048-f009c37129b9"), IMG("1559564484-e48eda6daa1f"), IMG("1488459716781-31db52582fe9")],
     anbieter: { name: "Stadt Zürich Grün", verifikation: "wohnsitz" },
     flags: { gratis: true, spontan: true, kinderfreundlich: true, mitHund: true, kinderwagen: true },
-    cross: { tickets: 0, bars: 4, posts: 28, mitfahr: 0 },
+    cross: { tickets: 0, bars: 4, posts: 28 },
     reihen: ["kostenlos", "familien"],
   },
   {
@@ -1342,7 +1342,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1559564484-e48eda6daa1f"), IMG("1502082553048-f009c37129b9"), IMG("1518709268805-4e9042af2176")],
     anbieter: { name: "Frauenbadi Zürich", verifikation: "wohnsitz" },
     flags: { spontan: true, kinderfreundlich: true },
-    cross: { tickets: 0, bars: 18, posts: 32, mitfahr: 0 },
+    cross: { tickets: 0, bars: 18, posts: 32 },
     reihen: ["kostenlos"],
   },
   {
@@ -1363,7 +1363,7 @@ export const EVENTS: EventX[] = [
     bilder: [IMG("1465847899084-d164df4dedc6"), IMG("1514525253161-7a46d19cd819"), IMG("1518709268805-4e9042af2176")],
     anbieter: { name: "Tonhalle-Gesellschaft", verifikation: "wohnsitz" },
     flags: { gratis: true, spontan: true, kinderfreundlich: true, mitHund: true, kinderwagen: true, rollstuhl: true },
-    cross: { tickets: 0, bars: 24, posts: 38, mitfahr: 4 },
+    cross: { tickets: 0, bars: 24, posts: 38 },
     reihen: ["kostenlos", "konzerte"],
   },
 ];

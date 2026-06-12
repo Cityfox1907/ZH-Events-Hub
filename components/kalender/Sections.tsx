@@ -5,9 +5,6 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
-  CloudRain,
-  Sun,
-  Snowflake,
   ChevronLeft,
   ChevronRight,
   PenTool,
@@ -29,97 +26,6 @@ import {
   type EventX,
 } from "@/lib/eventkalender";
 import { EventCard } from "./EventCard";
-
-// ─────────────────────────────────────────────────────────────
-// AI SMART SUGGESTION
-// ─────────────────────────────────────────────────────────────
-
-type Weather = "regen" | "sonne" | "kalt";
-
-export function AISuggestion() {
-  const [weather, setWeather] = useState<Weather>("regen");
-
-  const suggestions: Record<Weather, { headline: string; events: EventX[]; Icon: React.ComponentType<{ className?: string }> }> = {
-    regen: {
-      headline: "Es regnet seit 14:00 — hier 3 Indoor-Empfehlungen für deinen Abend.",
-      events: EVENTS.filter((e) =>
-        ["klang-und-kerzenschein-vivaldi", "van-gogh-immersive", "jazzclub-moods-trio"].includes(e.slug),
-      ),
-      Icon: CloudRain,
-    },
-    sonne: {
-      headline: "Strahlend sonnig — drei Outdoor-Highlights für deinen Tag.",
-      events: EVENTS.filter((e) =>
-        ["frauenbadi-saisonstart", "lindenhof-sonnenuntergang", "clouds-rooftop-sonnenuntergang"].includes(e.slug),
-      ),
-      Icon: Sun,
-    },
-    kalt: {
-      headline: "12°C — drei kuschelige Indoor-Tipps für den Abend.",
-      events: EVENTS.filter((e) =>
-        ["klang-und-kerzenschein-vivaldi", "old-crow-geheim-konzert", "tonhalle-saisonkonzert"].includes(e.slug),
-      ),
-      Icon: Snowflake,
-    },
-  };
-
-  const cur = suggestions[weather];
-  const Icon = cur.Icon;
-
-  return (
-    <section className="container-editorial mt-5">
-      <div className="rounded-2xl bg-gradient-to-br from-burgundy/8 via-paper-dim to-paper border border-burgundy/15 p-5 md:p-6">
-        <div className="flex items-start gap-3 flex-wrap">
-          <div className="w-10 h-10 rounded-full bg-burgundy/15 grid place-items-center shrink-0">
-            <Icon className="w-5 h-5 text-burgundy" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="eyebrow text-burgundy">AI Smart Suggestion · Beta</p>
-            <p className="font-display text-[18px] md:text-[22px] leading-snug mt-1">
-              {cur.headline}
-            </p>
-          </div>
-          <div className="inline-flex gap-1 rounded-full border border-line bg-card p-0.5 shrink-0">
-            {(["regen", "sonne", "kalt"] as Weather[]).map((w) => (
-              <button
-                key={w}
-                onClick={() => setWeather(w)}
-                className={`text-[11px] px-2.5 py-1 rounded-full capitalize ${
-                  weather === w ? "bg-ink text-paper" : "text-ink-muted hover:text-ink"
-                }`}
-              >
-                {w}
-              </button>
-            ))}
-          </div>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-4">
-          {cur.events.map((e) => (
-            <Link
-              key={e.id}
-              href={`/entdecken/event/${e.slug}`}
-              className="group flex bg-card border border-line rounded-xl overflow-hidden hover:border-burgundy transition-colors"
-            >
-              <div className="relative w-20 shrink-0 bg-paper-dim overflow-hidden">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={e.bilder[0]}
-                  alt=""
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-              </div>
-              <div className="flex-1 p-3 min-w-0">
-                <p className="eyebrow truncate">{KATEGORIE_LABEL[e.kategorie]}</p>
-                <p className="font-display text-[14px] leading-tight mt-1 line-clamp-2">{e.titel}</p>
-                <p className="text-[11px] text-ink-muted mt-1">{e.zeitStart ?? ""} · {e.ort.stadtteil}</p>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
 
 // ─────────────────────────────────────────────────────────────
 // BENTO GRID
@@ -640,7 +546,7 @@ export function SmartEmptyState({ onReset }: { onReset: () => void }) {
 }
 
 // ─────────────────────────────────────────────────────────────
-// Helper used by AISuggestion / others
+// Gemeinsame Helfer für die Sektionen
 // ─────────────────────────────────────────────────────────────
 
 export function daysToToday(iso: string): number {

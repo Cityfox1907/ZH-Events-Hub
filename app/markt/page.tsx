@@ -45,7 +45,7 @@ export default function MarktPage() {
           Was Zürich <span className="italic">jetzt</span> braucht.
         </h1>
         <p className="text-ink-muted text-[14.5px] mt-2 max-w-xl">
-          Tickets, Mitfahr, Nachbarschaftshilfe — zeit-zentriert, hyperlokal,
+          Tickets, Nachbarschaftshilfe, Verschenken — zeit-zentriert, hyperlokal,
           verifiziert. Kein Tutti-Klon: hier zählt nur, was nur in deinem Quartier
           funktioniert.
         </p>

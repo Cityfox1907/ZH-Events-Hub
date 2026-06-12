@@ -25,7 +25,6 @@ import {
   type AdvancedFilters,
 } from "@/components/kalender/FilterDrawer";
 import {
-  AISuggestion,
   BentoGrid,
   AllHorizontalRows,
   SeasonSection,
@@ -156,7 +155,6 @@ function KalenderPage() {
 function MagazinView() {
   return (
     <>
-      <AISuggestion />
       <BentoGrid />
       <AllHorizontalRows />
       <SeasonSection />

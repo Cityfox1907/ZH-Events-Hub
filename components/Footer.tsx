@@ -9,7 +9,6 @@ const COLS: { title: string; links: { label: string; href: string }[] }[] = [
       { label: "Puls", href: "/puls" },
       { label: "Markt", href: "/markt" },
       { label: "Stadt-Dialog", href: "/stadt-dialog" },
-      { label: "Newsletter", href: "/#newsletter" },
     ],
   },
   {

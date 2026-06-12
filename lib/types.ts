@@ -314,12 +314,11 @@ export type IdentityTier =
   | "anonym";  // ⚪ Anonym (nur in Verschenken & Beichtstuhl)
 
 // ─────────────────────────────────────────────────────────────
-// MARKT — neue 5 Vertikalen (Phase 3)
+// MARKT — neue 4 Vertikalen (Phase 3)
 // ─────────────────────────────────────────────────────────────
 
 export type MarktVertical =
   | "tickets"        // Ticket-Tausch & Last-Minute
-  | "mitfahr"        // Spontan-Mitfahr
   | "nachbarschaft"  // Nachbarschaftshilfe
   | "verschenken"    // Verschenken & Kostenlos
   | "dienstleister"; // Lokale Dienstleister
@@ -346,9 +345,7 @@ export interface MarktItem {
   rating_count?: number;
   // Cross-Module-Verknüpfungen
   linkedEvent?: { id: string; slug: string; title: string };
-  linkedEventNote?: string; // z.B. "Heimfahrt nach Klang & Kerzenschein"
-  // Mitfahr-spezifisch
-  route?: { from: string; to: string; departure: string; seats: number };
+  linkedEventNote?: string; // z.B. "Apero nach Klang & Kerzenschein"
   // Ticket-spezifisch
   ticketDetails?: { eventTitle: string; eventDate: string; sector?: string; quantity: number };
 }
@@ -361,7 +358,6 @@ export type PulsSourceKind =
   | "zvv"
   | "sbb"
   | "vbz"
-  | "meteo"
   | "stadt"
   | "polizei"
   | "erz"
@@ -452,7 +448,6 @@ export type MarktCategory =
   | "wohnen"
   | "jobs"
   | "moebel"
-  | "mitfahr"
   | "haustier"
   | "tickets"
   | "freunde"
