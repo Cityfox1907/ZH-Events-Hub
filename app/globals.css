@@ -27,6 +27,38 @@
   --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* ─────────────────────────────────────────────────────────────
+   GEDIMMTER MODUS — überschreibt die Palette, sobald
+   <html data-theme="dim"> gesetzt ist (ThemeToggle).
+   ───────────────────────────────────────────────────────────── */
+html[data-theme="dim"] {
+  color-scheme: dark;
+  --color-paper: #0c1322;
+  --color-paper-dim: #131c30;
+  --color-card: #16213a;
+  --color-ink: #e8eefa;
+  --color-ink-muted: #a3b2cc;
+  --color-ink-faint: #67768f;
+  --color-line: #22304d;
+  --color-line-strong: #32436a;
+  --color-burgundy: #5b9bf2;
+  --color-burgundy-dark: #3f7fe0;
+  --color-brass: #7d9cc8;
+
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  --shadow-card-hover: 0 6px 20px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(91, 155, 242, 0.18);
+  --shadow-modal: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+html[data-theme="dim"] body::after {
+  mix-blend-mode: screen;
+  opacity: 0.03;
+}
+
+html[data-theme="dim"] ::selection {
+  color: #0c1322;
+}
+
 @layer base {
   :root {
     color-scheme: light;
