@@ -1,7 +1,7 @@
 // ─────────────────────────────────────────────────────────────
 // PHASE 3 — MARKT & PULS UMBAU
-// 33 Markt-Anzeigen verteilt über 5 Vertikalen,
-// 12 verifizierte Stadt-Updates, 15 Quartier-Posts (Fokus Kreis 11),
+// Markt-Anzeigen verteilt über 4 Vertikalen,
+// 10 verifizierte Stadt-Updates, 15 Quartier-Posts (Fokus Kreis 11),
 // 8 kuratierte Stadt-Threads.
 // ─────────────────────────────────────────────────────────────
 
@@ -41,14 +41,6 @@ export const MARKT_VERTICALS: {
     emoji: "🎟",
     blurb: "Spontan tauschen, fair weitergeben — niemand sitzt auf seinem Ticket.",
     href: "/markt/tickets",
-  },
-  {
-    key: "mitfahr",
-    label: "Spontan-Mitfahr",
-    short: "Mitfahr",
-    emoji: "🚗",
-    blurb: "Heute Abend zurück nach Hause, morgen früh nach Bern — gemeinsam fahren.",
-    href: "/markt/mitfahr",
   },
   {
     key: "nachbarschaft",
@@ -275,109 +267,6 @@ export const MARKT_ITEMS: MarktItem[] = [
     price: "CHF 120 / Stück",
     image: UNSPLASH("photo-1469854523086-cc02fe5d8800"),
     linkedEvent: { id: "sechselaeuten", slug: "sechselaeuten", title: "Sechseläuten 2027" },
-  },
-
-  // ───── SPONTAN-MITFAHR (6) ─────
-  {
-    id: "f1",
-    vertical: "mitfahr",
-    intent: "biete",
-    title: "Heute 17:30 HB → Winterthur",
-    description: "1 Platz, CHF 8, fahre mit Tesla. Pünktlich bitte, Treffpunkt Sihlquai.",
-    author: "PendlerinWinti",
-    avatar: AVATAR("PendlerinWinti"),
-    identity: "wohnsitz",
-    district: "Kreis 1",
-    ago: "vor 18 Min",
-    expires: "heute 17:00",
-    price: "CHF 8",
-    lat: 47.3779,
-    lng: 8.5402,
-    route: { from: "Zürich HB", to: "Winterthur", departure: "Heute 17:30", seats: 1 },
-  },
-  {
-    id: "f2",
-    vertical: "mitfahr",
-    intent: "biete",
-    title: "Morgen 6:00 Oerlikon → Bern HB",
-    description: "3 Plätze frei, fahre wegen Sitzung. Kaffee unterwegs auf Wunsch.",
-    author: "BernPendler",
-    avatar: AVATAR("BernPendler"),
-    identity: "wohnsitz",
-    district: "Oerlikon",
-    ago: "vor 1h",
-    expires: "morgen 5:30",
-    price: "CHF 25",
-    lat: 47.4118,
-    lng: 8.5446,
-    route: { from: "ZH-Oerlikon", to: "Bern HB", departure: "Morgen 6:00", seats: 3 },
-  },
-  {
-    id: "f3",
-    vertical: "mitfahr",
-    intent: "biete",
-    title: "Freitag 18:00 ZH → Tessin (Lugano)",
-    description: "4 Plätze, gemütlich. Verlängertes Wochenende — Rückfahrt Sonntagabend.",
-    author: "TessinFan",
-    avatar: AVATAR("TessinFan"),
-    identity: "member",
-    district: "Kreis 5",
-    ago: "vor 3h",
-    price: "CHF 35",
-    expires: "Freitag 16:00",
-    route: { from: "Zürich Süd", to: "Lugano", departure: "Fr 18:00", seats: 4 },
-  },
-  {
-    id: "f4",
-    vertical: "mitfahr",
-    intent: "biete",
-    title: "Heute 22:30 Helvetiaplatz → Wallisellen",
-    description: "Nach Konzert-Heimfahrt, 2 Plätze frei. Stop Glattzentrum möglich.",
-    author: "KonzertFahrer",
-    avatar: AVATAR("KonzertFahrer"),
-    identity: "wohnsitz",
-    district: "Kreis 4",
-    ago: "vor 30 Min",
-    expires: "heute 22:00",
-    price: "CHF 5",
-    lat: 47.3754,
-    lng: 8.5286,
-    linkedEvent: { id: "klang-kerzenschein", slug: "klang-kerzenschein", title: "Klang & Kerzenschein" },
-    linkedEventNote: "Heimfahrt nach dem Konzert",
-    route: { from: "Helvetiaplatz", to: "Wallisellen", departure: "Heute 22:30", seats: 2 },
-  },
-  {
-    id: "f5",
-    vertical: "mitfahr",
-    intent: "biete",
-    title: "Samstag 9:00 ZH → Säntis (Wanderung)",
-    description: "2 Plätze frei, Tagesausflug. Rückkehr ca. 19 Uhr.",
-    author: "BergPendlerin",
-    avatar: AVATAR("BergPendlerin"),
-    identity: "wohnsitz",
-    district: "Kreis 9",
-    ago: "vor 6h",
-    expires: "Samstag 8:00",
-    price: "CHF 18",
-    route: { from: "Zürich Altstetten", to: "Säntis", departure: "Sa 9:00", seats: 2 },
-  },
-  {
-    id: "f6",
-    vertical: "mitfahr",
-    intent: "biete",
-    title: "Heute 19:45 Letzigrund → Kreis 11 (gratis)",
-    description: "Fahre direkt nach Hause nach dem FCZ-Spiel. 1 Platz frei.",
-    author: "FCZHeimFahrer",
-    avatar: AVATAR("FCZHeimFahrer"),
-    identity: "member",
-    district: "Kreis 4",
-    ago: "vor 2h",
-    expires: "heute 19:30",
-    price: "Gratis",
-    lat: 47.3826,
-    lng: 8.5037,
-    linkedEventNote: "Direkt nach FCZ-Spiel",
-    route: { from: "Letzigrund", to: "Kreis 11", departure: "Heute 19:45", seats: 1 },
   },
 
   // ───── NACHBARSCHAFTSHILFE (8) ─────
@@ -721,14 +610,6 @@ export const VERIFIED_UPDATES: PulsVerifiedUpdate[] = [
     identity: "wohnsitz",
   },
   {
-    id: "u2",
-    source: "MeteoSchweiz",
-    sourceKind: "meteo",
-    text: "Gewitter heute 19 Uhr, lokal Hagel möglich",
-    ago: "vor 12 Min",
-    identity: "wohnsitz",
-  },
-  {
     id: "u3",
     source: "Stadt Zürich",
     sourceKind: "stadt",
@@ -804,14 +685,6 @@ export const VERIFIED_UPDATES: PulsVerifiedUpdate[] = [
     text: "Bahnhofstrasse Höhe Globus heute eng — via Sihlstrasse einfacher",
     ago: "vor 1h",
     district: "Kreis 1",
-    identity: "wohnsitz",
-  },
-  {
-    id: "u12",
-    source: "MeteoSchweiz",
-    sourceKind: "meteo",
-    text: "Pollenflug aktuell hoch — Gräser, Birken stark",
-    ago: "vor 6h",
     identity: "wohnsitz",
   },
 ];
@@ -1250,7 +1123,7 @@ export const CITY_THREADS: CityThread[] = [
 ];
 
 // ─────────────────────────────────────────────────────────────
-// Cross-Module Lookups: Tickets pro Event, Mitfahr pro Event,
+// Cross-Module Lookups: Tickets pro Event,
 // Quartier-Posts pro Bezirk, Helfer-Anfragen pro Bezirk.
 // ─────────────────────────────────────────────────────────────
 
@@ -1260,11 +1133,6 @@ export function ticketsForEvent(eventId: string): MarktItem[] {
   );
 }
 
-export function rideshareForEvent(eventId: string): MarktItem[] {
-  return MARKT_ITEMS.filter(
-    (i) => i.vertical === "mitfahr" && i.linkedEvent?.id === eventId,
-  );
-}
 
 export function quartierPostsByDistrict(district: string): QuartierPost[] {
   return QUARTIER_POSTS.filter((q) => q.district === district);

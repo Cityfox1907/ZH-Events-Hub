@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import { Fraunces, DM_Sans } from "next/font/google";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
+import { AppChrome } from "@/components/AppChrome";
 import { ToastProvider } from "@/components/Toast";
 import { ViewModeProvider } from "@/components/ViewModeProvider";
-import { DemoBanner } from "@/components/DemoBanner";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -34,10 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="bg-paper text-ink antialiased min-h-screen flex flex-col">
         <ViewModeProvider>
           <ToastProvider>
-            <DemoBanner />
-            <Header />
-            <main className="flex-1 pb-16 md:pb-0">{children}</main>
-            <Footer />
+            <AppChrome>{children}</AppChrome>
           </ToastProvider>
         </ViewModeProvider>
       </body>

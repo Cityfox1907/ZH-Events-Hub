@@ -78,14 +78,6 @@ export function MarktItemCard({ item, variant = "default" }: Props) {
           {item.description}
         </p>
 
-        {item.route && (
-          <div className="mt-2 text-[11.5px] text-ink-muted">
-            <span className="font-medium">{item.route.from}</span> →{" "}
-            <span className="font-medium">{item.route.to}</span>
-            <span className="text-ink-faint"> · {item.route.seats} Plätze</span>
-          </div>
-        )}
-
         {item.linkedEvent && (
           <Link
             href={`/entdecken/kalender?slug=${item.linkedEvent.slug}`}

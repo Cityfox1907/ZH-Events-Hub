@@ -142,7 +142,7 @@ function formatDateChip(e: EventX): string {
 export function CrossModuleHint({
   cross,
 }: {
-  cross: { tickets: number; bars: number; posts: number; mitfahr: number };
+  cross: { tickets: number; bars: number; posts: number };
 }) {
   const parts: string[] = [];
   if (cross.posts > 0) parts.push(`${cross.posts} Posts`);

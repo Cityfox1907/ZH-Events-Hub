@@ -3,7 +3,6 @@
 import Link from "next/link";
 import {
   ArrowRight,
-  CloudRain,
   Train,
   Heart,
   Sparkles,
@@ -149,10 +148,10 @@ const FIKO_MARKT = [
     href: "/markt/nachbarschaft",
   },
   {
-    cat: "🚗 Mitfahr · Oerlikon",
-    title: "Morgen 6:00 Oerlikon → Bern HB",
-    meta: "🟢 3 Plätze · CHF 25",
-    href: "/markt/mitfahr",
+    cat: "🎁 Verschenken · Oerlikon",
+    title: "Bücherkiste gratis abzuholen — 40 Romane",
+    meta: "🟢 Verifizierte Nachbarin · bis Sonntag",
+    href: "/markt/verschenken",
   },
   {
     cat: "🎟 Ticket-Tausch · zu deinem Bookmark",
@@ -166,10 +165,6 @@ const FIKO_VERIFIED = [
   {
     source: "ZVV",
     text: "Tram 11 (deine Linie) — 8 Min Verspätung, Bauarbeiten Stauffacher",
-  },
-  {
-    source: "MeteoSchweiz",
-    text: "Gewitter heute 19 Uhr — bringt Schirm mit",
   },
   {
     source: "Stadt Zürich",
@@ -353,23 +348,7 @@ function FikoDashboard({ isDashboard }: { isDashboard: boolean }) {
           {profile.district} · {profile.interests.join(" · ")}
         </p>
 
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
-          <div className="bg-card border border-line rounded-2xl card-shadow p-5">
-            <div className="flex items-center gap-2">
-              <CloudRain
-                className="w-4 h-4 text-burgundy"
-                strokeWidth={1.8}
-              />
-              <p className="eyebrow">Wetter</p>
-            </div>
-            <p className="font-display text-3xl mt-3">11° · leichter Regen</p>
-            <p className="text-[13px] text-ink-muted mt-1">
-              Heute Abend: Gewitter ab 19 Uhr
-            </p>
-            <p className="mt-2 inline-block px-2 py-0.5 rounded-full bg-burgundy/10 text-burgundy text-[11px] font-medium">
-              Indoor-Aktivitäten unten
-            </p>
-          </div>
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
           <div className="bg-card border border-line rounded-2xl card-shadow p-5">
             <div className="flex items-center gap-2">
               <Train className="w-4 h-4 text-burgundy" strokeWidth={1.8} />
@@ -822,20 +801,7 @@ function SarahDashboard({ isDashboard }: { isDashboard: boolean }) {
           </span>
         </p>
 
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
-          <div className="bg-card border border-line rounded-2xl card-shadow p-5">
-            <div className="flex items-center gap-2">
-              <CloudRain
-                className="w-4 h-4 text-burgundy"
-                strokeWidth={1.8}
-              />
-              <p className="eyebrow">Wetter / Weather</p>
-            </div>
-            <p className="font-display text-3xl mt-3">11° · light rain</p>
-            <p className="text-[13px] text-ink-muted mt-1">
-              Thunderstorm expected 19:00 — bring umbrella
-            </p>
-          </div>
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
           <div className="bg-card border border-line rounded-2xl card-shadow p-5">
             <div className="flex items-center gap-2">
               <Languages
@@ -961,10 +927,10 @@ function SarahDashboard({ isDashboard }: { isDashboard: boolean }) {
           <div>
             <p className="eyebrow">Markt · Für dich kuratiert</p>
             <h2 className="font-display text-2xl md:text-3xl mt-1">
-              Italienisch-Tandem, Run-Club, Mitfahr
+              Italienisch-Tandem, Run-Club, Nachbarschaft
             </h2>
             <p className="text-[13px] text-ink-faint mt-1">
-              Hand-picked for newcomers — meet locals, share rides, swap languages.
+              Hand-picked for newcomers — meet locals, find your crew, swap languages.
             </p>
           </div>
           <Link
@@ -989,10 +955,10 @@ function SarahDashboard({ isDashboard }: { isDashboard: boolean }) {
               href: "/markt/nachbarschaft",
             },
             {
-              cat: "🚗 Mitfahr · Freitag",
-              title: "Freitag 18:00 ZH → Lugano",
-              meta: "🔵 4 Plätze · CHF 35 · weekend trip",
-              href: "/markt/mitfahr",
+              cat: "🎁 Verschenken · Kreis 4",
+              title: "Möbel-Starterset für Newcomer — gratis",
+              meta: "🟢 Verifizierter Nachbar · Abholung Samstag",
+              href: "/markt/verschenken",
             },
           ].map((m) => (
             <Link
@@ -1116,20 +1082,7 @@ function TomDashboard({ isDashboard }: { isDashboard: boolean }) {
           dein perfekter Plan.
         </p>
 
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
-          <div className="bg-card border border-line rounded-2xl card-shadow p-5">
-            <div className="flex items-center gap-2">
-              <CloudRain
-                className="w-4 h-4 text-burgundy"
-                strokeWidth={1.8}
-              />
-              <p className="eyebrow">Wetter</p>
-            </div>
-            <p className="font-display text-3xl mt-3">11° · Regen</p>
-            <p className="text-[13px] text-ink-muted mt-1">
-              Heute Kunsthaus &amp; Kronenhalle empfohlen
-            </p>
-          </div>
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
           <div className="bg-card border border-line rounded-2xl card-shadow p-5">
             <div className="flex items-center gap-2">
               <Ticket
@@ -1264,7 +1217,6 @@ function TomDashboard({ isDashboard }: { isDashboard: boolean }) {
         <ul className="bg-card border border-line rounded-2xl card-shadow divide-y divide-line overflow-hidden">
           {[
             { source: "ZVV", text: "Tram 4/15 normal — vom Storchen aus alles erreichbar" },
-            { source: "MeteoSchweiz", text: "11° leichter Regen heute, morgen sonnig 18°" },
             { source: "Stadt Zürich", text: "Bahnhofstrasse Höhe Globus heute eng — via Sihlstrasse" },
             { source: "SBB", text: "Zürich HB Gleis 7 heute Abend gesperrt — Bern auf Gleis 9" },
           ].map((u, i) => (

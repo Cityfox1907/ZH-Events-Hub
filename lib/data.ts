@@ -1866,7 +1866,6 @@ export const MARKT_CATEGORIES = [
   { key: "wohnen", label: "WG / Wohnen", icon: "🏠", count: 47 },
   { key: "jobs", label: "Lokale Jobs", icon: "💼", count: 23 },
   { key: "moebel", label: "Möbel / Sachen", icon: "🛋", count: 89 },
-  { key: "mitfahr", label: "Mitfahrgelegenheiten", icon: "🚗", count: 12 },
   { key: "haustier", label: "Haustier-Sitting", icon: "🐕", count: 18 },
   { key: "tickets", label: "Ticket-Tausch", icon: "🎟", count: 6 },
   { key: "freunde", label: "Freunde / Gleichgesinnte", icon: "👫", count: 34 },
@@ -2009,32 +2008,6 @@ export const MARKT_LISTINGS: MarktListing[] = [
     expires: "in 1 Woche",
     price: "CHF 280",
     images: [UNSPLASH("photo-1532298229144-0ec0c57515c7")],
-  },
-
-  // MITFAHR (2)
-  {
-    id: "m10",
-    category: "mitfahr",
-    title: "Freitag nach Genf, 2 Plätze frei, 40 CHF/Platz",
-    description:
-      "Fahre Freitag 17:00 ab HB-Parking. Komme Sonntag-Abend zurück. 2 Plätze frei.",
-    author: "WeekendDriver",
-    avatar: AVATAR("WeekendDriver"),
-    district: "Kreis 1",
-    ago: "vor 5h",
-    expires: "in 3 Tage",
-    price: "CHF 40 / Platz",
-  },
-  {
-    id: "m11",
-    category: "mitfahr",
-    title: "Tessin am Wochenende — wer kommt mit?",
-    description: "Lugano-Trip, suche 2-3 Mitfahrer. Teilen Benzin + Maut.",
-    author: "TessinFan",
-    avatar: AVATAR("TessinFan"),
-    district: "Kreis 5",
-    ago: "vor 1 Tag",
-    expires: "in 4 Tage",
   },
 
   // HAUSTIER (2)
