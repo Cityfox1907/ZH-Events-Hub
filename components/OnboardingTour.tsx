@@ -24,8 +24,8 @@ const SLIDES = [
   },
   {
     eyebrow: "Community",
-    title: "Puls · Markt · Stimmen",
-    body: "Puls ist der Community-Feed (Tipps, Fragen, Live-Updates). Markt sind lokale Anzeigen. Stimmen ist Stadt-Demokratie — Umfragen, Initiativen, Index.",
+    title: "Entdecken · Markt · Stadt-Dialog",
+    body: "Entdecken zeigt die grossen Stadtfeste, Organisationen und Community-Events. Markt sind lokale Anzeigen. Stadt-Dialog ist Stadt-Demokratie — Umfragen, Initiativen, Index.",
     emoji: "🏘",
   },
   {

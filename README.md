@@ -7,7 +7,7 @@ Fünf Module unter einem Dach + Anbieter-Sicht:
 - **Tonight** — Was läuft heute / am Wochenende / diese Woche
 - **Dine** — Restaurant- & Bar-Reservierungen
 - **Experience** — Erlebnisse mit lokalen Hosts
-- **Pulse** — Premium-Networking & Community
+- **Entdecken** — Stadtfeste & Stadt-Organisationen im Kanton Zürich + Community-Events
 - **Live** — Pop-up & Premium-Events
 - **For Providers** — Anbieter-Landing + Mock-Dashboard
 
@@ -42,15 +42,15 @@ npm run dev
 ## Routes
 
 ```
-/                  Home — Hero-Slider, Live-Counter, Trending, Stadtteile, Recently-Viewed, Pulse-Banner, Newsletter
+/                  Home — Feed, Hero-Slider, Live-Counter, Trending, Stadtteile, Recently-Viewed, Newsletter
 /tonight           12 Events · Tabs (Heute / Wochenende / Woche) · funktionierende Filter mit Chips
 /tonight/[id]      Detail · Tabs (Übersicht / Lage / FAQ) · Trust-Badges · Share · Similar Items
 /dine              10 Venues · Date/Time/People-Picker · Filter · Skeleton Loading
 /dine/[id]         Detail · Tabs (Übersicht / Bewertungen / Lage / FAQ) · Galerie · Reviews
 /experience        8 Erlebnisse · Filter (Kategorie / Sprache / Dauer / Quartier)
 /experience/[id]   Detail · Booking-Kalender (3 Monate, Zeitfenster, +/- Personen) · Host-Bio
-/pulse             Membership-Pricing · 6 Pulse-Events
-/pulse/[id]        Detail · RSVP · Belegungs-Bar · Curator-Notes
+/entdecken         Stadtfeste & Stadt-Organisationen (Karten) · Community-Events mit Kommentaren
+/entdecken/[slug]  Detail · Diskussion · Fragen & Hilfe · Helfer:in werden
 /live              Hero-Karussell (Auto-Rotate) · 8 Events · Filter
 /live/[id]         Detail · Multi-Step Checkout · Tickets-Sold-Bar
 /favorites         Alle gespeicherten Items, gruppiert nach Modul

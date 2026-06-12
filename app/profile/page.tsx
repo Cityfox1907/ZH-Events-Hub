@@ -219,13 +219,13 @@ function KarmaStat({ label, value }: { label: string; value: number }) {
 
 function PostsTab({ userPosts }: { userPosts: UserPulsPost[] }) {
   if (userPosts.length === 0 && DEMO_PROFILE.posts === 0)
-    return <Empty title="Noch keine Posts" desc="Poste etwas im Puls-Feed — es erscheint hier." />;
+    return <Empty title="Noch keine Posts" desc="Poste etwas im Feed auf der Startseite — es erscheint hier." />;
   return (
     <div className="space-y-2 max-w-3xl">
       {userPosts.map((p) => (
         <div key={p.id} className="p-4 bg-card border border-line rounded-xl">
           <div className="flex items-center gap-2 mb-2">
-            <span className="eyebrow">Puls</span>
+            <span className="eyebrow">Feed</span>
             <span className="text-[11px] text-ink-faint">{p.ago} · {p.district}</span>
             <span className="ml-auto text-[12px] text-ink-muted">▲ {p.upvotes} · 💬 {p.comments_count}</span>
           </div>

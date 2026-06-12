@@ -78,14 +78,9 @@ export function PostCard({ post }: { post: FeedPost }) {
         {post.tags.length > 0 && (
           <p className="mt-1 text-[14px] leading-snug">
             {post.tags.map((t) => (
-              <Link
-                key={t}
-                href={`/puls?tag=${t}`}
-                className="text-burgundy hover:underline mr-2"
-                onClick={(e) => e.stopPropagation()}
-              >
+              <span key={t} className="text-burgundy mr-2">
                 #{t}
-              </Link>
+              </span>
             ))}
           </p>
         )}

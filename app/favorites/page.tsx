@@ -11,7 +11,6 @@ const MODULE_LABEL: Record<string, string> = {
   tonight: "Tonight",
   dine: "Dine",
   experience: "Experience",
-  pulse: "Pulse",
   live: "Live",
 };
 
@@ -19,7 +18,6 @@ const MODULE_TONE: Record<string, string> = {
   tonight: "bg-burgundy/10 text-burgundy",
   dine: "bg-brass/15 text-brass",
   experience: "bg-paper-dim text-ink-muted",
-  pulse: "bg-ink/10 text-ink",
   live: "bg-burgundy/20 text-burgundy",
 };
 
@@ -55,10 +53,10 @@ export default function FavoritesPage() {
             </p>
             <div className="flex flex-wrap gap-3 justify-center mt-6">
               <Link href="/entdecken" className="px-4 py-2 rounded-full bg-burgundy text-paper text-[13px] hover:bg-burgundy-dark">
-                Events entdecken
+                Stadtfeste entdecken
               </Link>
-              <Link href="/puls" className="px-4 py-2 rounded-full border border-line text-[13px] hover:border-burgundy">
-                Zum Puls-Feed
+              <Link href="/markt" className="px-4 py-2 rounded-full border border-line text-[13px] hover:border-burgundy">
+                Zum Markt
               </Link>
             </div>
           </div>

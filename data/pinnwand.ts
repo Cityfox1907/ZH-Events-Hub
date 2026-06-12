@@ -71,7 +71,7 @@ export const PINNWAND_AUSHAENGE: PinnwandAushang[] = [
     premium: false,
     crossLink: {
       label: "→ Daphne & Sons im Orte-Tab",
-      route: "/entdecken/orte?suche=Daphne+%26+Sons",
+      route: "/entdecken",
     },
     rotation: -1.6,
   },
@@ -92,7 +92,7 @@ export const PINNWAND_AUSHAENGE: PinnwandAushang[] = [
     premium: false,
     crossLink: {
       label: "→ Confiserie Sprüngli im Orte-Tab",
-      route: "/entdecken/orte?suche=Spr%C3%BCngli",
+      route: "/entdecken",
     },
     rotation: 1.2,
   },
@@ -113,7 +113,7 @@ export const PINNWAND_AUSHAENGE: PinnwandAushang[] = [
     premium: false,
     crossLink: {
       label: "→ Frau Gerolds Garten im Orte-Tab",
-      route: "/entdecken/orte?suche=Frau+Gerolds+Garten",
+      route: "/entdecken",
     },
     rotation: -0.6,
   },
@@ -133,7 +133,7 @@ export const PINNWAND_AUSHAENGE: PinnwandAushang[] = [
     premium: false,
     crossLink: {
       label: "→ Café Mandela im Orte-Tab",
-      route: "/entdecken/orte?suche=Caf%C3%A9+Mandela",
+      route: "/entdecken",
     },
     rotation: 1.8,
   },
@@ -153,7 +153,7 @@ export const PINNWAND_AUSHAENGE: PinnwandAushang[] = [
     premium: false,
     crossLink: {
       label: "→ Bookhaus im Orte-Tab",
-      route: "/entdecken/orte?suche=Bookhaus",
+      route: "/entdecken",
     },
     rotation: -1.1,
   },
